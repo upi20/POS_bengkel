@@ -1,6 +1,8 @@
 <?php
 // error_reporting(0);
 session_start();
+// var_dump($_SESSION);
+// die;
 include "function.php";
 if (!ceklogin($_SESSION['user'])) header('Location: login.php');
 
@@ -187,7 +189,7 @@ if ($menus) {
     </div>
     <div class="navbar navbar-inverse navbar-fixed-bottom footer-bottom">
         <div class="container text-center">
-            <p class="text-center" style="color: #D1C4E9;margin-left: 24%"><small>copyright @ 2020 PT. Agung Automall Jambi</p>
+            <p class="text-center" style="color: #D1C4E9;"><small>Copyright @ 2020 PT. Agung Automall Jambi</p>
         </div>
         <!-- /. WRAPPER  -->
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->

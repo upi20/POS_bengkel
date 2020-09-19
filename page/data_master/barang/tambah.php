@@ -88,7 +88,7 @@ if (isset($_POST['simpan'])) {
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode Barang</label>
-                                    <input class="form-control" name="kode_barang" id="kode_barang" required="" />
+                                    <input class="form-control" name="kode_barang" id="kode_barang" required="" disabled value="<?= date("yy/m/d/") . uniqid(); ?>" />
                                 </div>
                             </div>
                             <div class="col-md-3">

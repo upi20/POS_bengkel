@@ -13,15 +13,15 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr>
-                                <th style="text-align: center;">NO</th>
-                                <th style="text-align: center;">NAMA BARANG</th>
-                                <th style="text-align: center;">KODE BARANG</th>
-                                <th style="text-align: center;">HARGA BELI</th>
-                                <th style="text-align: center;">HARGA JUAL</th>
-                                <th style="text-align: center;">GAMBAR</th>
-                                <th style="text-align: center;">STOK</th>
-                                <th style="text-align: center;">KATEGORI</th>
-                                <th style="text-align: center;">AKSI</th>
+                                <th style="text-align: center;">No</th>
+                                <th style="text-align: center;">Nama barang</th>
+                                <th style="text-align: center;">Kode barang</th>
+                                <th style="text-align: center;">Harga beli</th>
+                                <th style="text-align: center;">Harga jual</th>
+                                <th style="text-align: center;">Gambar</th>
+                                <th style="text-align: center;">Stok</th>
+                                <th style="text-align: center;">Kategori</th>
+                                <th style="text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
