@@ -1,6 +1,8 @@
 <?php
 // memperoses data ubah
 if (isset($_POST['simpan'])) {
+    var_dump($_POST);
+    die;
     $nama_barang = $_POST['nama_barang'];
     $kode_barang = $_POST['kode_barang'];
     $harga_beli  = $_POST['harga_beli'];
@@ -26,7 +28,6 @@ if (isset($_POST['simpan'])) {
         $upload       = move_uploaded_file($lokasi, "images/barang/" . $gambar);
         $querybuilder = " UPDATE `tb_barang` SET
                                 `nama_barang`           = '$nama_barang',
-                                `kode_barang`           = '$kode_barang',
                                 `harga_beli`            = '$harga_beli',
                                 `harga_jual`            = '$harga_jual',
                                 `stok`                  = '$stok',
@@ -44,9 +45,9 @@ if (isset($_POST['simpan'])) {
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     } else {
+        die;
         $querybuilder = " UPDATE `tb_barang` SET
                                 `nama_barang`           = '$nama_barang',
-                                `kode_barang`           = '$kode_barang',
                                 `harga_beli`            = '$harga_beli',
                                 `harga_jual`            = '$harga_jual',
                                 `stok`                  = '$stok',
@@ -132,7 +133,7 @@ $harga_jual2 = $tampil['harga_jual'];
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode Barang</label>
-                                    <input class="form-control" name="kode_barang" value="<?php echo $tampil['kode_barang']; ?>" />
+                                    <input disabled="" class="form-control" type="text" name="kode_barang" value="<?php echo $tampil['kode_barang']; ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">

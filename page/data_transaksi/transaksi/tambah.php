@@ -3,6 +3,9 @@ $barang   = query("SELECT `id_barang`, `nama_barang`, `kode_barang`, `harga_jual
 $konsumen = query("SELECT `nama`, `id_konsumen` FROM `tb_konsumen`");
 
 if (isset($_POST['simpan'])) {
+var_dump($_POST);
+
+	die;
 	$konsumen       = $_POST['konsumen'];
 	$kode_transaksi = $_POST['kode_transaksi'];
 	$kode_barang    = $_POST['kode_barang'];

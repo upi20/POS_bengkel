@@ -33,7 +33,7 @@
                                 <tr>
                                     <td style="white-space: nowrap;"><?php echo $no++; ?></td>
                                     <td style="white-space: nowrap;"><?php echo $data['nama_barang']; ?></td>
-                                    <td style="white-space: nowrap;"><?php echo $data['kode_barang']; ?></td>
+                                    <td><?php echo $data['kode_barang']; ?></td>
                                     <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_beli'], 0, ',', '.'); ?></td>
                                     <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_jual'], 0, ',', '.'); ?></td>
                                     <td style="white-space: nowrap; text-align:center;"><img style="width: 200px; height: 80px; object-fit:contain;" src="images/master_data_barang/<?php echo $data['gambar']; ?>" style="width: 100px;" alt="..." class="img-thumbnail"></td>

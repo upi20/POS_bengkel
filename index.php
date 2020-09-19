@@ -1,10 +1,14 @@
 <?php
 // error_reporting(0);
 session_start();
-// var_dump($_SESSION);
+// var_dump($_POST);
 // die;
 include "function.php";
 if (!ceklogin($_SESSION['user'])) header('Location: login.php');
+
+// mendeklarasikan temporari
+$temp = [];
+$temp['page']['title'] = false;
 
 // mengecek apakah ada data get atau tidak
 if (isset($_GET['page'])) $page = $_GET['page'];
@@ -47,10 +51,11 @@ if ($menus) {
                 $menus[$i]['sub_menu'][$j]['url_act'] = "?page=" . $menus[$i]['menu_url'] . "&submenu=" . $menus[$i]['sub_menu'][$j]['sub_menu_url'];
 
                 // mencari menu dan sub menu navigasi active
-                if ($menus[$i]['menu_url'] . "|" . $menus[$i]['sub_menu'][$j]['sub_menu_url'] == ($page .  "|" . $submenu)) {
+                if ($menus[$i]['menu_url'] . $menus[$i]['sub_menu'][$j]['sub_menu_url'] == ($page . $submenu)) {
                     $display_page                 = $menus[$i]['sub_menu'][$j]['file'];
                     $menus[$i]['sub_menu'][$j]['active'] = true;
                     $menus[$i]['active']                 = true;
+                    $temp['page']['title'] = $menus[$i]['sub_menu'][$j]['title'];
                 } else {
                     $menus[$i]['sub_menu'][$j]['active'] = false;
                 }
@@ -63,6 +68,8 @@ if ($menus) {
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -205,6 +212,8 @@ if ($menus) {
             $(document).ready(function() {
                 $('#dataTables-example').dataTable();
                 $('.alert').alert();
+                // Mengganti judul halaman sesuai dengan sub mehu
+                <?php if ($temp['page']['title']) echo "document.title = '" . $temp['page']['title'] . " | PT. Agung Automall Jambi';" ?>
             });
         </script>
         <script src="assets/js/custom.js"></script>
