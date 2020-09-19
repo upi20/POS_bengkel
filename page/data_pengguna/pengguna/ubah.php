@@ -18,11 +18,11 @@ if (isset($_GET['id_user'])) {
             $ekteksiGambar = explode('.', $foto);
             $ekteksiGambar = strtolower(end($ekteksiGambar));
             $namaFileBaru  = $username . "_" . uniqid() . '.' . $ekteksiGambar;
-            $upload        = move_uploaded_file($lokasi, "images/master_data_barang/" . $namaFileBaru);
+            $upload        = move_uploaded_file($lokasi, "images/user_profile/" . $namaFileBaru);
 
             // hapus file yang sudah ada
-            if (file_exists("images/master_data_barang/$fotoasal")) {
-                unlink("images/master_data_barang/$fotoasal");
+            if (file_exists("images/user_profile/$fotoasal")) {
+                unlink("images/user_profile/$fotoasal");
             }
             $sql = $koneksi->query("update  tb_user set username='$username', password='$pass', nama='$nama', foto='$namaFileBaru', id_level='$level' where id='$id'");
             if ($sql) {
