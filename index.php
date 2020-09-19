@@ -53,7 +53,11 @@ if ($menus) {
                     $menus[$i]['sub_menu'][$j]['active'] = false;
                 }
             }
-        } else $menus[$i]['active'] = false;
+            $menus[$i]['visible'] = true;
+        } else {
+            $menus[$i]['visible'] = false;
+            $menus[$i]['active'] = false;
+        }
     }
 }
 ?>
@@ -131,32 +135,34 @@ if ($menus) {
 
                     <?php if ($menus) {
                         foreach ($menus as $menu) {
-                            echo '<li>';
+                            if ($menu['visible']) {
+                                echo '<li>';
 
-                            // tag buaka ul
-                            if ($menu['active']) {
-                                echo '
+                                // tag buaka ul
+                                if ($menu['active']) {
+                                    echo '
                                 <a  href  = "#" class                                        = "bg-primary"><i class = "' . $menu["icon"] . '"></i> ' . $menu["menu_title"] . '<span class = "fa arrow"></span></a>
                                 <ul class = "nav nav-second-level collapse in" aria-expanded = "true" style          = "">
                                 ';
-                            } else {
-                                echo '
+                                } else {
+                                    echo '
                                 <a  href  = "#"><i class = "' . $menu["icon"] . '"></i> ' . $menu["menu_title"] . '<span class = "fa arrow"></span></a>
                                 <ul class = "nav nav-second-level">
                                 ';
-                            }
-
-                            // daftar sub menu
-                            if ($menu['sub_menu']) {
-                                foreach ($menu['sub_menu'] as $nav_submenu) {
-                                    if ($nav_submenu['active']) echo '<li><a href="' . $nav_submenu['url_act'] . '" class="bg-primary"></i> ' . $nav_submenu['title'] . '</a></li>';
-                                    else  echo '<li><a href="' . $nav_submenu['url_act'] . '"></i> ' . $nav_submenu['title'] . '</a></li>';
                                 }
-                            }
 
-                            // tag tutup ul
-                            echo '</ul>';
-                            echo '</li>';
+                                // daftar sub menu
+                                if ($menu['sub_menu']) {
+                                    foreach ($menu['sub_menu'] as $nav_submenu) {
+                                        if ($nav_submenu['active']) echo '<li><a href="' . $nav_submenu['url_act'] . '" class="bg-primary"></i> ' . $nav_submenu['title'] . '</a></li>';
+                                        else  echo '<li><a href="' . $nav_submenu['url_act'] . '"></i> ' . $nav_submenu['title'] . '</a></li>';
+                                    }
+                                }
+
+                                // tag tutup ul
+                                echo '</ul>';
+                                echo '</li>';
+                            }
                         }
                     } ?>
                 </ul>

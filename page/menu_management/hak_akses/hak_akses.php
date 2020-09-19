@@ -98,7 +98,7 @@ if (isset($_GET['id'])) {
                 <div class="panel-body">
                     <div class="row">
                         <div class="container-fluid">
-                            <h3>Hak Akses Menu level <?= $level_title[0]['title']; ?></h3>
+                            <h3>Hak Akses SubMenu level <?= $level_title[0]['title']; ?></h3>
                             <br>
                         </div>
                     </div>
