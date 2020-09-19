@@ -48,13 +48,13 @@ var_dump($_POST);
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Kode transaksi</label>
-								<input class="form-control" type="text" name="kode_transaksi" disabled value="<?= date("yy/m/d/") . uniqid(); ?>" />
+								<input class="form-control" type="text" name="kode_transaksi" readonly value="<?= date("yy/m/d/") . uniqid(); ?>" />
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Kode barang</label>
-								<input class="form-control" type="text" name="kode_barang" id="kode_barang" disabled />
+								<input class="form-control" type="text" name="kode_barang" id="kode_barang" readonly />
 							</div>
 						</div>
 					</div>
@@ -72,13 +72,13 @@ var_dump($_POST);
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Stok</label>
-								<input class="form-control" type="number" id="stok" disabled>
+								<input class="form-control" type="number" id="stok" readonly>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Harga</label>
-								<input class="form-control" type="number" name="Harga" id="harga" disabled />
+								<input class="form-control" type="number" name="Harga" id="harga" readonly />
 							</div>
 						</div>
 					</div>
@@ -93,7 +93,7 @@ var_dump($_POST);
 						<div class="col-md-5">
 							<div class="form-group">
 								<label>Total harga</label>
-								<input class="form-control" type="number" name="Total_harga" id="total_harga" disabled />
+								<input class="form-control" type="number" name="Total_harga" id="total_harga" readonly />
 							</div>
 						</div>
 						<div class="col-md-2">

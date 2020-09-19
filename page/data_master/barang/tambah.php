@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['simpan'])) {
+  // meniapkan informasi untu disimpan
   $nama_barang = $_POST['nama_barang'];
   $kode_barang = $_POST['kode_barang'];
   $harga_beli  = $_POST['harga_beli'];
@@ -7,6 +8,7 @@ if (isset($_POST['simpan'])) {
   $stok        = $_POST['stok'];
   $kategori    = $_POST['kategori'];
 
+  // menyiapkan informasi gambar
   $foto          = $_FILES['gambar']['name'];
   $lokasi        = $_FILES['gambar']['tmp_name'];
   $ekteksiGambar = explode('.', $foto);
@@ -88,9 +90,7 @@ if (isset($_POST['simpan'])) {
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Kode Barang</label>
-                  <!-- ===================== disabled =================== -->
-                  <input class="form-control" name="kode_barang" id="kode_barang" required="" disabled value="<?= date("yy-m-d-") . uniqid(); ?>" />
-                  <!-- ===================== disabled =================== -->
+                  <input class="form-control" name="kode_barang" id="kode_barang" required="" readonly="" value="<?= date("yy-m-d-") . uniqid(); ?>" />
                 </div>
               </div>
               <div class="col-md-3">

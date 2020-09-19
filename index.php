@@ -1,14 +1,34 @@
 <?php
 // error_reporting(0);
 session_start();
-// var_dump($_POST);
-// die;
 include "function.php";
+
+
+// tools ======================================================
+// Judul halaman
+$tools['page_title'] = "PT. Agung Automall Jambi";
+
+
+
+// jangan dirubah <------
+$temp['page']['title'] = false;
+// --------------------->
+
+
+
+// mode Ubah dan Delete Manajemen user
+$tools['developer'] = true;
+//  ===========================================================
+
+
+
+
+
+// ============================================================
+// cek apakah user sudah login altau belum
 if (!ceklogin($_SESSION['user'])) header('Location: login.php');
 
-// mendeklarasikan temporari
-$temp = [];
-$temp['page']['title'] = false;
+
 
 // mengecek apakah ada data get atau tidak
 if (isset($_GET['page'])) $page = $_GET['page'];
@@ -17,8 +37,12 @@ else $page = "";
 if (isset($_GET['submenu'])) $submenu = $_GET['submenu'];
 else $submenu = "";
 
+
+
 // mendefinisikan base url
 $_baseurl = '?page=' . $page . '&submenu=' . $submenu;
+
+
 
 
 // Mengambil data untuk menu navigasi
@@ -67,17 +91,16 @@ if ($menus) {
         }
     }
 }
+
+// ============================================================
 ?>
-
-
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PT. Agung Automall Jambi</title>
+    <title><?= $tools['page_title']; ?></title>
     <!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
@@ -93,7 +116,7 @@ if ($menus) {
             justify-content: center;
             align-items: center;
             height: 60px;
-            background-color: dimgrey;
+            background-color: #303030;
             width: 260px;
         }
 
@@ -123,23 +146,23 @@ if ($menus) {
                     <span class="icon-bar"></span>
                 </button>
                 <div class="navbar-bg text-tengah">
-                    <a class="navbar-merek" href="index.php">PT. Agung Automall Jambi</a>
+                    <a class="navbar-merek" href="index.php"><?= $tools['page_title']; ?></a>
                 </div>
             </div>
-            <div style="color: white;
-                padding  : 15px 50px 5px 50px;
-                float    : right;
-                font-size: 16px;"><?php echo date('d-M-Y'); ?> &nbsp; <a href="logout.php" class="btn btn-danger square-btn-adjust">Logout</a> </div>
+            <div style="color: white; padding  : 15px 50px 5px 50px;float    : right; font-size: 16px;">
+                <span>Login As: <?= $_SESSION['user']['level_title']; ?> / <?= $_SESSION['user']['nama']; ?> |</span>
+                <span id="clockTopbar"></span> &nbsp; 
+                <a href="logout.php" class="btn btn-danger square-btn-adjust">Logout</a>
+            </div>
         </nav>
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <?php if ($page === "") : ?>
-                            <a href="index.php" class="bg-primary"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>
-                        <?php else : ?>
-                            <a href="index.php"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>
-                        <?php endif; ?>
+                        <?php 
+                            if ($page === "") echo '<a href="index.php" class="bg-primary"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>';
+                                else echo '<a href="index.php"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>'; 
+                        ?>
                     </li>
 
                     <?php if ($menus) {
@@ -182,7 +205,8 @@ if ($menus) {
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="row">
+                        <div class="row" id="alert_display">
+                            <!-- Menampilkan alert -->
                             <?php if ($_SESSION['alert']['show']) getAlert(); ?>
                         </div>
                         <?php
@@ -196,7 +220,7 @@ if ($menus) {
     </div>
     <div class="navbar navbar-inverse navbar-fixed-bottom footer-bottom">
         <div class="container text-center">
-            <p class="text-center" style="color: #D1C4E9;"><small>Copyright @ 2020 PT. Agung Automall Jambi</p>
+            <p class="text-center" style="color: #D1C4E9;"><small>Copyright @ 2020 <?= $tools['page_title']; ?></p>
         </div>
         <!-- /. WRAPPER  -->
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -208,12 +232,13 @@ if ($menus) {
 
         <script src="assets/js/dataTables/jquery.dataTables.js"></script>
         <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+        <script src="assets/js/clock.js"></script>
         <script>
             $(document).ready(function() {
                 $('#dataTables-example').dataTable();
                 $('.alert').alert();
                 // Mengganti judul halaman sesuai dengan sub mehu
-                <?php if ($temp['page']['title']) echo "document.title = '" . $temp['page']['title'] . " | PT. Agung Automall Jambi';" ?>
+                <?php if ($temp['page']['title']) echo "document.title = '" . $temp['page']['title'] . " | ". $tools['page_title']."';" ?>
             });
         </script>
         <script src="assets/js/custom.js"></script>

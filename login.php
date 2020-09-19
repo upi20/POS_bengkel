@@ -7,16 +7,17 @@ if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
 } else if (isset($_POST['login'])) {
     $nama   = $_POST['username'];
     $pass   = $_POST['password'];
-    $ambil  = $koneksi->query("select * from tb_user where username='$nama' and password='$pass'");
+    $ambil  = $koneksi->query("SELECT * FROM tb_user INNER JOIN tb_user_level ON tb_user.id_level = tb_user_level.id_level WHERE username='$nama' and password='$pass'");
     $data   = $ambil->fetch_assoc();
     $ketemu = $ambil->num_rows;
     if ($ketemu >= 1) {
         $_SESSION['user'] = [
-            'user'  => $data['username'],
-            'nama'  => $data['nama'],
-            'pass'  => $data['password'],
-            'level' => $data['id_level'],
-            'id'    => $data['id']
+            'user'        => $data['username'],
+            'nama'        => $data['nama'],
+            'pass'        => $data['password'],
+            'level'       => $data['id_level'],
+            'level_title' => $data['title'],
+            'id'          => $data['id']
         ];
 
         $_SESSION['alert']['title'] = "";

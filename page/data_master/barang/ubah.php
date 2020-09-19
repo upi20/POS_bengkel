@@ -1,8 +1,6 @@
 <?php
 // memperoses data ubah
 if (isset($_POST['simpan'])) {
-    var_dump($_POST);
-    die;
     $nama_barang = $_POST['nama_barang'];
     $kode_barang = $_POST['kode_barang'];
     $harga_beli  = $_POST['harga_beli'];
@@ -75,17 +73,12 @@ $harga_jual2 = $tampil['harga_jual'];
 <script type="text/javascript">
     function validasi(form) {
         if (form.nama_barang.value == "") {
-            alert("nama_barang Tidak Boleh Kosong");
+            alert("Nama Barang Tidak Boleh Kosong");
             form.nama_barang.focus();
             return (false);
         }
-        if (form.kode_barang.value == "") {
-            alert("kode_barang Tidak Boleh Kosong");
-            form.kode_barang.focus();
-            return (false);
-        }
         if (form.harga_beli.value == "") {
-            alert("harga_beli Tidak Boleh Kosong");
+            alert("Harga Beli Tidak Boleh Kosong");
             form.harga_beli.focus();
             return (false);
         }
@@ -95,7 +88,7 @@ $harga_jual2 = $tampil['harga_jual'];
             return (false);
         }
 
-        return (true);
+        return (false);
     }
 </script>
 
@@ -133,7 +126,7 @@ $harga_jual2 = $tampil['harga_jual'];
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode Barang</label>
-                                    <input disabled="" class="form-control" type="text" name="kode_barang" value="<?php echo $tampil['kode_barang']; ?>">
+                                    <input readonly="" class="form-control" type="text" name="kode_barang" value="<?php echo $tampil['kode_barang']; ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
