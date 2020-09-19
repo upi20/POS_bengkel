@@ -18,7 +18,10 @@ if (isset($_GET['id'])) {
         $result = query("SELECT 'id' FROM `tb_user_access_menu` WHERE `tb_user_access_menu`.`menu_id` = '$menu_id' AND `tb_user_access_menu`.`id_user_level` = '$id_level'");
         if ($result) {
             $menu_akses[$i]['akses'] = true;
-            $temp = query("SELECT * FROM `tb_user_sub_menu` WHERE `tb_user_sub_menu`.`menu_id`='$menu_id'");
+            $temp = query("SELECT * FROM `tb_user_sub_menu` 
+            INNER JOIN `tb_user_menu` 
+            ON `tb_user_sub_menu`.`menu_id` = `tb_user_menu`.`user_menu_id`  
+            WHERE `tb_user_sub_menu`.`menu_id`='$menu_id'");
             foreach ($temp as $t) {
                 $sub_menu_akses[] = $t;
             }
@@ -63,8 +66,8 @@ if (isset($_GET['id'])) {
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;" width="25px">No</th>
-                                                <th style="text-align:center;">Nama Menu</th>
-                                                <th style="text-align:center;" width="120px;">Hak Akses</th>
+                                                <th style="text-align:center;">Menu</th>
+                                                <th style="text-align:center;">Hak Akses</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -110,8 +113,9 @@ if (isset($_GET['id'])) {
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center;" width="25px">No</th>
-                                                <th style="text-align:center;">Nama SubMenu</th>
-                                                <th style="text-align:center;" width="120px;">Hak Akses</th>
+                                                <th style="text-align:center;">Menu</th>
+                                                <th style="text-align:center;">SubMenu</th>
+                                                <th style="text-align:center;">Hak Akses</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -121,6 +125,9 @@ if (isset($_GET['id'])) {
                                                 <tr>
                                                     <td style="text-align:center;">
                                                         <?php echo ++$nomor; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $sub_menu['menu_title']; ?>
                                                     </td>
                                                     <td>
                                                         <?php echo $sub_menu['title']; ?>
