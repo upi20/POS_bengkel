@@ -1,3 +1,10 @@
+<?php
+include 'tambah.php';
+include 'ubah.php';
+include 'hapus.php';
+$nomor   = 0;
+$display = query("SELECT * FROM tb_barang_kategori");
+?>
 <div class="panel panel-default">
     <div class="panel-heading">
         Data Kategori
@@ -5,7 +12,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="container-fluid">
-                <a href="<?= $_baseurl; ?>&aksi=tambah" class="btn btn-success" style="margin-top:  8px;"><i class="fa fa-plus"></i> Tambah Data</a>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalTambah">tambah</button>
                 <br>
                 <br>
             </div>
@@ -23,20 +30,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $no = 1;
-                                $datas = query("select * from tb_barang_kategori");
-                                foreach ($datas as $data) {
-                                ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $data['kategori']; ?></td>
-                                        <td style="white-space:nowrap">
-                                            <a href="<?= $_baseurl; ?>&aksi=ubah&id_kategori=<?= $data['id_kategori']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
-                                            <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&aksi=hapus&id_kategori=<?= $data['id_kategori']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
-                                        </td>
-                                    </tr>
-                                <?php  } ?>
+                                <?php if ($display) {
+                                    foreach ($display as $data) { ?>
+                                        <tr>
+                                            <td><?php echo ++$nomor; ?></td>
+                                            <td><?php echo $data['barang_kategori_nama']; ?></td>
+                                            <td style="white-space:nowrap">
+                                                <button class="btn btn-warning" onclick="ubahData('<?php echo $data['barang_kategori_nama']; ?>', '<?php echo $data['id_barang_kategori']; ?>')" data-toggle="modal" data-target="#modalUbah"><i class="fa fa-edit"></i> Ubah</button>
+                                                <button class="btn btn-danger" onclick="hapusData('<?php echo $data['barang_kategori_nama']; ?>', '<?php echo $data['id_barang_kategori']; ?>')" data-toggle="modal" data-target="#modalHapus"><i class="fa fa-trash"></i> Hapus</button>
+                                            </td>
+                                        </tr>
+                                <?php  }
+                                } ?>
                             </tbody>
                         </table>
                     </div>
