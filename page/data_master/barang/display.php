@@ -25,26 +25,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $no = 1;
-                            $sql = $koneksi->query("SELECT * FROM tb_barang INNER JOIN tb_kategori ON tb_barang.id_kategori = tb_kategori.id_kategori");
-                            while ($data = $sql->fetch_assoc()) {
-                            ?>
-                                <tr>
-                                    <td style="white-space: nowrap;"><?php echo $no++; ?></td>
-                                    <td style="white-space: nowrap;"><?php echo $data['nama_barang']; ?></td>
-                                    <td><?php echo $data['kode_barang']; ?></td>
-                                    <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_beli'], 0, ',', '.'); ?></td>
-                                    <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_jual'], 0, ',', '.'); ?></td>
-                                    <td style="white-space: nowrap; text-align:center;"><img style="width: 200px; height: 80px; object-fit:contain;" src="images/master_data_barang/<?php echo $data['gambar']; ?>" style="width: 100px;" alt="..." class="img-thumbnail"></td>
-                                    <td style="white-space: nowrap; text-align:right;"><?php echo $data['stok']; ?></td>
-                                    <td style="white-space: nowrap;"><?php echo $data['kategori']; ?></td>
-                                    <td style="white-space:nowrap;">
-                                        <a href="<?= $_baseurl; ?>&aksi=ubah&id_barang=<?php echo $data['id_barang']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
-                                        <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&aksi=hapus&id_barang=<?php echo $data['id_barang']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
-                                    </td>
-                                </tr>
-                            <?php  } ?>
+                            <?php $no = 1;
+                            $datas = query("SELECT * FROM tb_barang INNER JOIN tb_kategori ON tb_barang.id_kategori = tb_kategori.id_kategori");
+                            if ($datas) :
+                                foreach ($datas as $data) : ?>
+                                    <tr>
+                                        <td style="white-space: nowrap;"><?php echo $no++; ?></td>
+                                        <td style="white-space: nowrap;"><?php echo $data['nama_barang']; ?></td>
+                                        <td><?php echo $data['kode_barang']; ?></td>
+                                        <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_beli'], 0, ',', '.'); ?></td>
+                                        <td style="white-space: nowrap; text-align:right;">Rp. <?= number_format($data['harga_jual'], 0, ',', '.'); ?></td>
+                                        <td style="white-space: nowrap; text-align:center;"><img style="width: 200px; height: 80px; object-fit:contain;" src="images/master_data_barang/<?php echo $data['gambar']; ?>" style="width: 100px;" alt="..." class="img-thumbnail"></td>
+                                        <td style="white-space: nowrap; text-align:right;"><?php echo $data['stok']; ?></td>
+                                        <td style="white-space: nowrap;"><?php echo $data['kategori']; ?></td>
+                                        <td style="white-space:nowrap;">
+                                            <a href="<?= $_baseurl; ?>&aksi=ubah&id_barang=<?php echo $data['id_barang']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+                                            <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&aksi=hapus&id_barang=<?php echo $data['id_barang']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                            <?php endforeach;
+                            endif; ?>
                         </tbody>
                     </table>
                 </div>

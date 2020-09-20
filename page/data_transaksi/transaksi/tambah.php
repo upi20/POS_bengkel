@@ -3,7 +3,7 @@ $barang   = query("SELECT `id_barang`, `nama_barang`, `kode_barang`, `harga_jual
 $konsumen = query("SELECT `nama`, `id_konsumen` FROM `tb_konsumen`");
 
 if (isset($_POST['simpan'])) {
-var_dump($_POST);
+	var_dump($_POST);
 
 	die;
 	$konsumen       = $_POST['konsumen'];
@@ -48,7 +48,7 @@ var_dump($_POST);
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Kode transaksi</label>
-								<input class="form-control" type="text" name="kode_transaksi" readonly value="<?= date("yy/m/d/") . uniqid(); ?>" />
+								<input class="form-control" type="text" name="kode_transaksi" readonly value="<?= date("yy-m-d-") . uniqid(); ?>" />
 							</div>
 						</div>
 						<div class="col-md-4">

@@ -23,12 +23,14 @@ function query($query)
 {
 	global $koneksi;
 	$result = mysqli_query($koneksi, $query);
-	if ($result->num_rows > 0) {
-		$rows = [];
-		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-			$rows[] = $row;
-		}
-		return $rows;
+	if ($result) {
+		if ($result->num_rows > 0) {
+			$rows = [];
+			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+				$rows[] = $row;
+			}
+			return $rows;
+		} else return false;
 	} else return false;
 }
 
@@ -59,7 +61,7 @@ function getAlert()
 	$alert_color = $_SESSION['alert']['color'];
 	$alert_title = $_SESSION['alert']['title'];
 	$alert_conte = $_SESSION['alert']['conte'];
-	
+
 	echo 'setAlert("' . $alert_title . '", "' . $alert_conte . '", "' . $alert_color . '")';
 	$_SESSION['alert']['show'] = false;
 }
