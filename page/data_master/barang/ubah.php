@@ -70,26 +70,39 @@ $tampil      = $sql->fetch_assoc();
 $harga_jual2 = $tampil['harga_jual'];
 ?>
 
-<script type="text/javascript">
-    function validasi(form) {
-        if (form.nama_barang.value == "") {
-            alert("Nama Barang Tidak Boleh Kosong");
-            form.nama_barang.focus();
-            return (false);
-        }
-        if (form.harga_beli.value == "") {
-            alert("Harga Beli Tidak Boleh Kosong");
-            form.harga_beli.focus();
-            return (false);
-        }
-        if (form.stok.value == "") {
-            alert("stok Tidak Boleh Kosong");
-            form.stok.focus();
-            return (false);
-        }
-
-        return (false);
+<script type="text/javascript"> 
+  function validasi(form) {
+    if (form.nama_barang.value == "") {
+      setAlert('Peringatan..!', "Nama Barang Tidak Boleh Kosong", 'danger');
+      form.nama_barang.focus();
+      return (false);
     }
+
+    if (form.harga_beli.value == "") {
+      setAlert('Peringatan..!', "Harga Beli Tidak Boleh Kosong", 'danger');
+      form.harga_beli.focus();
+      return (false);
+    }
+
+    if (form.harga_jual.value <= form.harga_beli.value) {
+      setAlert('Peringatan..!', "Harga jual harus lebih tinggi dari harga beli", 'danger');
+      form.harga_jual.focus();
+      return (false);
+    }
+
+    if (form.harga_jual.value == "") {
+      setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
+      form.harga_jual.focus();
+      return (false);
+    }
+
+    if (form.stok.value == "" || form.stok.value < 1) {
+      setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
+      form.stok.focus();
+      return (false);
+    }
+    return (true);
+  }
 </script>
 
 <div class="panel panel-default">

@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['simpan1'])) {
+if (isset($_POST['simpan'])) {
   // meniapkan informasi untu disimpan
   $nama_barang = $_POST['nama_barang'];
   $kode_barang = $_POST['kode_barang'];
@@ -30,41 +30,39 @@ if (isset($_POST['simpan1'])) {
 }
 ?>
 
-<script type="text/javascript">
-  
+<script type="text/javascript"> 
   function validasi(form) {
     if (form.nama_barang.value == "") {
-      alert("Nama Barang Tidak Boleh Kosong");
+      setAlert('Peringatan..!', "Nama Barang Tidak Boleh Kosong", 'danger');
       form.nama_barang.focus();
       return (false);
     }
 
     if (form.harga_beli.value == "") {
-      alert("Harga Beli Tidak Boleh Kosong");
+      setAlert('Peringatan..!', "Harga Beli Tidak Boleh Kosong", 'danger');
       form.harga_beli.focus();
       return (false);
     }
 
-    if (form.harga_jual.value < form.harga_beli.value) {
-      alert("Harga jual harus lebih tinggi dari harga beli");
+    if (form.harga_jual.value <= form.harga_beli.value) {
+      setAlert('Peringatan..!', "Harga jual harus lebih tinggi dari harga beli", 'danger');
       form.harga_jual.focus();
       return (false);
     }
 
     if (form.harga_jual.value == "") {
-      alert("Harga Jual Tidak Boleh Kosong");
+      setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
       form.harga_jual.focus();
       return (false);
     }
 
-    if (form.stok.value == "") {
-      alert("Stok Tidak Boleh Kosong");
+    if (form.stok.value == "" || form.stok.value < 1) {
+      setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
       form.stok.focus();
       return (false);
     }
-    return (false);
+    return (true);
   }
-    setAlert('Testing', 'danger');
 </script>
 
 <div class="panel panel-default">
@@ -92,7 +90,7 @@ if (isset($_POST['simpan1'])) {
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Harga Jual</label>
-                  <input class="form-control" type="number" name="harga_jual" id="harga_jual" required="" />
+                  <input class="form-control is-invalid" type="number" name="harga_jual" id="harga_jual" required="" />
                 </div>
               </div>
             </div>

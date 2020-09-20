@@ -13,55 +13,41 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr>
-                                <th>id_konsumen</th>
-                                <th>kode_konsumen</th>
-                                <th>nik</th>
-                                <th>nama</th>
-                                <th>hp</th>
-                                <th>bg_mobil</th>
-                                <th>merk_mobil</th>
-                                <th>warna_mobil</th>
-                                <th>tgl_daftar</th>
-                                <th>alamat</th>
-                                <th width="19%">Aksi</th>
+                                <th>Kode</th>
+                                <th>NIK</th>
+                                <th>Nama</th>
+                                <th>No Telepon</th>
+                                <th>Merek Mobil</th>
+                                <th>Warna Mobil</th>
+                                <th>Tgl Daftar</th>
+                                <th>Alamat</th>
+                                <th width="200px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-
                             <?php
-
+                            $datas = query("SELECT * FROM tb_konsumen");
+                            if($datas):
                             $no = 1;
-
-                            $sql = $koneksi->query("select * from tb_konsumen");
-
-                            while ($data = $sql->fetch_assoc()) {
-
-                            ?>
-
+                            foreach ($datas as $data) : ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
                                     <td><?php echo $data['kode_konsumen']; ?></td>
                                     <td><?php echo $data['nik']; ?></td>
                                     <td><?php echo $data['nama']; ?></td>
-                                    <td><?php echo $data['hp']; ?></td>
-                                    <td><?php echo $data['bg_mobil']; ?></td>
+                                    <td><?php echo $data['no_telepon']; ?></td>
                                     <td><?php echo $data['merk_mobil']; ?></td>
                                     <td><?php echo $data['warna_mobil']; ?></td>
-                                    <td><?php echo $data['tgl_daftar']; ?></td>
+                                    <td><?php echo $data['tanggal_daftar']; ?></td>
                                     <td><?php echo $data['alamat']; ?></td>
                                     <td>
                                         <a href="<?= $_baseurl; ?>&aksi=ubah&id_konsumen=<?php echo $data['id_konsumen']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
                                         <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&&aksi=hapus&id_konsumen=<?php echo $data['id_konsumen']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
-
                                     </td>
                                 </tr>
-
-
-                            <?php  } ?>
+                            <?php  endforeach; endif; ?>
                         </tbody>
-
                     </table>
-
                 </div>
             </div>
         </div>
