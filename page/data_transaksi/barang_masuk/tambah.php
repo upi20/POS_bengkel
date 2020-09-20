@@ -1,19 +1,19 @@
 <?php
-$barang   = query("SELECT `id_barang`, `nama_barang`, `kode_barang`, `harga_jual`, `stok` FROM `tb_barang`");
-$konsumen = query("SELECT `nama`, `id_konsumen` FROM `tb_konsumen`");
+$barang   = query("SELECT `id_barang_data`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_jual`, `barang_data_stok` FROM `tb_barang_data`");
+$suplier  = query("SELECT `barang_suplier_nama`, `id_barang_suplier` FROM `tb_barang_suplier`");
 
 if (isset($_POST['simpan'])) {
-	$id_konsumen    = $_POST['konsumen'];
+	$id_suplier    = $_POST['suplier'];
 	$kode_transaksi = $_POST['kode_transaksi'];
 	$id_barang      = $_POST['barang'];
 	$jumlah         = $_POST['qty'];
 	$harga          = $_POST['harga'];
 	$tgl            = $_POST['tgl'];
 
-	$querybuilder = "INSERT INTO `tb_barang_keluar` 
-	(`id_transaksi`, `id_konsumen`, `kode_transaksi`, `id_barang`, `jumlah`, `harga`, `tanggal`) 
+	$querybuilder = "INSERT INTO `tb_barang_masuk` 
+	(`id_barang_masuk`, `id_barang_data`, `id_barang_suplier`, `barang_masuk_kode`, `barang_masuk_jumlah`, `barang_masuk_harga`, `barang_masuk_tanggal`)
 	VALUES 
-	(NULL, '$id_konsumen', '$kode_transaksi', '$id_barang', '$jumlah', '$harga', '$tgl')";
+	(NULL, '$id_barang', '$id_suplier', '$kode_transaksi', '$jumlah', '$harga', '$tgl')";
 
 	if ($koneksi->query($querybuilder)) {
 		setAlert('Berhasil..! ', 'Data berhasil ditambahkan..', 'success');
@@ -25,31 +25,24 @@ if (isset($_POST['simpan'])) {
 }
 
 ?>
-<script type="text/javascript">
-	function validasi(form) {
-		if (Number(form.qty.value) > Number(form.stok.value)) {
-			setAlert("Peringatan..!", `Stok Kurang, Stok yang tersedia saat ini adalah ${form.stok.value}`, "danger");
-			form.qty.focus();
-			return false;
-		}
-		return (true);
-	}
-</script>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Tambah Data Transaksi
+		Tambah Data Transaksi Pengadaan Barang
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<form method="POST" action="" onsubmit="return validasi(this)">
+			<form method="POST" action="">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Nama Konsumen</label>
-								<select class="form-control" name="konsumen" id="konsumen">
-									<?php foreach ($konsumen as $k) {
-										echo '<option value="' . $k['id_konsumen'] . '">' . $k['nama'] . '</option>';
+								<label>Nama suplier</label>
+								<select class="form-control" name="suplier" id="suplier">
+									<?php
+									if ($suplier) {
+										foreach ($suplier as $s) {
+											echo '<option value="' . $s['id_barang_suplier'] . '">' . $s['barang_suplier_nama'] . '</option>';
+										}
 									} ?>
 								</select>
 							</div>
@@ -73,14 +66,14 @@ if (isset($_POST['simpan'])) {
 								<label>Nama Barang</label>
 								<select class="form-control" name="barang" id="barang">
 									<?php foreach ($barang as $b) {
-										echo '<option value="' . $b['id_barang'] . '">' . $b['nama_barang'] . '</option>';
+										echo '<option value="' . $b['id_barang_data'] . '">' . $b['barang_data_nama'] . '</option>';
 									} ?>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<label>Stok</label>
+								<label>Stok Yang Ada</label>
 								<input class="form-control" type="number" id="stok" name="stok" readonly>
 							</div>
 						</div>
@@ -136,11 +129,10 @@ if (isset($_POST['simpan'])) {
 
 		function caputre() {
 			<?php foreach ($barang as $b) : ?>
-				if (nama_barang.val() == '<?= $b['id_barang']; ?>') {
-					kode_barang.val('<?= $b['kode_barang']; ?>');
-					harga.val('<?= $b['harga_jual']; ?>');
-					qty.attr('max', '<?= $b['stok']; ?>');
-					stok.val('<?= $b['stok']; ?>');
+				if (nama_barang.val() == '<?= $b['id_barang_data']; ?>') {
+					kode_barang.val('<?= $b['barang_data_kode']; ?>');
+					harga.val('<?= $b['barang_data_harga_jual']; ?>');
+					stok.val('<?= $b['barang_data_stok']; ?>');
 				}
 			<?php endforeach; ?>
 			countQty();
@@ -148,25 +140,16 @@ if (isset($_POST['simpan'])) {
 
 		function countQty() {
 			total_harga.val(Number(qty.val()) * Number(harga.val()));
-			cekStok();
-		}
-
-		function cekStok() {
-			if (Number(qty.val()) > Number(stok.val())) {
-				setAlert("Peringatan..!", `Stok Kurang, Stok yang tersedia saat ini adalah ${stok.val()}`, "danger");
-			} else {
-				setAlert();
-			}
 		}
 
 		nama_barang.on('change', function() {
 			caputre();
 		});
 
-		caputre();
 		qty.on('keyup', function() {
 			countQty();
 		});
+		caputre();
 
 
 	});
