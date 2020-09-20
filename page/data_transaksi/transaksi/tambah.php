@@ -3,36 +3,45 @@ $barang   = query("SELECT `id_barang`, `nama_barang`, `kode_barang`, `harga_jual
 $konsumen = query("SELECT `nama`, `id_konsumen` FROM `tb_konsumen`");
 
 if (isset($_POST['simpan'])) {
-	var_dump($_POST);
-
-	die;
-	$konsumen       = $_POST['konsumen'];
+	$id_konsumen    = $_POST['konsumen'];
 	$kode_transaksi = $_POST['kode_transaksi'];
-	$kode_barang    = $_POST['kode_barang'];
-	$barang         = $_POST['barang'];
-	$Qty            = $_POST['Qty'];
-	$Harga          = $_POST['Harga'];
-	$Total_harga    = $_POST['Total_harga'];
-	$Tgl            = $_POST['Tgl'];
-	$sql            = $koneksi->query("INSERT INTO tb_transaksi VALUES (NULL,'$konsumen', '$kode_transaksi','$kode_barang','$barang', '$Qty', '$Harga', '$Total_harga', '$Tgl')");
-	if ($sql) {
-		echo '
-     <script>
-     	alert("Data transaksi berhasil di tambah");
-		 window.location.href = "' . $_baseurl . '";
-     </script>
-		';
+	$id_barang      = $_POST['barang'];
+	$jumlah         = $_POST['qty'];
+	$harga          = $_POST['harga'];
+	$tgl            = $_POST['tgl'];
+
+	$querybuilder = "INSERT INTO `tb_transaksi` 
+	(`id_transaksi`, `id_konsumen`, `kode_transaksi`, `id_barang`, `jumlah`, `harga`, `tanggal`) 
+	VALUES 
+	(NULL, '$id_konsumen', '$kode_transaksi', '$id_barang', '$jumlah', '$harga', '$tgl')";
+
+	if ($koneksi->query($querybuilder)) {
+		setAlert('Berhasil..! ', 'Data berhasil ditambahkan..', 'success');
+		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
+	} else {
+		setAlert('Gagal..! ', 'Data gagal ditambahkan..', 'success');
+		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	}
 }
 
 ?>
+<script type="text/javascript">
+	function validasi(form) {
+		if (Number(form.qty.value) > Number(form.stok.value)) {
+			setAlert("Peringatan..!", `Stok Kurang, Stok yang tersedia saat ini adalah ${form.stok.value}`, "danger");
+			form.qty.focus();
+			return false;
+		}
+		return (true);
+	}
+</script>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		Tambah Data Transaksi
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<form method="POST" action="">
+			<form method="POST" action="" onsubmit="return validasi(this)">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-4">
@@ -40,7 +49,7 @@ if (isset($_POST['simpan'])) {
 								<label>Nama Konsumen</label>
 								<select class="form-control" name="konsumen" id="konsumen">
 									<?php foreach ($konsumen as $k) {
-										echo '<option value="' . $k['nama'] . '">' . $k['nama'] . '</option>';
+										echo '<option value="' . $k['id_konsumen'] . '">' . $k['nama'] . '</option>';
 									} ?>
 								</select>
 							</div>
@@ -64,7 +73,7 @@ if (isset($_POST['simpan'])) {
 								<label>Nama Barang</label>
 								<select class="form-control" name="barang" id="barang">
 									<?php foreach ($barang as $b) {
-										echo '<option value="' . $b['nama_barang'] . '">' . $b['nama_barang'] . '</option>';
+										echo '<option value="' . $b['id_barang'] . '">' . $b['nama_barang'] . '</option>';
 									} ?>
 								</select>
 							</div>
@@ -72,13 +81,13 @@ if (isset($_POST['simpan'])) {
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Stok</label>
-								<input class="form-control" type="number" id="stok" readonly>
+								<input class="form-control" type="number" id="stok" name="stok" readonly>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Harga</label>
-								<input class="form-control" type="number" name="Harga" id="harga" readonly />
+								<input class="form-control" type="number" name="harga" id="harga" readonly />
 							</div>
 						</div>
 					</div>
@@ -86,7 +95,7 @@ if (isset($_POST['simpan'])) {
 						<div class="col-md-5">
 							<div class="form-group">
 								<label>Qty</label>
-								<input class="form-control" type="number" value="0" name="Qty" id="qty" min="1" />
+								<input class="form-control" type="number" value="0" name="qty" id="qty" min="1" />
 							</div>
 							<strong><i><span class="text-danger" id="qty_alert"></span></i></strong>
 						</div>
@@ -99,7 +108,7 @@ if (isset($_POST['simpan'])) {
 						<div class="col-md-2">
 							<div class="form-group">
 								<label>Tanggal</label>
-								<input class="form-control" type="text" name="Tgl" value="<?= date("yy-m-d"); ?>" readonly />
+								<input class="form-control" type="text" name="tgl" value="<?= date("yy-m-d"); ?>" readonly />
 							</div>
 						</div>
 						<div class="row">
@@ -125,30 +134,40 @@ if (isset($_POST['simpan'])) {
 		const total_harga = $('#total_harga');
 		const stok = $('#stok');
 
-		nama_barang.on('change', function() {
+		function caputre() {
 			<?php foreach ($barang as $b) : ?>
-				if (nama_barang.val() == '<?= $b['nama_barang']; ?>') {
+				if (nama_barang.val() == '<?= $b['id_barang']; ?>') {
 					kode_barang.val('<?= $b['kode_barang']; ?>');
 					harga.val('<?= $b['harga_jual']; ?>');
 					qty.attr('max', '<?= $b['stok']; ?>');
 					stok.val('<?= $b['stok']; ?>');
 				}
 			<?php endforeach; ?>
-		});
+			countQty();
+		}
 
-		<?php foreach ($barang as $b) : ?>
-			if (nama_barang.val() == '<?= $b['nama_barang']; ?>') {
-				kode_barang.val('<?= $b['kode_barang']; ?>');
-				harga.val('<?= $b['harga_jual']; ?>');
-				qty.attr('max', '<?= $b['stok']; ?>');
-				stok.val('<?= $b['stok']; ?>');
-			}
-		<?php endforeach; ?>
-
-		qty.on('keyup', function() {
+		function countQty() {
 			total_harga.val(Number(qty.val()) * Number(harga.val()));
+			cekStok();
+		}
+
+		function cekStok() {
+			if (Number(qty.val()) > Number(stok.val())) {
+				setAlert("Peringatan..!", `Stok Kurang, Stok yang tersedia saat ini adalah ${stok.val()}`, "danger");
+			} else {
+				setAlert();
+			}
+		}
+
+		nama_barang.on('change', function() {
+			caputre();
 		});
 
-		total_harga.val(Number(qty.val()) * Number(harga.val()));
+		caputre();
+		qty.on('keyup', function() {
+			countQty();
+		});
+
+
 	});
 </script>

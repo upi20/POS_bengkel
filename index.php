@@ -151,7 +151,7 @@ if ($menus) {
             </div>
             <div style="color: white; padding  : 15px 50px 5px 50px;float    : right; font-size: 16px;">
                 <span>Login As: <?= $_SESSION['user']['level_title']; ?> / <?= $_SESSION['user']['nama']; ?> |</span>
-                <span id="clockTopbar"></span> &nbsp; 
+                <span id="clockTopbar"></span> &nbsp;
                 <a href="logout.php" class="btn btn-danger square-btn-adjust">Logout</a>
             </div>
         </nav>
@@ -159,9 +159,9 @@ if ($menus) {
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <?php 
-                            if ($page === "") echo '<a href="index.php" class="bg-primary"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>';
-                                else echo '<a href="index.php"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>'; 
+                        <?php
+                        if ($page === "") echo '<a href="index.php" class="bg-primary"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>';
+                        else echo '<a href="index.php"><i class="fa fa-dashboard fa-2x"></i> Beranda</a>';
                         ?>
                     </li>
 
@@ -208,19 +208,22 @@ if ($menus) {
                         <div class="row" id="alert_display">
                         </div>
                         <script>
-                            function setAlert(alert_title = '', alert_content = "", alert_color = 'succes'){
-                                document.querySelector('#alert_display').innerHTML = `
-    <div class="col-md-12">
-    <div class="alert alert-${alert_color} alert-dismissible show" role="alert">
-    <strong>${alert_title}</strong>  ${alert_content}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    </div>
-                                `;
+                            function setAlert(alert_title = 'hide_alert', alert_content = "", alert_color = 'succes') {
+                                if (alert_title == 'hide_alert') {
+                                    document.querySelector('#alert_display').innerHTML = '';
+                                } else {
+                                    document.querySelector('#alert_display').innerHTML = `
+                                    <div class="col-md-12">
+                                    <div class="alert alert-${alert_color} alert-dismissible show" role="alert">
+                                    <strong>${alert_title}</strong>  ${alert_content}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    </div>
+                                    `;
+                                }
                             }
-                            <!-- Menampilkan alert -->
                             <?php if ($_SESSION['alert']['show']) getAlert(); ?>
                         </script>
                         <?php
@@ -252,7 +255,7 @@ if ($menus) {
                 $('#dataTables-example').dataTable();
                 $('.alert').alert();
                 // Mengganti judul halaman sesuai dengan sub mehu
-                <?php if ($temp['page']['title']) echo "document.title = '" . $temp['page']['title'] . " | ". $tools['page_title']."';" ?>
+                <?php if ($temp['page']['title']) echo "document.title = '" . $temp['page']['title'] . " | " . $tools['page_title'] . "';" ?>
             });
         </script>
         <script src="assets/js/custom.js"></script>
