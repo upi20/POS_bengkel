@@ -9,10 +9,10 @@ if (isset($_GET['id'])) {
 		$sql  = $koneksi->query("UPDATE `tb_user_level` SET `title` = '$nama' WHERE `tb_user_level`.`id_level` = '$id_level'");
 
 		if ($sql) {
-			setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+			setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
 			echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 		} else {
-			setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+			setAlert('Gagal..! ','Data gagal diubah..', 'success');
 			echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 		}
 	}

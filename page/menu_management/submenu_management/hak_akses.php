@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
         else $user_level[$i]['akses']         = false;;
     }
 } else {
-    setAlert('<strong>Gagal..! </strong>Data gagal ditampilkan..', 'danger');
+    setAlert('Gagal..! ','Data gagal ditampilkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";

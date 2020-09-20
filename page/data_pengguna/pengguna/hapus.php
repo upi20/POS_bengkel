@@ -11,13 +11,13 @@ if (isset($_GET['id'])) {
 	$koneksi->query("delete from tb_user where id='$id_user'");
 
 	if (mysqli_affected_rows($koneksi) > 0) {
-		setAlert('<strong>Berhasil..! </strong>Data berhasil dihapus..', 'success');
+		setAlert('Berhasil..! ','Data berhasil dihapus..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	} else {
-		setAlert('<strong>Gagal..! </strong>Data gagal dihapus..', 'success');
+		setAlert('Gagal..! ','Data gagal dihapus..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	}
 } else {
-	setAlert('<strong>Gagal..! </strong>Data gagal dihapus..', 'success');
+	setAlert('Gagal..! ','Data gagal dihapus..', 'success');
 	echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 }

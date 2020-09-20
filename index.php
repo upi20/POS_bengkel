@@ -206,9 +206,23 @@ if ($menus) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row" id="alert_display">
+                        </div>
+                        <script>
+                            function setAlert(alert_title = '', alert_content = "", alert_color = 'succes'){
+                                document.querySelector('#alert_display').innerHTML = `
+    <div class="col-md-12">
+    <div class="alert alert-${alert_color} alert-dismissible show" role="alert">
+    <strong>${alert_title}</strong>  ${alert_content}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    </div>
+                                `;
+                            }
                             <!-- Menampilkan alert -->
                             <?php if ($_SESSION['alert']['show']) getAlert(); ?>
-                        </div>
+                        </script>
                         <?php
                         if (file_exists($display_page)) include $display_page;
                         else include "page/error.php";

@@ -18,15 +18,15 @@ if (isset($_GET['id'])) {
         WHERE `tb_user_sub_menu`.`id` = '$id'");
 
         if ($sql) {
-            setAlert('<strong>Berhasil..! </strong>Data berhasil ditambahkan..', 'success');
+            setAlert('Berhasil..! ','Data berhasil ditambahkan..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('<strong>Gagal..! </strong>Data gagal ditambahkan..', 'danger');
+            setAlert('Gagal..! ','Data gagal ditambahkan..', 'danger');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     }
 } else {
-    setAlert('<strong>Gagal..! </strong>Tidak ada data id yang dikirimkan..', 'danger');
+    setAlert('Gagal..! ','Tidak ada data id yang dikirimkan..', 'danger');
     echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 }
 ?>

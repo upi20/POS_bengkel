@@ -26,19 +26,19 @@ if (isset($_GET['id_user'])) {
             }
             $sql = $koneksi->query("update  tb_user set username='$username', password='$pass', nama='$nama', foto='$namaFileBaru', id_level='$level' where id='$id'");
             if ($sql) {
-                setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+                setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
                 echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
             } else {
-                setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+                setAlert('Gagal..! ','Data gagal diubah..', 'success');
                 echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
             }
         } else {
             $sql = $koneksi->query("update  tb_user set username='$username', password='$pass', nama='$nama', id_level='$level' where id='$id'");
             if ($sql) {
-                setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+                setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
                 echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
             } else {
-                setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+                setAlert('Gagal..! ','Data gagal diubah..', 'success');
                 echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
             }
         }

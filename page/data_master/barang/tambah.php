@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['simpan'])) {
+if (isset($_POST['simpan1'])) {
   // meniapkan informasi untu disimpan
   $nama_barang = $_POST['nama_barang'];
   $kode_barang = $_POST['kode_barang'];
@@ -21,40 +21,50 @@ if (isset($_POST['simpan'])) {
 
   $sql = $koneksi->query($querybuilder);
   if ($sql) {
-    setAlert('<strong>Berhasil..! </strong>Data berhasil ditambahkan..', 'success');
+    setAlert('Berhasil..! ','Data berhasil ditambahkan..', 'success');
     echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
   } else {
-    setAlert('<strong>Gagal..! </strong>Data gagal ditambahkan..', 'success');
+    setAlert('Gagal..! ','Data gagal ditambahkan..', 'success');
     echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
   }
 }
 ?>
 
 <script type="text/javascript">
+  
   function validasi(form) {
     if (form.nama_barang.value == "") {
-      alert("nama_barang Tidak Boleh Kosong");
+      alert("Nama Barang Tidak Boleh Kosong");
       form.nama_barang.focus();
       return (false);
     }
-    if (form.kode_barang.value == "") {
-      alert("kode_barang Tidak Boleh Kosong");
-      form.kode_barang.focus();
-      return (false);
-    }
+
     if (form.harga_beli.value == "") {
-      alert("harga_beli Tidak Boleh Kosong");
+      alert("Harga Beli Tidak Boleh Kosong");
       form.harga_beli.focus();
       return (false);
     }
-    if (form.stok.value == "") {
-      alert("stok Tidak Boleh Kosong");
-      form.stok.focus();
+
+    if (form.harga_jual.value < form.harga_beli.value) {
+      alert("Harga jual harus lebih tinggi dari harga beli");
+      form.harga_jual.focus();
       return (false);
     }
 
-    return (true);
+    if (form.harga_jual.value == "") {
+      alert("Harga Jual Tidak Boleh Kosong");
+      form.harga_jual.focus();
+      return (false);
+    }
+
+    if (form.stok.value == "") {
+      alert("Stok Tidak Boleh Kosong");
+      form.stok.focus();
+      return (false);
+    }
+    return (false);
   }
+    setAlert('Testing', 'danger');
 </script>
 
 <div class="panel panel-default">
@@ -96,7 +106,7 @@ if (isset($_POST['simpan'])) {
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="stock">Stok</label>
-                  <input class="form-control" type="number" name="stok" id="stok" required="" />
+                  <input class="form-control" type="number" name="stok" id="stok" required="" min="1" />
                 </div>
               </div>
               <div class="col-md-3">

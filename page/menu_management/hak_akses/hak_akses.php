@@ -18,11 +18,11 @@ if (isset($_GET['id'])) {
         $result = query("SELECT 'id' FROM `tb_user_access_menu` WHERE `tb_user_access_menu`.`menu_id` = '$menu_id' AND `tb_user_access_menu`.`id_user_level` = '$id_level'");
         if ($result) {
             $menu_akses[$i]['akses'] = true;
-            $temp = query("SELECT * FROM `tb_user_sub_menu` 
+            $temp['hakakses'] = query("SELECT * FROM `tb_user_sub_menu` 
             INNER JOIN `tb_user_menu` 
             ON `tb_user_sub_menu`.`menu_id` = `tb_user_menu`.`user_menu_id`  
             WHERE `tb_user_sub_menu`.`menu_id`='$menu_id'");
-            foreach ($temp as $t) {
+            foreach ($temp['hakakses'] as $t) {
                 $sub_menu_akses[] = $t;
             }
         } else $menu_akses[$i]['akses'] = false;
@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
         else $sub_menu_akses[$i]['akses'] = false;
     }
 } else {
-    setAlert('<strong>Galat..! </strong>Tidak ada id yang dikirimkan..', 'danger');
+    setAlert('Galat..! ','Tidak ada id yang dikirimkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";

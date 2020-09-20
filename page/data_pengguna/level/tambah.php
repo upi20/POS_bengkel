@@ -3,10 +3,10 @@ if (isset($_POST['simpan'])) {
     $level = $_POST['level'];
     $sql = $koneksi->query("INSERT INTO `tb_user_level` (`id_level`, `title`) VALUES (NULL, '$level')");
     if ($sql) {
-        setAlert('<strong>Berhasil..! </strong>Data berhasil ditambahkan..', 'success');
+        setAlert('Berhasil..! ','Data berhasil ditambahkan..', 'success');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     } else {
-        setAlert('<strong>Gagal..! </strong>Data gagal ditambahkan..', 'success');
+        setAlert('Gagal..! ','Data gagal ditambahkan..', 'success');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     }
 }

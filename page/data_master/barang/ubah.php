@@ -36,10 +36,10 @@ if (isset($_POST['simpan'])) {
 
         $sql = $koneksi->query($querybuilder);
         if ($sql) {
-            setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+            setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+            setAlert('Gagal..! ','Data gagal diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     } else {
@@ -54,10 +54,10 @@ if (isset($_POST['simpan'])) {
         ";
         $sql = $koneksi->query($querybuilder);
         if ($sql) {
-            setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+            setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+            setAlert('Gagal..! ','Data gagal diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     }

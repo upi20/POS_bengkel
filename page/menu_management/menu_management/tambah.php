@@ -6,10 +6,10 @@ if (isset($_POST['simpan'])) {
 
     $sql  = $koneksi->query("INSERT INTO `tb_user_menu` (`user_menu_id`, `menu_title`, `icon`, `menu_url`) VALUES (NULL, '$nama', '$icon', '$url')");
     if ($sql) {
-        setAlert('<strong>Berhasil..! </strong>Data berhasil ditambahkan..', 'success');
+        setAlert('Berhasil..! ','Data berhasil ditambahkan..', 'success');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     } else {
-        setAlert('<strong>Gagal..! </strong>Data gagal ditambahkan..', 'danger');
+        setAlert('Gagal..! ','Data gagal ditambahkan..', 'danger');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     }
 }

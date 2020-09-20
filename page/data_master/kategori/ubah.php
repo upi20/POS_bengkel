@@ -9,10 +9,10 @@ if (isset($_POST['simpan'])) {
 	$sql      = $koneksi->query("update tb_kategori set kategori='$kategori' where id_kategori='$id_kategori' ");
 
 	if ($sql) {
-		setAlert('<strong>Berhasil..! </strong>Data berhasil diubah..', 'success');
+		setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	} else {
-		setAlert('<strong>Gagal..! </strong>Data gagal diubah..', 'success');
+		setAlert('Gagal..! ','Data gagal diubah..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	}
 }

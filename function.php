@@ -46,10 +46,11 @@ function cekLogin($data = false)
 }
 
 
-function setAlert($title = "", $color = "primary")
+function setAlert($title = "", $conte = "", $color = "primary")
 {
 	$_SESSION['alert']['title'] = $title;
 	$_SESSION['alert']['color'] = $color;
+	$_SESSION['alert']['conte'] = $conte;
 	$_SESSION['alert']['show'] = true;
 }
 
@@ -57,15 +58,8 @@ function getAlert()
 {
 	$alert_color = $_SESSION['alert']['color'];
 	$alert_title = $_SESSION['alert']['title'];
-	echo '
-	<div class="col-md-12">
-	<div class="alert alert-' . $alert_color . ' alert-dismissible show" role="alert">
-	' . $alert_title . '
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	<span aria-hidden="true">&times;</span>
-	</button>
-	</div>
-	</div>
-	';
+	$alert_conte = $_SESSION['alert']['conte'];
+	
+	echo 'setAlert("' . $alert_title . '", "' . $alert_conte . '", "' . $alert_color . '")';
 	$_SESSION['alert']['show'] = false;
 }

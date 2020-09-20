@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
         else $user_level[$i]['akses'] = false;;
     }
 } else {
-    setAlert('<strong>Fatal..! </strong>Tidak ada id yang dikirimkan..', 'danger');
+    setAlert('Fatal..! ','Tidak ada id yang dikirimkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";
