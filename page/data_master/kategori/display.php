@@ -12,7 +12,7 @@ $display = query("SELECT * FROM tb_barang_kategori");
     <div class="panel-body">
         <div class="row">
             <div class="container-fluid">
-                <button class="btn btn-success" data-toggle="modal" data-target="#modalTambah">tambah</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalTambah"><i class="fa fa-plus"></i> Tambah Data</button>
                 <br>
                 <br>
             </div>
