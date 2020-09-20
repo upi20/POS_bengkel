@@ -1,6 +1,6 @@
 <?php
-// memperoses data ubah
 if (isset($_POST['simpan'])) {
+    // memperoses data ubah
     $nama_barang = $_POST['nama_barang'];
     $kode_barang = $_POST['kode_barang'];
     $harga_beli  = $_POST['harga_beli'];
@@ -36,14 +36,13 @@ if (isset($_POST['simpan'])) {
 
         $sql = $koneksi->query($querybuilder);
         if ($sql) {
-            setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
+            setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('Gagal..! ','Data gagal diubah..', 'success');
+            setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     } else {
-        die;
         $querybuilder = " UPDATE `tb_barang` SET
                                 `nama_barang`           = '$nama_barang',
                                 `harga_beli`            = '$harga_beli',
@@ -54,55 +53,59 @@ if (isset($_POST['simpan'])) {
         ";
         $sql = $koneksi->query($querybuilder);
         if ($sql) {
-            setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
+            setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('Gagal..! ','Data gagal diubah..', 'success');
+            setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     }
 }
 
-// Menyiapkan data ubah
-$id_barang   = $_GET['id_barang'];
-$sql         = $koneksi->query("select * from tb_barang where id_barang='$id_barang'");
-$tampil      = $sql->fetch_assoc();
-$harga_jual2 = $tampil['harga_jual'];
+if (isset($_GET['id_barang'])) {
+    // Menyiapkan data ubah
+    $id_barang   = $_GET['id_barang'];
+    $sql         = $koneksi->query("select * from tb_barang where id_barang='$id_barang'");
+    $tampil      = $sql->fetch_assoc();
+} else {
+    setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
+    echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
+}
 ?>
 
-<script type="text/javascript"> 
-  function validasi(form) {
-    if (form.nama_barang.value == "") {
-      setAlert('Peringatan..!', "Nama Barang Tidak Boleh Kosong", 'danger');
-      form.nama_barang.focus();
-      return (false);
-    }
+<script type="text/javascript">
+    function validasi(form) {
+        if (form.nama_barang.value == "") {
+            setAlert('Peringatan..!', "Nama Barang Tidak Boleh Kosong", 'danger');
+            form.nama_barang.focus();
+            return (false);
+        }
 
-    if (form.harga_beli.value == "") {
-      setAlert('Peringatan..!', "Harga Beli Tidak Boleh Kosong", 'danger');
-      form.harga_beli.focus();
-      return (false);
-    }
+        if (form.harga_beli.value == "") {
+            setAlert('Peringatan..!', "Harga Beli Tidak Boleh Kosong", 'danger');
+            form.harga_beli.focus();
+            return (false);
+        }
 
-    if (form.harga_jual.value <= form.harga_beli.value) {
-      setAlert('Peringatan..!', "Harga jual harus lebih tinggi dari harga beli", 'danger');
-      form.harga_jual.focus();
-      return (false);
-    }
+        if (form.harga_jual.value <= form.harga_beli.value) {
+            setAlert('Peringatan..!', "Harga jual harus lebih tinggi dari harga beli", 'danger');
+            form.harga_jual.focus();
+            return (false);
+        }
 
-    if (form.harga_jual.value == "") {
-      setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
-      form.harga_jual.focus();
-      return (false);
-    }
+        if (form.harga_jual.value == "") {
+            setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
+            form.harga_jual.focus();
+            return (false);
+        }
 
-    if (form.stok.value == "" || form.stok.value < 1) {
-      setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
-      form.stok.focus();
-      return (false);
+        if (form.stok.value == "" || form.stok.value < 1) {
+            setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
+            form.stok.focus();
+            return (false);
+        }
+        return (true);
     }
-    return (true);
-  }
 </script>
 
 <div class="panel panel-default">
