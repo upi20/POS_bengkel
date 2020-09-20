@@ -1,18 +1,7 @@
 <?php
-
-$id_konsumen  = $_GET['id_konsumen'];
-$sql          = $koneksi->query("select * from tb_konsumen where id_konsumen='$id_konsumen'");
-$tampil       = $sql->fetch_assoc();
-$warna_mobil2 = $tampil['warna_mobil2'];
-$kategori     = $tampil['kategori'];
-$alamat       = $tampil['alamat'];
-
-?>
-
-<?php
-// memperoses data ubah
 if (isset($_POST['simpan'])) {
-    $kode_konsumen = $_POST['kode_konsumen'];
+    // memperoses data ubah
+    $id_konsumen   = $_POST['id_konsumen'];
     $nik           = $_POST['nik'];
     $nama          = $_POST['nama'];
     $no_telepon    = $_POST['no_telepon'];
@@ -21,29 +10,37 @@ if (isset($_POST['simpan'])) {
     $tgl_daftar    = $_POST['tgl_daftar'];
     $alamat        = $_POST['alamat'];
 
-    $querybuilder = " UPDATE `tb_barang` SET
-                  `nama_barang`           = '$nama_barang',
-                  `harga_beli`            = '$harga_beli',
-                  `harga_jual`            = '$harga_jual',
-                  `stok`                  = '$stok',
-                  `id_kategori`           = '$kategori'
-            WHERE `tb_barang`.`id_barang` = '$id_barang'
-        ";
+    $querybuilder = " UPDATE `tb_konsumen` SET 
+        `nik`            = '$nik',
+        `nama`           = '$nama',
+        `no_telepon`     = '$no_telepon',
+        `merk_mobil`     = '$merk_mobil',
+        `warna_mobil`    = '$warna_mobil',
+        `tanggal_daftar` = '$tgl_daftar',
+        `alamat`         = '$alamat'
+        WHERE 
+        `tb_konsumen`.`id_konsumen` = '$id_konsumen'
+    ";
+
     $sql = $koneksi->query($querybuilder);
     if ($sql) {
         setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     } else {
-        setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
+        setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     }
 }
 
-// Menyiapkan data ubah
-$id_barang   = $_GET['id_barang'];
-$sql         = $koneksi->query("select * from tb_barang where id_barang='$id_barang'");
-$tampil      = $sql->fetch_assoc();
-$harga_jual2 = $tampil['harga_jual'];
+if (isset($_GET['id_konsumen'])) {
+    // Menyiapkan data ubah
+    $id_konsumen = $_GET['id_konsumen'];
+    $sql         = $koneksi->query("select * from tb_konsumen where id_konsumen='$id_konsumen'");
+    $tampil      = $sql->fetch_assoc();
+} else {
+    setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
+    echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
+}
 ?>
 
 <script type="text/javascript">
@@ -93,19 +90,20 @@ $harga_jual2 = $tampil['harga_jual'];
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>NIK</label>
-                                <input class="form-control" name="nik" id="nik" />
+                                <input class="form-control" name="nik" id="nik" value="<?= $tampil['nik']; ?>" />
+                                <input hidden="" name="id_konsumen" id="id_konsumen" value="<?= $tampil['id_konsumen']; ?>" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nama</label>
-                                <input class="form-control" type="text" name="nama" id="nama" />
+                                <input class="form-control" type="text" name="nama" id="nama" value="<?= $tampil['nama']; ?>" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>No Telepon</label>
-                                <input class="form-control" type="tel" name="no_telepon" id="no_telepon" />
+                                <input class="form-control" type="tel" name="no_telepon" id="no_telepon" value="<?= $tampil['no_telepon']; ?>" />
                             </div>
                         </div>
                     </div>
@@ -115,13 +113,13 @@ $harga_jual2 = $tampil['harga_jual'];
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tanggal Daftar</label>
-                                        <input class="form-control" type="date" name="tgl_daftar" id="tgl_daftar" value="<?= date("yy-m-d"); ?>" />
+                                        <input class="form-control" type="date" name="tgl_daftar" id="tgl_daftar" value="<?= $tampil['tanggal_daftar']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Kode Konsumen</label>
-                                        <input class="form-control" name="kode_konsumen" id="kode_konsumen" required="" readonly="" value="<?= date("yy-m-d-") . uniqid(); ?>" />
+                                        <input class="form-control" name="kode_konsumen" id="kode_konsumen" required="" readonly="" value=" <?= $tampil['kode_konsumen']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -129,13 +127,13 @@ $harga_jual2 = $tampil['harga_jual'];
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Merek Mobil</label>
-                                        <input class="form-control" type="text" name="merk_mobil" id="merk_mobil" />
+                                        <input class="form-control" type="text" name="merk_mobil" id="merk_mobil" value="<?= $tampil['merk_mobil']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Warna Mobil</label>
-                                        <input class="form-control" type="text" name="warna_mobil" id="warna_mobil" />
+                                        <input class="form-control" type="text" name="warna_mobil" id="warna_mobil" value="<?= $tampil['warna_mobil']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +141,7 @@ $harga_jual2 = $tampil['harga_jual'];
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" type="text" name="alamat" id="alamat" rows="4"></textarea>
+                                <textarea class="form-control" type="text" name="alamat" id="alamat" rows="4"><?= $tampil['alamat']; ?></textarea>
                             </div>
                         </div>
                     </div>

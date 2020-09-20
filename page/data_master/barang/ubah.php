@@ -39,7 +39,7 @@ if (isset($_POST['simpan'])) {
             setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
+            setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     } else {
@@ -56,7 +56,7 @@ if (isset($_POST['simpan'])) {
             setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
+            setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     }
@@ -68,7 +68,7 @@ if (isset($_GET['id_barang'])) {
     $sql         = $koneksi->query("select * from tb_barang where id_barang='$id_barang'");
     $tampil      = $sql->fetch_assoc();
 } else {
-    setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
+    setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
     echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 }
 ?>
