@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
 
     for ($i = 0; $i < count($menu_akses); $i++) {
         $menu_id = $menu_akses[$i]['user_menu_id'];
-        $result = query("SELECT 'id' FROM `tb_user_access_menu` WHERE `tb_user_access_menu`.`menu_id` = '$menu_id' AND `tb_user_access_menu`.`id_user_level` = '$id_level'");
+        $result = query("SELECT 'id' FROM `tb_user_menu_access` WHERE `tb_user_menu_access`.`menu_id` = '$menu_id' AND `tb_user_menu_access`.`id_user_level` = '$id_level'");
         if ($result) {
             $menu_akses[$i]['akses'] = true;
             $temp['hakakses'] = query("SELECT * FROM `tb_user_sub_menu` 
@@ -30,12 +30,12 @@ if (isset($_GET['id'])) {
 
     for ($i = 0; $i < count($sub_menu_akses); $i++) {
         $sub_menu_id = $sub_menu_akses[$i]['id'];
-        $result = query("SELECT 'id' FROM `tb_user_access_sub_menu` WHERE `tb_user_access_sub_menu`.`sub_menu_id` = '$sub_menu_id' AND `tb_user_access_sub_menu`.`id_user_level` = '$id_level'");
+        $result = query("SELECT 'id' FROM `tb_user_sub_menu_access` WHERE `tb_user_sub_menu_access`.`sub_menu_id` = '$sub_menu_id' AND `tb_user_sub_menu_access`.`id_user_level` = '$id_level'");
         if ($result) $sub_menu_akses[$i]['akses'] = true;
         else $sub_menu_akses[$i]['akses'] = false;
     }
 } else {
-    setAlert('Galat..! ','Tidak ada id yang dikirimkan..', 'danger');
+    setAlert('Galat..! ', 'Tidak ada id yang dikirimkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";

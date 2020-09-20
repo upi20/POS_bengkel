@@ -48,10 +48,10 @@ $_baseurl = '?page=' . $page . '&submenu=' . $submenu;
 // Mengambil data untuk menu navigasi
 $level        = $_SESSION['user']['level'];
 $display_page = "home.php";
-$menus        = query("SELECT * FROM tb_user_access_menu 
+$menus        = query("SELECT * FROM tb_user_menu_access 
         INNER JOIN tb_user_menu 
-        ON    tb_user_access_menu.menu_id       = tb_user_menu.user_menu_id
-        WHERE tb_user_access_menu.id_user_level = '$level'
+        ON    tb_user_menu_access.menu_id       = tb_user_menu.user_menu_id
+        WHERE tb_user_menu_access.id_user_level = '$level'
 ");
 
 if ($menus) {
@@ -59,10 +59,10 @@ if ($menus) {
         $id = $menus[$i]['menu_id'];
 
         // Mengambil data untuk sub menu
-        $menus[$i]['sub_menu'] = query("SELECT * FROM tb_user_access_sub_menu 
+        $menus[$i]['sub_menu'] = query("SELECT * FROM tb_user_sub_menu_access 
             INNER JOIN tb_user_sub_menu 
-            ON    tb_user_access_sub_menu.sub_menu_id   = tb_user_sub_menu.id
-            WHERE tb_user_access_sub_menu.id_user_level = '$level'
+            ON    tb_user_sub_menu_access.sub_menu_id   = tb_user_sub_menu.id
+            WHERE tb_user_sub_menu_access.id_user_level = '$level'
             AND tb_user_sub_menu.menu_id='$id'
         ");
 

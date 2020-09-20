@@ -47,7 +47,7 @@
     if (@$_GET['page'] == 'data_kategori') {
         echo '<table align="center" border="1" cellspacing="0"  cell style="width:100%;"><thead><th>No.</th><th>Kategori Barang</th></thead><tbody >';
         $no  = 1;
-        $sql = mysqli_query($koneksi, "SELECT*FROM tb_kategori");
+        $sql = mysqli_query($koneksi, "SELECT*FROM tb_barang_kategori");
         while ($r = mysqli_fetch_array($sql)) {
             echo '<tr><td>' . $no++ . '</td><td>' . $r['kategori'] . '</td></tr>';
         }
@@ -81,9 +81,9 @@
                 $no = 1;
 
                 if ($tgl_mulai != '' and $tgl_mulai != '') {
-                    $sql = mysqli_query($koneksi, "SELECT*FROM tb_transaksi WHERE '$tgl_mulai'<=tgl AND tgl<='$tgl_selesai' ORDER BY tgl ASC  ");
+                    $sql = mysqli_query($koneksi, "SELECT*FROM tb_barang_keluar WHERE '$tgl_mulai'<=tgl AND tgl<='$tgl_selesai' ORDER BY tgl ASC  ");
                 } else {
-                    $sql = mysqli_query($koneksi, "SELECT*FROM tb_transaksi  ORDER BY tgl ASC  ");
+                    $sql = mysqli_query($koneksi, "SELECT*FROM tb_barang_keluar  ORDER BY tgl ASC  ");
                 }
                 while ($data = mysqli_fetch_array($sql)) {
 
@@ -185,7 +185,7 @@
             <tbody>
                 <?php
                 $no = 1;
-                $sql = $koneksi->query("SELECT * FROM tb_barang INNER JOIN tb_kategori ON tb_barang.id_kategori = tb_kategori.id_kategori");
+                $sql = $koneksi->query("SELECT * FROM tb_barang INNER JOIN tb_barang_kategori ON tb_barang.id_kategori = tb_barang_kategori.id_kategori");
                 while ($data = $sql->fetch_assoc()) {
                 ?>
                     <tr>

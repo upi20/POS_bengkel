@@ -1,18 +1,18 @@
 <?php
 $id_kategori = $_GET['id_kategori'];
-$sql         = $koneksi->query("select * from tb_kategori where id_kategori='$id_kategori'");
+$sql         = $koneksi->query("select * from tb_barang_kategori where id_kategori='$id_kategori'");
 $tampil      = $sql->fetch_assoc();
 
 
 if (isset($_POST['simpan'])) {
 	$kategori = $_POST['kategori'];
-	$sql      = $koneksi->query("update tb_kategori set kategori='$kategori' where id_kategori='$id_kategori' ");
+	$sql      = $koneksi->query("update tb_barang_kategori set kategori='$kategori' where id_kategori='$id_kategori' ");
 
 	if ($sql) {
-		setAlert('Berhasil..! ','Data berhasil diubah..', 'success');
+		setAlert('Berhasil..! ', 'Data berhasil diubah..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	} else {
-		setAlert('Gagal..! ','Data gagal diubah..', 'success');
+		setAlert('Gagal..! ', 'Data gagal diubah..', 'success');
 		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
 	}
 }

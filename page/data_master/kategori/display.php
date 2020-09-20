@@ -25,7 +25,7 @@
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $datas = query("select * from tb_kategori");
+                                $datas = query("select * from tb_barang_kategori");
                                 foreach ($datas as $data) {
                                 ?>
                                     <tr>

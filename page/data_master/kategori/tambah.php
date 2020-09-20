@@ -3,12 +3,12 @@ if (isset($_POST['simpan'])) {
     $kategori = $_POST['kategori'];
     $simpan   = $_POST['simpan'];
     if ($simpan) {
-        $sql = $koneksi->query("insert into tb_kategori (kategori)values('$kategori')");
+        $sql = $koneksi->query("insert into tb_barang_kategori (kategori)values('$kategori')");
         if ($sql) {
-            setAlert('Berhasil..! ','Data berhasil ditambahkan..', 'success');
+            setAlert('Berhasil..! ', 'Data berhasil ditambahkan..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         } else {
-            setAlert('Gagal..! ','Data gagal ditambahkan..', 'success');
+            setAlert('Gagal..! ', 'Data gagal ditambahkan..', 'success');
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     }

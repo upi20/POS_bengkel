@@ -5,7 +5,6 @@ if (isset($_POST['simpan'])) {
     $kode_barang = $_POST['kode_barang'];
     $harga_beli  = $_POST['harga_beli'];
     $harga_jual  = $_POST['harga_jual'];
-    $stok        = $_POST['stok'];
     $kategori    = $_POST['kategori'];
 
     // menyiapkan informasi gambar
@@ -16,8 +15,10 @@ if (isset($_POST['simpan'])) {
     $namaFileBaru  = $kode_barang . "_" . uniqid() . '.' . $ekteksiGambar;
     $upload        = move_uploaded_file($lokasi, "images/master_data_barang/" . $namaFileBaru);
 
-    $querybuilder = " INSERT INTO `tb_barang` (`id_barang`, `nama_barang`, `kode_barang`, `harga_beli`, `harga_jual`, `gambar`, `stok`, `id_kategori`)
-    VALUES (NULL, '$nama_barang', '$kode_barang', '$harga_beli', '$harga_jual', '$namaFileBaru', '$stok', '$kategori') ";
+    $querybuilder = "INSERT INTO `tb_barang_data` 
+    (`id_barang_data`, `id_barang_kategori`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_beli`, `barang_data_harga_jual`, `barang_data_gambar`)
+    VALUES 
+    (NULL, '$kategori', '$nama_barang', '$kode_barang', '$harga_beli', '$harga_jual', '$namaFileBaru') ";
 
     $sql = $koneksi->query($querybuilder);
     if ($sql) {
@@ -28,6 +29,9 @@ if (isset($_POST['simpan'])) {
         echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
     }
 }
+
+// Menyiapkan data kategori
+$kategori = query("SELECT * FROM tb_barang_kategori");
 ?>
 
 <script type="text/javascript">
@@ -53,12 +57,6 @@ if (isset($_POST['simpan'])) {
         if (form.harga_jual.value == "") {
             setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
             form.harga_jual.focus();
-            return (false);
-        }
-
-        if (form.stok.value == "" || form.stok.value < 1) {
-            setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
-            form.stok.focus();
             return (false);
         }
         return (true);
@@ -103,21 +101,17 @@ if (isset($_POST['simpan'])) {
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="stock">Stok</label>
-                                    <input class="form-control" type="number" name="stok" id="stok" required="" min="1" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label>Kategori</label>
                                     <select class="form-control" name="kategori">
-                                        <?php foreach (query("SELECT * FROM tb_kategori ORDER by id_kategori") as $kategori) {
-                                            echo "<option value='$kategori[id_kategori]'>$kategori[kategori]</option>";
+                                        <?php if ($kategori) {
+                                            foreach ($kategori as $k) {
+                                                echo "<option value='$k[id_barang_kategori]'>$k[barang_kategori_nama]</option>";
+                                            }
                                         } ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="gambar">Gambar</label>
                                     <input type="file" class="file-control-file" name="gambar" id="gambar" required="" />
@@ -125,11 +119,10 @@ if (isset($_POST['simpan'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <input type="submit" name="simpan" value="Simpan" class="btn btn-primary btn-block">
+                            <div class="col-md-12">
+                                <input type="submit" name="simpan" value="Simpan" class="btn btn-primary">
+                                <a href="<?php echo $_baseurl; ?>" class="btn btn-success">Kembali</a>
                             </div>
-                            <div class="col-md-2"></div>
                         </div>
                     </div>
                 </form>

@@ -10,7 +10,7 @@ if (isset($_POST['simpan'])) {
 	$harga          = $_POST['harga'];
 	$tgl            = $_POST['tgl'];
 
-	$querybuilder = "INSERT INTO `tb_transaksi` 
+	$querybuilder = "INSERT INTO `tb_barang_keluar` 
 	(`id_transaksi`, `id_konsumen`, `kode_transaksi`, `id_barang`, `jumlah`, `harga`, `tanggal`) 
 	VALUES 
 	(NULL, '$id_konsumen', '$kode_transaksi', '$id_barang', '$jumlah', '$harga', '$tgl')";

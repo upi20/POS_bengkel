@@ -5,7 +5,6 @@ if (isset($_POST['simpan'])) {
     $kode_barang = $_POST['kode_barang'];
     $harga_beli  = $_POST['harga_beli'];
     $harga_jual  = $_POST['harga_jual'];
-    $stok        = $_POST['stok'];
     $kategori    = $_POST['kategori'];
     $fotoasal    = $_POST['fotoasal'];
     $id_barang   = $_POST['id_barang'];
@@ -24,14 +23,13 @@ if (isset($_POST['simpan'])) {
             unlink("images/master_data_barang/$fotoasal");
         }
         $upload       = move_uploaded_file($lokasi, "images/barang/" . $gambar);
-        $querybuilder = " UPDATE `tb_barang` SET
-                                `nama_barang`           = '$nama_barang',
-                                `harga_beli`            = '$harga_beli',
-                                `harga_jual`            = '$harga_jual',
-                                `stok`                  = '$stok',
-                                `gambar`                = '$namaFileBaru',
-                                `id_kategori`           = '$kategori'
-                          WHERE `tb_barang`.`id_barang` = '$id_barang'
+        $querybuilder = " UPDATE `tb_barang_data` SET
+            `barang_data_nama`       = '$nama_barang',
+            `barang_data_harga_beli` = '$harga_beli',
+            `barang_data_harga_jual` = '$harga_jual',
+            `barang_data_gambar`     = '$namaFileBaru',
+            `id_barang_kategori`     = '$kategori'
+        WHERE `tb_barang_data`.`id_barang_data` = '$id_barang'
         ";
 
         $sql = $koneksi->query($querybuilder);
@@ -43,13 +41,12 @@ if (isset($_POST['simpan'])) {
             echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
         }
     } else {
-        $querybuilder = " UPDATE `tb_barang` SET
-                                `nama_barang`           = '$nama_barang',
-                                `harga_beli`            = '$harga_beli',
-                                `harga_jual`            = '$harga_jual',
-                                `stok`                  = '$stok',
-                                `id_kategori`           = '$kategori'
-                          WHERE `tb_barang`.`id_barang` = '$id_barang'
+        $querybuilder = " UPDATE `tb_barang_data` SET
+            `barang_data_nama`       = '$nama_barang',
+            `barang_data_harga_beli` = '$harga_beli',
+            `barang_data_harga_jual` = '$harga_jual',
+            `id_barang_kategori`     = '$kategori'
+        WHERE `tb_barang_data`.`id_barang_data` = '$id_barang'
         ";
         $sql = $koneksi->query($querybuilder);
         if ($sql) {
@@ -62,11 +59,19 @@ if (isset($_POST['simpan'])) {
     }
 }
 
-if (isset($_GET['id_barang'])) {
+if (isset($_GET['id'])) {
     // Menyiapkan data ubah
-    $id_barang   = $_GET['id_barang'];
-    $sql         = $koneksi->query("select * from tb_barang where id_barang='$id_barang'");
-    $tampil      = $sql->fetch_assoc();
+    $id_barang = $_GET['id'];
+    $tampil['data']    = query("SELECT * FROM tb_barang_data WHERE id_barang_data='$id_barang'")[0];
+
+
+    if (!$tampil) {
+        setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
+        echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
+    } else {
+        // menyiapkan data kategori
+        $tampil['kategori'] = query("SELECT * FROM tb_barang_kategori");
+    }
 } else {
     setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
     echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
@@ -87,7 +92,7 @@ if (isset($_GET['id_barang'])) {
             return (false);
         }
 
-        if (form.harga_jual.value <= form.harga_beli.value) {
+        if (Number(form.harga_jual.value) <= Number(form.harga_beli.value)) {
             setAlert('Peringatan..!', "Harga jual harus lebih tinggi dari harga beli", 'danger');
             form.harga_jual.focus();
             return (false);
@@ -96,12 +101,6 @@ if (isset($_GET['id_barang'])) {
         if (form.harga_jual.value == "") {
             setAlert('Peringatan..!', "Harga Jual Tidak Boleh Kosong", 'danger');
             form.harga_jual.focus();
-            return (false);
-        }
-
-        if (form.stok.value == "" || form.stok.value < 1) {
-            setAlert('Peringatan..!', "Stok Tidak Boleh Kosong", 'danger');
-            form.stok.focus();
             return (false);
         }
         return (true);
@@ -121,20 +120,20 @@ if (isset($_GET['id_barang'])) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama barang</label>
-                                    <input class="form-control" name="nama_barang" value="<?php echo $tampil['nama_barang']; ?>" />
-                                    <input hidden="" name="id_barang" value="<?php echo $tampil['id_barang']; ?>" />
+                                    <input class="form-control" name="nama_barang" value="<?php echo $tampil['data']['barang_data_nama']; ?>" />
+                                    <input hidden="" name="id_barang" value="<?php echo $tampil['data']['id_barang_data']; ?>" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Harga Beli</label>
-                                    <input class="form-control" name="harga_beli" value="<?php echo $tampil['harga_beli']; ?>" />
+                                    <input class="form-control" name="harga_beli" value="<?php echo $tampil['data']['barang_data_harga_beli']; ?>" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Harga Jual</label>
-                                    <input class="form-control" name="harga_jual" value="<?php echo $tampil['harga_jual']; ?>" />
+                                    <input class="form-control" name="harga_jual" value="<?php echo $tampil['data']['barang_data_harga_jual']; ?>" />
                                 </div>
                             </div>
                         </div>
@@ -142,30 +141,22 @@ if (isset($_GET['id_barang'])) {
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode Barang</label>
-                                    <input readonly="" class="form-control" type="text" name="kode_barang" value="<?php echo $tampil['kode_barang']; ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="stock">Stok</label>
-                                    <input class="form-control" type="text" name="stok" value="<?php echo $tampil['stok']; ?>" />
+                                    <input readonly="" class="form-control" type="text" name="kode_barang" value="<?php echo $tampil['data']['barang_data_kode']; ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kategori</label>
                                     <select class="form-control" name="kategori">
-                                        <option>== Pilih ==</option>
-                                        <?php
-                                        $query = $koneksi->query("SELECT * FROM tb_kategori ORDER by id_kategori");
-                                        while ($kategori = $query->fetch_assoc()) {
-                                            if ($tampil['id_kategori'] == $kategori['id_kategori']) {
-                                                echo '<option selected="" value="' . $kategori['id_kategori'] . '">' . $kategori['kategori'] . '</option>';
-                                            } else {
-                                                echo '<option value="' . $kategori['id_kategori'] . '">' . $kategori['kategori'] . '</option>';
+                                        <?php if ($tampil['kategori']) {
+                                            foreach ($tampil['kategori'] as $kategori) {
+                                                if ($tampil['data']['id_barang_kategori'] == $kategori['id_barang_kategori']) {
+                                                    echo '<option selected="" value="' . $kategori['id_barang_kategori'] . '">' . $kategori['barang_kategori_nama'] . '</option>';
+                                                } else {
+                                                    echo '<option value="' . $kategori['id_barang_kategori'] . '">' . $kategori['barang_kategori_nama'] . '</option>';
+                                                }
                                             }
-                                        }
-                                        ?>
+                                        } ?>
                                     </select>
                                 </div>
                             </div>
@@ -173,16 +164,15 @@ if (isset($_GET['id_barang'])) {
                                 <div class="form-group">
                                     <label for="gambar">Gambar</label>
                                     <input type="file" class="file-control-file" name="gambar" id="gambar" />
-                                    <input type="text" name="fotoasal" value="<?= $tampil['gambar']; ?>" hidden="">
+                                    <input type="text" name="fotoasal" value="<?= $tampil['data']['barang_data_gambar']; ?>" hidden="">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <input type="submit" name="simpan" value="Ubah" class="btn btn-primary btn-block">
+                            <div class="col-md-12">
+                                <input type="submit" name="simpan" value="Simpan" class="btn btn-primary">
+                                <a href="<?php echo $_baseurl; ?>" class="btn btn-success">Kembali</a>
                             </div>
-                            <div class="col-md-2"></div>
                         </div>
                     </div>
                 </form>

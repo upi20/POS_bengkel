@@ -9,12 +9,12 @@ if (isset($_GET['id'])) {
     $user_level = query("SELECT * FROM `tb_user_level`");
     for ($i = 0; $i < count($user_level); $i++) {
         $user_level_id = $user_level[$i]['id_level'];
-        $result = query("SELECT 'id' FROM tb_user_access_menu WHERE tb_user_access_menu.menu_id = '$id_menu' AND tb_user_access_menu.id_user_level = '$user_level_id'");
+        $result = query("SELECT 'id' FROM tb_user_menu_access WHERE tb_user_menu_access.menu_id = '$id_menu' AND tb_user_menu_access.id_user_level = '$user_level_id'");
         if ($result) $user_level[$i]['akses'] = true;
         else $user_level[$i]['akses'] = false;;
     }
 } else {
-    setAlert('Fatal..! ','Tidak ada id yang dikirimkan..', 'danger');
+    setAlert('Fatal..! ', 'Tidak ada id yang dikirimkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";

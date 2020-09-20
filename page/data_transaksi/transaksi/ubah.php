@@ -2,7 +2,7 @@
 
 if (isset($_GET['id'])) {
 	$id   = $_GET['id'];
-	$data = query("SELECT * FROM `tb_transaksi` WHERE `no`='$id'");
+	$data = query("SELECT * FROM `tb_barang_keluar` WHERE `no`='$id'");
 } else {
 	echo '
 	<script>
@@ -32,7 +32,7 @@ if (isset($_POST['simpan'])) {
 	$Tgl            = $_POST['Tgl'];
 	$no             = $_POST['no'];
 
-	$querybuilder   = "UPDATE `tb_transaksi` SET 
+	$querybuilder   = "UPDATE `tb_barang_keluar` SET 
 		`no`                = '$no',
 		`konsumen`          = '$konsumen',
 		`kode_transaksi`    = '$kode_transaksi',
@@ -42,7 +42,7 @@ if (isset($_POST['simpan'])) {
 		`Harga`             = '$Harga',
 		`total_harga`       = '$Total_harga',
 		`tgl`               = '$Tgl'
-	WHERE `tb_transaksi`.`no` = '$no'";
+	WHERE `tb_barang_keluar`.`no` = '$no'";
 	if ($koneksi->query($querybuilder)) {
 		echo '
 		<script>

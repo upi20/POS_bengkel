@@ -9,13 +9,13 @@ if (isset($_GET['id'])) {
     $user_level = query("SELECT * FROM `tb_user_level`");
     for ($i = 0; $i < count($user_level); $i++) {
         $user_level_id = $user_level[$i]['id_level'];
-        $result        = query("SELECT * FROM `tb_user_access_sub_menu` WHERE `tb_user_access_sub_menu`.`sub_menu_id` = '$id_sub_menu' AND `tb_user_access_sub_menu`.`id_user_level` = '$user_level_id'");
+        $result        = query("SELECT * FROM `tb_user_sub_menu_access` WHERE `tb_user_sub_menu_access`.`sub_menu_id` = '$id_sub_menu' AND `tb_user_sub_menu_access`.`id_user_level` = '$user_level_id'");
 
         if ($result) $user_level[$i]['akses'] = true;
         else $user_level[$i]['akses']         = false;;
     }
 } else {
-    setAlert('Gagal..! ','Data gagal ditampilkan..', 'danger');
+    setAlert('Gagal..! ', 'Data gagal ditampilkan..', 'danger');
     echo '
     <script type = "text/javascript">
         window.location.href = "' . $_baseurl . '";
