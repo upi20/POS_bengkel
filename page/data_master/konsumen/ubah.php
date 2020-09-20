@@ -10,16 +10,16 @@ if (isset($_POST['simpan'])) {
     $tgl_daftar    = $_POST['tgl_daftar'];
     $alamat        = $_POST['alamat'];
 
-    $querybuilder = " UPDATE `tb_konsumen` SET 
-        `nik`            = '$nik',
-        `nama`           = '$nama',
-        `no_telepon`     = '$no_telepon',
-        `merk_mobil`     = '$merk_mobil',
-        `warna_mobil`    = '$warna_mobil',
-        `tanggal_daftar` = '$tgl_daftar',
-        `alamat`         = '$alamat'
+    $querybuilder = " UPDATE `tb_barang_konsumen` SET 
+        `barang_konsumen_nik`            = '$nik',
+        `barang_konsumen_nama`           = '$nama',
+        `barang_konsumen_no_telepon`     = '$no_telepon',
+        `barang_konsumen_merk_mobil`     = '$merk_mobil',
+        `barang_konsumen_warna_mobil`    = '$warna_mobil',
+        `barang_konsumen_tanggal_daftar` = '$tgl_daftar',
+        `barang_konsumen_alamat`         = '$alamat'
         WHERE 
-        `tb_konsumen`.`id_konsumen` = '$id_konsumen'
+        `tb_barang_konsumen`.`id_barang_konsumen` = '$id_konsumen'
     ";
 
     $sql = $koneksi->query($querybuilder);
@@ -35,7 +35,7 @@ if (isset($_POST['simpan'])) {
 if (isset($_GET['id_konsumen'])) {
     // Menyiapkan data ubah
     $id_konsumen = $_GET['id_konsumen'];
-    $sql         = $koneksi->query("select * from tb_konsumen where id_konsumen='$id_konsumen'");
+    $sql         = $koneksi->query("SELECT * FROM tb_barang_konsumen WHERE id_barang_konsumen='$id_konsumen'");
     $tampil      = $sql->fetch_assoc();
 } else {
     setAlert('Gagal..! ', 'Data gagal diubah..', 'danger');
@@ -90,20 +90,20 @@ if (isset($_GET['id_konsumen'])) {
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>NIK</label>
-                                <input class="form-control" name="nik" id="nik" value="<?= $tampil['nik']; ?>" />
-                                <input hidden="" name="id_konsumen" id="id_konsumen" value="<?= $tampil['id_konsumen']; ?>" />
+                                <input class="form-control" name="nik" id="nik" value="<?= $tampil['barang_konsumen_nik']; ?>" />
+                                <input hidden="" name="id_konsumen" id="id_konsumen" value="<?= $tampil['id_barang_konsumen']; ?>" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nama</label>
-                                <input class="form-control" type="text" name="nama" id="nama" value="<?= $tampil['nama']; ?>" />
+                                <input class="form-control" type="text" name="nama" id="nama" value="<?= $tampil['barang_konsumen_nama']; ?>" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>No Telepon</label>
-                                <input class="form-control" type="tel" name="no_telepon" id="no_telepon" value="<?= $tampil['no_telepon']; ?>" />
+                                <input class="form-control" type="tel" name="no_telepon" id="no_telepon" value="<?= $tampil['barang_konsumen_no_telepon']; ?>" />
                             </div>
                         </div>
                     </div>
@@ -113,13 +113,13 @@ if (isset($_GET['id_konsumen'])) {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tanggal Daftar</label>
-                                        <input class="form-control" type="date" name="tgl_daftar" id="tgl_daftar" value="<?= $tampil['tanggal_daftar']; ?>" />
+                                        <input class="form-control" type="date" name="tgl_daftar" id="tgl_daftar" value="<?= $tampil['barang_konsumen_tanggal_daftar']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Kode Konsumen</label>
-                                        <input class="form-control" name="kode_konsumen" id="kode_konsumen" required="" readonly="" value=" <?= $tampil['kode_konsumen']; ?>" />
+                                        <input class="form-control" name="kode_konsumen" id="kode_konsumen" required="" readonly="" value=" <?= $tampil['barang_konsumen_kode']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -127,13 +127,13 @@ if (isset($_GET['id_konsumen'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Merek Mobil</label>
-                                        <input class="form-control" type="text" name="merk_mobil" id="merk_mobil" value="<?= $tampil['merk_mobil']; ?>" />
+                                        <input class="form-control" type="text" name="merk_mobil" id="merk_mobil" value="<?= $tampil['barang_konsumen_merk_mobil']; ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Warna Mobil</label>
-                                        <input class="form-control" type="text" name="warna_mobil" id="warna_mobil" value="<?= $tampil['warna_mobil']; ?>" />
+                                        <input class="form-control" type="text" name="warna_mobil" id="warna_mobil" value="<?= $tampil['barang_konsumen_warna_mobil']; ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ if (isset($_GET['id_konsumen'])) {
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" type="text" name="alamat" id="alamat" rows="4"><?= $tampil['alamat']; ?></textarea>
+                                <textarea class="form-control" type="text" name="alamat" id="alamat" rows="4"><?= $tampil['barang_konsumen_alamat']; ?></textarea>
                             </div>
                         </div>
                     </div>

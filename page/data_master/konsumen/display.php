@@ -27,23 +27,23 @@
                         </thead>
                         <tbody>
                             <?php
-                            $datas = query("SELECT * FROM tb_konsumen");
+                            $datas = query("SELECT * FROM tb_barang_konsumen");
                             if ($datas) :
                                 $no = 1;
                                 foreach ($datas as $data) : ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
-                                        <td><?php echo $data['kode_konsumen']; ?></td>
-                                        <td><?php echo $data['nik']; ?></td>
-                                        <td style="white-space: nowrap"><?php echo $data['nama']; ?></td>
-                                        <td><?php echo $data['no_telepon']; ?></td>
-                                        <td><?php echo $data['merk_mobil']; ?></td>
-                                        <td><?php echo $data['warna_mobil']; ?></td>
-                                        <td><?php echo $data['tanggal_daftar']; ?></td>
-                                        <td><?php echo $data['alamat']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_kode']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_nik']; ?></td>
+                                        <td style="white-space: nowrap"><?php echo $data['barang_konsumen_nama']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_no_telepon']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_merk_mobil']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_warna_mobil']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_tanggal_daftar']; ?></td>
+                                        <td><?php echo $data['barang_konsumen_alamat']; ?></td>
                                         <td style="white-space: nowrap">
-                                            <a href="<?= $_baseurl; ?>&aksi=ubah&id_konsumen=<?php echo $data['id_konsumen']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
-                                            <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&&aksi=hapus&id_konsumen=<?php echo $data['id_konsumen']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                            <a href="<?= $_baseurl; ?>&aksi=ubah&id_konsumen=<?php echo $data['id_barang_konsumen']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i> Ubah</a>
+                                            <a onclick="return confirm('Anda yakin ingin menghapus?')" href="<?= $_baseurl; ?>&&aksi=hapus&id_konsumen=<?php echo $data['id_barang_konsumen']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                                         </td>
                                     </tr>
                             <?php endforeach;

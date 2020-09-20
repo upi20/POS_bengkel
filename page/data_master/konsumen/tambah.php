@@ -9,8 +9,8 @@ if (isset($_POST['simpan'])) {
     $tgl_daftar    = $_POST['tgl_daftar'];
     $alamat        = $_POST['alamat'];
 
-    $querybuilder = "INSERT INTO `tb_konsumen` 
-    (`id_konsumen`, `kode_konsumen`, `nik`, `nama`, `no_telepon`, `merk_mobil`, `warna_mobil`, `tanggal_daftar`, `alamat`) 
+    $querybuilder = "INSERT INTO `tb_barang_konsumen` 
+    (`id_barang_konsumen`, `barang_konsumen_kode`, `barang_konsumen_nik`, `barang_konsumen_nama`, `barang_konsumen_no_telepon`, `barang_konsumen_merk_mobil`, `barang_konsumen_warna_mobil`, `barang_konsumen_tanggal_daftar`, `barang_konsumen_alamat`) 
     VALUES 
     (NULL, '$kode_konsumen', '$nik', '$nama', '$no_telepon', '$merk_mobil ', '$warna_mobil', '$tgl_daftar', '$alamat')";
 
