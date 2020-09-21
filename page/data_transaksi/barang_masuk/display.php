@@ -1,11 +1,25 @@
 <?php
+// query data
+// ==========================================================
+$data['tambah']['barang']   = query("SELECT `id_barang_data`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_jual` FROM `tb_barang_data`");
+$data['tambah']['suplier']  = query("SELECT `barang_suplier_nama`, `id_barang_suplier` FROM `tb_barang_suplier`");
+// ==========================================================
+
+// modal CRUD
+// ==========================================================
+include "tambah.php";
+
+
+
+
+// ==========================================================
 $datas = query("SELECT * FROM tb_barang_masuk 
-                JOIN
-                tb_barang_data
-                ON tb_barang_masuk.id_barang_data = tb_barang_data.id_barang_data
-                JOIN
-                tb_barang_suplier
-                ON tb_barang_masuk.id_barang_suplier = tb_barang_suplier.id_barang_suplier");
+    JOIN
+    tb_barang_data
+    ON tb_barang_masuk.id_barang_data = tb_barang_data.id_barang_data
+    JOIN
+    tb_barang_suplier
+    ON tb_barang_masuk.id_barang_suplier = tb_barang_suplier.id_barang_suplier");
 $nomor = 0;
 ?>
 <div class="panel panel-default">
@@ -15,7 +29,8 @@ $nomor = 0;
     <div class="panel-body">
         <div class="row">
             <div class="container-fluid">
-                <div class="col"><a href="<?= $_baseurl; ?>&aksi=tambah" class="btn btn-success" style="margin-top: 8px;"><i class="fa fa-plus"></i> Tambah Data</a></div>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalTambah"><i class="fa fa-plus"></i> Tambah Data</button>
+                <br>
                 <br>
             </div>
         </div>
