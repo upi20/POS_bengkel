@@ -3,10 +3,10 @@ if (isset($_POST['simpan_hapus'])) {
 	$id_kategori = $_POST['id_kategori'];
 	$koneksi->query("DELETE FROM tb_barang_kategori WHERE id_barang_kategori ='$id_kategori'");
 
-	if (mysqli_affected_rows($koneksi) > 0) {
+	if (mysqli_errno($koneksi) == 0) {
 		echo '<script type = "text/javascript">setAlert("Berhasil..! ", "Data berhasil hapus..", "success");</script>';
-	} else {
-		echo '<script type = "text/javascript">setAlert("Gagal..! ", "Data gagal hapus.. Nama kategori mungkin sudah ada..", "danger");</script>';
+	} else if (mysqli_errno($koneksi) == 1451) {
+		echo '<script type = "text/javascript">setAlert("Gagal..! ", "Data gagal hapus.. Kategori ini digunakan oleh barang lain..", "danger");</script>';
 	}
 }
 ?>
