@@ -6,7 +6,7 @@ if (isset($_POST['simpan_ubah'])) {
 	$jumlah         = $_POST['qty_ubah'];
 	$harga          = $_POST['harga_ubah'];
 	$tgl            = $_POST['tgl_ubah'];
-	$querybuilder = "INSERT INTO `tb_barang_masuk` 
+	$querybuilder   = "INSERT INTO `tb_barang_masuk` 
 	(`id_barang_masuk`, `id_barang_data`, `id_barang_suplier`, `barang_masuk_kode`, `barang_masuk_jumlah`, `barang_masuk_harga`, `barang_masuk_tanggal`)
 	VALUES 
 	(NULL, '$id_barang', '$id_suplier', '$kode_transaksi', '$jumlah', '$harga', '$tgl')";
@@ -40,7 +40,7 @@ if (isset($_POST['simpan_ubah'])) {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Nama suplier</label>
-												<select class="form-control" name="suplier_ubah" id="suplier">
+												<select class="form-control" name="suplier_ubah" id="suplier_ubah">
 													<?php
 													if ($data['tambah']['suplier']) {
 														foreach ($data['tambah']['suplier'] as $s) {
@@ -93,7 +93,7 @@ if (isset($_POST['simpan_ubah'])) {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Tanggal</label>
-												<input class="form-control" type="text" name="tgl_ubah" value="<?= date("yy-m-d"); ?>" readonly />
+												<input class="form-control" type="text" name="tgl_ubah" id="tgl_ubah" value="" readonly />
 											</div>
 										</div>
 									</div>
@@ -101,7 +101,7 @@ if (isset($_POST['simpan_ubah'])) {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Kode transaksi</label>
-												<input class="form-control" type="text" name="kode_transaksi_ubah" readonly value="<?= date("yy-m-d-") . uniqid(); ?>" />
+												<input class="form-control" type="text" name="kode_transaksi_ubah" readonly value="" />
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -127,36 +127,51 @@ if (isset($_POST['simpan_ubah'])) {
 <!-- ================================================================================================ -->
 
 <script>
-	$(document).ready(function() {
-		const nama_barang = $('#barang_ubah');
-		const kode_barang = $('#kode_barang_ubah');
-		const qty = $('#qty_ubah');
-		const harga = $('#harga_ubah');
-		const total_harga = $('#total_harga_ubah');
-		const stok = $('#stok_ubah');
+	function ubahData(data) {
+		let suplier_ubah = document.querySelector('#suplier_ubah');
+		let barang_ubah = document.querySelector('#barang_ubah');
+		suplier_ubah.value = data.dataset.id_barang_suplier;
+		barang_ubah.value = data.dataset.id_barang_data;
+	}
 
-		function caputre() {
-			<?php foreach ($data['tambah']['barang'] as $b) : ?>
-				if (nama_barang.val() == '<?= $b['id_barang_data']; ?>') {
-					kode_barang.val('<?= $b['barang_data_kode']; ?>');
-					harga.val('<?= $b['barang_data_harga_jual']; ?>');
-					stok.val('<?= getStokBarang($b['id_barang_data']); ?>');
-				}
-			<?php endforeach; ?>
-			countQty();
-		}
 
-		function countQty() {
-			total_harga.val(Number(qty.val()) * Number(harga.val()));
-		}
 
-		nama_barang.on('change', function() {
-			caputre();
-		});
+	// let ubah_nama_barang = undefined;
+	// let ubah_kode_barang = undefined;
+	// let ubah_qty = undefined;
+	// let ubah_harga = undefined;
+	// let ubah_total_harga = undefined;
+	// let ubah_stok = undefined;
+	// $(document).ready(function() {
+	// 	ubah_nama_barang = $('#barang_ubah');
+	// 	ubah_kode_barang = $('#kode_barang_ubah');
+	// 	ubah_qty = $('#qty_ubah');
+	// 	ubah_harga = $('#harga_ubah');
+	// 	ubah_total_harga = $('#total_harga_ubah');
+	// 	ubah_stok = $('#stok_ubah');
 
-		qty.on('keyup', function() {
-			countQty();
-		});
-		caputre();
-	});
+	// 	function caputre() {
+	// 		<?php foreach ($data['tambah']['barang'] as $b) : ?>
+	// 			if (ubah_nama_barang.val() == '<?= $b['id_barang_data']; ?>') {
+	// 				ubah_kode_barang.val('<?= $b['barang_data_kode']; ?>');
+	// 				ubah_harga.val('<?= $b['barang_data_harga_jual']; ?>');
+	// 				ubah_stok.val('<?= getStokBarang($b['id_barang_data']); ?>');
+	// 			}
+	// 		<?php endforeach; ?>
+	// 		countQty();
+	// 	}
+
+	// 	function countQty() {
+	// 		ubah_total_harga.val(Number(ubah_qty.val()) * Number(ubah_harga.val()));
+	// 	}
+
+	// 	ubah_nama_barang.on('change', function() {
+	// 		caputre();
+	// 	});
+
+	// 	ubah_qty.on('keyup', function() {
+	// 		countQty();
+	// 	});
+	// 	caputre();
+	// });
 </script>

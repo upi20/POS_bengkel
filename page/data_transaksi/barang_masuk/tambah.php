@@ -24,7 +24,7 @@ if (isset($_POST['simpan_tambah'])) {
 ?>
 <!-- Modal tambah -->
 <!-- ================================================================================================ -->
-<div class="modal fade" id="modalTambah">
+<div class="modal fade" id="modaltambah">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
