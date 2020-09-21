@@ -208,11 +208,11 @@ if ($menus) {
                         <div class="row" id="alert_display">
                         </div>
                         <script>
-                            function setAlert(alert_title = 'hide_alert', alert_content = "", alert_color = 'succes') {
+                            function setAlert(alert_title = 'hide_alert', alert_content = "", alert_color = 'succes', alert_location = '#alert_display') {
                                 if (alert_title == 'hide_alert') {
-                                    document.querySelector('#alert_display').innerHTML = '';
+                                    document.querySelector(alert_location).innerHTML = '';
                                 } else {
-                                    document.querySelector('#alert_display').innerHTML = `
+                                    document.querySelector(alert_location).innerHTML = `
                                     <div class="col-md-12">
                                     <div class="alert alert-${alert_color} alert-dismissible show" role="alert">
                                     <strong>${alert_title}</strong>  ${alert_content}

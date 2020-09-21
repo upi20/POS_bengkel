@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['simpan_ubah'])) {
+if (isset($_POST['simpan_ubah1'])) {
 	$id_suplier     = $_POST['suplier_ubah'];
 	$kode_transaksi = $_POST['kode_transaksi_ubah'];
 	$id_barang      = $_POST['barang_ubah'];
@@ -34,7 +34,8 @@ if (isset($_POST['simpan_ubah'])) {
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-							<form method="POST" action="">
+							<div id="alert-modal-ubah"></div>
+							<form method="POST" action="" id="form_modal_ubah">
 								<div class="container-fluid">
 									<div class="row">
 										<div class="col-md-6">
@@ -101,7 +102,7 @@ if (isset($_POST['simpan_ubah'])) {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Kode transaksi</label>
-												<input class="form-control" type="text" name="kode_transaksi_ubah" readonly value="" />
+												<input class="form-control" type="text" name="kode_transaksi_ubah" id="kode_transaksi_ubah" readonly value="" />
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -127,51 +128,96 @@ if (isset($_POST['simpan_ubah'])) {
 <!-- ================================================================================================ -->
 
 <script>
+	let data_barang = [];
+	let temp = {};
+	let qty_ubah = document.querySelector('#qty_ubah');
+	let barang_ubah = document.querySelector('#barang_ubah');
+	let total_harga_ubah = document.querySelector('#total_harga_ubah');
+	let stok_ubah = document.querySelector('#stok_ubah')
+	let kode_barang_ubah = document.querySelector('#kode_barang_ubah')
+	let harga_ubah = document.querySelector('#harga_ubah')
+	let suplier_ubah = document.querySelector('#suplier_ubah');
+	let tgl_ubah = document.querySelector('#tgl_ubah');
+	let kode_transaksi_ubah = document.querySelector('#kode_transaksi_ubah');
+	let form_modal_ubah = document.querySelector('#form_modal_ubah');
+	let alert_modal_ubah = document.querySelector('#alert-modal-ubah');
+
+	<?php for ($i = 0; $i < count($data['tambah']['barang']); $i++) : ?>
+		data_barang[<?= $data['tambah']['barang'][$i]['id_barang_data']; ?>] = {
+			id_barang_data: <?= $data['tambah']['barang'][$i]['id_barang_data']; ?>,
+			barang_data_stok: <?= $data['tambah']['barang'][$i]['barang_data_stok']; ?>,
+			barang_data_harga_jual: <?= $data['tambah']['barang'][$i]['barang_data_harga_jual']; ?>,
+			barang_data_kode: '<?= $data['tambah']['barang'][$i]['barang_data_kode']; ?>',
+			barang_data_nama: '<?= $data['tambah']['barang'][$i]['barang_data_nama']; ?>',
+		};
+	<?php endfor; ?>
+
+
+	barang_ubah.addEventListener('change', function() {
+		caputre(this.value);
+		countQty();
+		cekStok(this.value);
+	});
+
+	qty_ubah.addEventListener('keyup', function() {
+		countQty();
+	});
+	qty_ubah.addEventListener('click', function() {
+		countQty();
+	});
+
 	function ubahData(data) {
-		let suplier_ubah = document.querySelector('#suplier_ubah');
-		let barang_ubah = document.querySelector('#barang_ubah');
 		suplier_ubah.value = data.dataset.id_barang_suplier;
 		barang_ubah.value = data.dataset.id_barang_data;
+		qty_ubah.value = data.dataset.barang_masuk_jumlah;
+		kode_transaksi_ubah.value = data.dataset.barang_masuk_kode;
+		tgl_ubah.value = data.dataset.barang_masuk_tanggal;
+		temp.ubah = {
+			id: data.dataset.id_barang_data,
+			stok: data_barang[data.dataset.id_barang_data].barang_data_stok,
+			qty: Number(data.dataset.barang_masuk_jumlah)
+		};
+		caputre(data.dataset.id_barang_data);
 	}
 
 
+	function caputre(id) {
+		stok_ubah.value = data_barang[id].barang_data_stok;
+		kode_barang_ubah.value = data_barang[id].barang_data_kode;
+		harga_ubah.value = data_barang[id].barang_data_harga_jual;
+		countQty();
+	}
 
-	// let ubah_nama_barang = undefined;
-	// let ubah_kode_barang = undefined;
-	// let ubah_qty = undefined;
-	// let ubah_harga = undefined;
-	// let ubah_total_harga = undefined;
-	// let ubah_stok = undefined;
-	// $(document).ready(function() {
-	// 	ubah_nama_barang = $('#barang_ubah');
-	// 	ubah_kode_barang = $('#kode_barang_ubah');
-	// 	ubah_qty = $('#qty_ubah');
-	// 	ubah_harga = $('#harga_ubah');
-	// 	ubah_total_harga = $('#total_harga_ubah');
-	// 	ubah_stok = $('#stok_ubah');
+	function countQty() {
+		if (temp.ubah.id == barang_ubah.value) {
+			if (qty_ubah.value > Number(temp.ubah.qty)) {
+				console.log('lebih');
+			} else if (qty_ubah.value < Number(temp.ubah.qty)) {
+				console.log('kurang');
+			} else if (qty_ubah.value == Number(temp.ubah.qty)) {
+				console.log('sama');
+			}
+		}
+		total_harga_ubah.value = (Number(qty_ubah.value) * Number(harga_ubah.value));
+	}
 
-	// 	function caputre() {
-	// 		<?php foreach ($data['tambah']['barang'] as $b) : ?>
-	// 			if (ubah_nama_barang.val() == '<?= $b['id_barang_data']; ?>') {
-	// 				ubah_kode_barang.val('<?= $b['barang_data_kode']; ?>');
-	// 				ubah_harga.val('<?= $b['barang_data_harga_jual']; ?>');
-	// 				ubah_stok.val('<?= getStokBarang($b['id_barang_data']); ?>');
-	// 			}
-	// 		<?php endforeach; ?>
-	// 		countQty();
-	// 	}
+	function setVisibleForm(visible = true) {
+		if (visible) form_modal_ubah.removeAttribute('onsubmit');
+		else form_modal_ubah.setAttribute('onsubmit', 'return false');
+	}
 
-	// 	function countQty() {
-	// 		ubah_total_harga.val(Number(ubah_qty.val()) * Number(ubah_harga.val()));
-	// 	}
-
-	// 	ubah_nama_barang.on('change', function() {
-	// 		caputre();
-	// 	});
-
-	// 	ubah_qty.on('keyup', function() {
-	// 		countQty();
-	// 	});
-	// 	caputre();
-	// });
+	function cekStok(id) {
+		if (id == temp.ubah.id) {
+			setAlert('hide_alert', '', '', '#alert-modal-ubah');
+			setVisibleForm();
+		} else {
+			if ((temp.ubah.stok - temp.ubah.qty) < 0) {
+				setAlert('Peringatan.. ', "Barang tidak bisa diubah karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
+				setVisibleForm(false);
+			} else {
+				setAlert('hide_alert', '', '', '#alert-modal-ubah');
+				setVisibleForm();
+			}
+		}
+	}
 </script>

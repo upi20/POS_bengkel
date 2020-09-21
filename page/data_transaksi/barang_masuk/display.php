@@ -21,7 +21,7 @@ include "ubah.php";
 
 
 // ==========================================================
-$datas = query("SELECT * FROM tb_barang_masuk 
+$display = query("SELECT * FROM tb_barang_masuk 
     JOIN
     tb_barang_data
     ON tb_barang_masuk.id_barang_data = tb_barang_data.id_barang_data
@@ -60,8 +60,8 @@ $nomor = 0;
                                 </tr>
                             </thead>
                             <?php
-                            if ($datas) {
-                                foreach ($datas as $data) {
+                            if ($display) {
+                                foreach ($display as $data) {
                             ?>
                                     <tr>
                                         <td><?php echo ++$nomor; ?></td>
@@ -72,7 +72,7 @@ $nomor = 0;
                                         <td style="text-align:right"><?php echo 'Rp. ' . number_format($data['barang_masuk_harga'] * $data['barang_masuk_jumlah'], 0, ',', '.'); ?></td>
                                         <td><?php echo $data['barang_masuk_tanggal']; ?></td>
                                         <td style="white-space:nowrap">
-                                            <button class="btn btn-warning" onclick="ubahData(this)" data-toggle="modal" data-target="#modalubah" data-id_barang_masuk="<?php echo $data['id_barang_masuk']; ?>" data-id_barang_data="<?php echo $data['id_barang_data']; ?>" data-id_barang_suplier="<?php echo $data['id_barang_suplier']; ?>" data-barang_masuk_kode="<?php echo $data['barang_masuk_kode']; ?>" data-barang_masuk_jumlah="<?php echo $data['barang_masuk_jumlah']; ?>" data-barang_masuk_harga="<?php echo $data['barang_masuk_harga']; ?>" data-barang_masuk_tanggal="<?php echo $data['barang_masuk_tanggal']; ?>">
+                                            <button class="btn btn-warning" onclick="ubahData(this)" data-toggle="modal" data-target="#modalubah" data-id_barang_masuk="<?php echo $data['id_barang_masuk']; ?>" data-id_barang_data="<?php echo $data['id_barang_data']; ?>" data-id_barang_suplier="<?php echo $data['id_barang_suplier']; ?>" data-barang_masuk_kode="<?php echo $data['barang_masuk_kode']; ?>" data-barang_masuk_jumlah="<?php echo $data['barang_masuk_jumlah']; ?>" data-barang_masuk_harga="<?php echo $data['barang_masuk_harga']; ?>" data-barang_masuk_tanggal="<?php echo $data['barang_masuk_tanggal']; ?>" data-barang_masuk_kode="<?php echo $data['barang_masuk_kode']; ?>">
                                                 <i class="fa fa-edit"></i> Ubah
                                             </button>
                                             <button class="btn btn-danger" onclick="hapusData('<?php echo $data['barang_kategori_nama']; ?>', '<?php echo $data['id_barang_kategori']; ?>')" data-toggle="modal" data-target="#modalHapus"><i class="fa fa-trash"></i> Hapus</button>
