@@ -1,27 +1,3 @@
-<?php
-if (isset($_POST['simpan_tambah'])) {
-	$id_suplier     = $_POST['suplier_tambah'];
-	$kode_transaksi = $_POST['kode_transaksi_tambah'];
-	$id_barang      = $_POST['barang_tambah'];
-	$jumlah         = $_POST['qty_tambah'];
-	$harga          = $_POST['harga_tambah'];
-	$tgl            = $_POST['tgl_tambah'];
-
-	$querybuilder = "INSERT INTO `tb_barang_masuk` 
-	(`id_barang_masuk`, `id_barang_data`, `id_barang_suplier`, `barang_masuk_kode`, `barang_masuk_jumlah`, `barang_masuk_harga`, `barang_masuk_tanggal`)
-	VALUES 
-	(NULL, '$id_barang', '$id_suplier', '$kode_transaksi', '$jumlah', '$harga', '$tgl')";
-
-	if ($koneksi->query($querybuilder)) {
-		setAlert('Berhasil..! ', 'Data berhasil ditambahkan..', 'success');
-		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
-	} else {
-		setAlert('Gagal..! ', 'Data gagal ditambahkan..', 'success');
-		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
-	}
-}
-
-?>
 <!-- Modal tambah -->
 <!-- ================================================================================================ -->
 <div class="modal fade" id="modaltambah">
@@ -128,6 +104,18 @@ if (isset($_POST['simpan_tambah'])) {
 <!-- ================================================================================================ -->
 
 <script>
+	let temp = {};
+	let data_barang = [];
+	<?php for ($i = 0; $i < count($data['tambah']['barang']); $i++) : ?>
+		data_barang[<?= $data['tambah']['barang'][$i]['id_barang_data']; ?>] = {
+			id_barang_data: <?= $data['tambah']['barang'][$i]['id_barang_data']; ?>,
+			barang_data_stok: <?= $data['tambah']['barang'][$i]['barang_data_stok']; ?>,
+			barang_data_harga_jual: <?= $data['tambah']['barang'][$i]['barang_data_harga_jual']; ?>,
+			barang_data_kode: '<?= $data['tambah']['barang'][$i]['barang_data_kode']; ?>',
+			barang_data_nama: '<?= $data['tambah']['barang'][$i]['barang_data_nama']; ?>',
+		};
+	<?php endfor; ?>
+
 	$(document).ready(function() {
 		const nama_barang = $('#barang_tambah');
 		const kode_barang = $('#kode_barang_tambah');
@@ -152,6 +140,10 @@ if (isset($_POST['simpan_tambah'])) {
 		}
 
 		nama_barang.on('change', function() {
+			caputre();
+		});
+
+		qty.on('click', function() {
 			caputre();
 		});
 

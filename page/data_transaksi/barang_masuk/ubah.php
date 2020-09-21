@@ -1,26 +1,3 @@
-<?php
-if (isset($_POST['simpan_ubah1'])) {
-	$id_suplier     = $_POST['suplier_ubah'];
-	$kode_transaksi = $_POST['kode_transaksi_ubah'];
-	$id_barang      = $_POST['barang_ubah'];
-	$jumlah         = $_POST['qty_ubah'];
-	$harga          = $_POST['harga_ubah'];
-	$tgl            = $_POST['tgl_ubah'];
-	$querybuilder   = "INSERT INTO `tb_barang_masuk` 
-	(`id_barang_masuk`, `id_barang_data`, `id_barang_suplier`, `barang_masuk_kode`, `barang_masuk_jumlah`, `barang_masuk_harga`, `barang_masuk_tanggal`)
-	VALUES 
-	(NULL, '$id_barang', '$id_suplier', '$kode_transaksi', '$jumlah', '$harga', '$tgl')";
-
-	if ($koneksi->query($querybuilder)) {
-		setAlert('Berhasil..! ', 'Data berhasil diubahkan..', 'success');
-		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
-	} else {
-		setAlert('Gagal..! ', 'Data gagal diubahkan..', 'success');
-		echo '<script type = "text/javascript">window.location.href = "' . $_baseurl . '";</script>';
-	}
-}
-
-?>
 <!-- Modal ubah -->
 <!-- ================================================================================================ -->
 <div class="modal fade" id="modalubah">
@@ -71,7 +48,7 @@ if (isset($_POST['simpan_ubah1'])) {
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Stok Yang Ada</label>
+												<label>Stok Menjadi</label>
 												<input class="form-control" type="number" id="stok_ubah" name="stok_ubah" readonly>
 											</div>
 										</div>
@@ -109,6 +86,7 @@ if (isset($_POST['simpan_ubah1'])) {
 											<div class="form-group">
 												<label>Kode barang</label>
 												<input class="form-control" type="text" name="kode_barang_ubah" id="kode_barang_ubah" readonly />
+												<input hidden="" type="text" name="id_barang_masuk_ubah" id="id_barang_masuk_ubah" readonly />
 											</div>
 										</div>
 									</div>
@@ -128,8 +106,6 @@ if (isset($_POST['simpan_ubah1'])) {
 <!-- ================================================================================================ -->
 
 <script>
-	let data_barang = [];
-	let temp = {};
 	let qty_ubah = document.querySelector('#qty_ubah');
 	let barang_ubah = document.querySelector('#barang_ubah');
 	let total_harga_ubah = document.querySelector('#total_harga_ubah');
@@ -141,17 +117,7 @@ if (isset($_POST['simpan_ubah1'])) {
 	let kode_transaksi_ubah = document.querySelector('#kode_transaksi_ubah');
 	let form_modal_ubah = document.querySelector('#form_modal_ubah');
 	let alert_modal_ubah = document.querySelector('#alert-modal-ubah');
-
-	<?php for ($i = 0; $i < count($data['tambah']['barang']); $i++) : ?>
-		data_barang[<?= $data['tambah']['barang'][$i]['id_barang_data']; ?>] = {
-			id_barang_data: <?= $data['tambah']['barang'][$i]['id_barang_data']; ?>,
-			barang_data_stok: <?= $data['tambah']['barang'][$i]['barang_data_stok']; ?>,
-			barang_data_harga_jual: <?= $data['tambah']['barang'][$i]['barang_data_harga_jual']; ?>,
-			barang_data_kode: '<?= $data['tambah']['barang'][$i]['barang_data_kode']; ?>',
-			barang_data_nama: '<?= $data['tambah']['barang'][$i]['barang_data_nama']; ?>',
-		};
-	<?php endfor; ?>
-
+	let id_barang_masuk_ubah = document.querySelector('#id_barang_masuk_ubah');
 
 	barang_ubah.addEventListener('change', function() {
 		caputre(this.value);
@@ -167,11 +133,14 @@ if (isset($_POST['simpan_ubah1'])) {
 	});
 
 	function ubahData(data) {
+		setAlert('hide_alert', '', '', '#alert-modal-ubah');
+		setVisibleForm();
 		suplier_ubah.value = data.dataset.id_barang_suplier;
 		barang_ubah.value = data.dataset.id_barang_data;
 		qty_ubah.value = data.dataset.barang_masuk_jumlah;
 		kode_transaksi_ubah.value = data.dataset.barang_masuk_kode;
 		tgl_ubah.value = data.dataset.barang_masuk_tanggal;
+		id_barang_masuk_ubah.value = data.dataset.id_barang_masuk;
 		temp.ubah = {
 			id: data.dataset.id_barang_data,
 			stok: data_barang[data.dataset.id_barang_data].barang_data_stok,
@@ -190,13 +159,20 @@ if (isset($_POST['simpan_ubah1'])) {
 
 	function countQty() {
 		if (temp.ubah.id == barang_ubah.value) {
-			if (qty_ubah.value > Number(temp.ubah.qty)) {
-				console.log('lebih');
-			} else if (qty_ubah.value < Number(temp.ubah.qty)) {
-				console.log('kurang');
-			} else if (qty_ubah.value == Number(temp.ubah.qty)) {
-				console.log('sama');
+			if (Number(qty_ubah.value) > Number(temp.ubah.qty)) {
+				stok_ubah.value = Number(temp.ubah.stok) + Number(qty_ubah.value) - Number(temp.ubah.qty);
+			} else if (Number(qty_ubah.value) < Number(temp.ubah.qty)) {
+				stok_ubah.value = Number(temp.ubah.stok) - (Number(temp.ubah.qty) - Number(qty_ubah.value));
+				if (Number(stok_ubah.value) < 0) {
+					setAlert('Peringatan.. ', "Qty tidak bisa kurangi lagi karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
+					setVisibleForm(false);
+				} else {
+					setAlert('hide_alert', '', '', '#alert-modal-ubah');
+					setVisibleForm();
+				}
 			}
+		} else {
+			stok_ubah.value = Number(qty_ubah.value) + Number(data_barang[barang_ubah.value].barang_data_stok);
 		}
 		total_harga_ubah.value = (Number(qty_ubah.value) * Number(harga_ubah.value));
 	}
@@ -210,6 +186,7 @@ if (isset($_POST['simpan_ubah1'])) {
 		if (id == temp.ubah.id) {
 			setAlert('hide_alert', '', '', '#alert-modal-ubah');
 			setVisibleForm();
+			countQty();
 		} else {
 			if ((temp.ubah.stok - temp.ubah.qty) < 0) {
 				setAlert('Peringatan.. ', "Barang tidak bisa diubah karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
