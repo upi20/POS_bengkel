@@ -1,7 +1,6 @@
 <?php
 session_start();
-$koneksi = new mysqli("localhost", "root", "", "db_pos_bengkel");
-
+include "config.php";
 if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
     header("location: index.php");
 } else if (isset($_POST['login'])) {

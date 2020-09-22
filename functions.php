@@ -1,6 +1,4 @@
 <?php
-$koneksi = new mysqli("localhost", "root", "", "db_pos_bengkel");
-
 function terlambat($tgl_dateline, $tgl_kembali)
 {
 

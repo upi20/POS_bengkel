@@ -1,49 +1,13 @@
 <?php
 // error_reporting(0);
 session_start();
-include "function.php";
-
-
-// tools ======================================================
-// Judul halaman
-$tools['page_title'] = "PT. Agung Automall Jambi";
-
-
-
-// jangan dirubah <------
-$temp['page']['title'] = false;
-// --------------------->
-
-
-
-// mode Ubah dan Delete Manajemen user
-$tools['developer'] = true;
-//  ===========================================================
-
-
-
+include "config.php";
+include "functions.php";
 
 
 // ============================================================
 // cek apakah user sudah login altau belum
 if (!ceklogin($_SESSION['user'])) header('Location: login.php');
-
-
-
-// mengecek apakah ada data get atau tidak
-if (isset($_GET['page'])) $page = $_GET['page'];
-else $page = "";
-
-if (isset($_GET['submenu'])) $submenu = $_GET['submenu'];
-else $submenu = "";
-
-
-
-// mendefinisikan base url
-$_baseurl = '?page=' . $page . '&submenu=' . $submenu;
-
-
-
 
 // Mengambil data untuk menu navigasi
 $level        = $_SESSION['user']['level'];
