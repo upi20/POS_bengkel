@@ -116,40 +116,41 @@
 		};
 	<?php endfor; ?>
 
-	$(document).ready(function() {
-		const nama_barang = $('#barang_tambah');
-		const kode_barang = $('#kode_barang_tambah');
-		const qty = $('#qty_tambah');
-		const harga = $('#harga_tambah');
-		const total_harga = $('#total_harga_tambah');
-		const stok = $('#stok_tambah');
+	function tambahData() {
+		let nama_barang = document.querySelector('#barang_tambah');
+		let kode_barang = document.querySelector('#kode_barang_tambah');
+		let qty = document.querySelector('#qty_tambah');
+		let harga = document.querySelector('#harga_tambah');
+		let total_harga = document.querySelector('#total_harga_tambah');
+		let stok = document.querySelector('#stok_tambah');
 
-		function caputre() {
-			<?php foreach ($data['tambah']['barang'] as $b) : ?>
-				if (nama_barang.val() == '<?= $b['id_barang_data']; ?>') {
-					kode_barang.val('<?= $b['barang_data_kode']; ?>');
-					harga.val('<?= $b['barang_data_harga_jual']; ?>');
-					stok.val('<?= getStokBarang($b['id_barang_data']); ?>');
-				}
-			<?php endforeach; ?>
+		const countQty = () => {
+			total_harga.value = Number(qty.value) * Number(harga.value);
+		}
+
+		const capture = (id) => {
+			stok.value = data_barang[id].barang_data_stok;
+			kode_barang.value = data_barang[id].barang_data_kode;
+			harga.value = data_barang[id].barang_data_harga_jual;
 			countQty();
 		}
 
-		function countQty() {
-			total_harga.val(Number(qty.val()) * Number(harga.val()));
-		}
-
-		nama_barang.on('change', function() {
-			caputre();
+		nama_barang.addEventListener('click', () => {
+			capture(nama_barang.value);
 		});
 
-		qty.on('click', function() {
-			caputre();
+		nama_barang.addEventListener('change', () => {
+			capture(nama_barang.value);
 		});
 
-		qty.on('keyup', function() {
-			countQty();
+		qty.addEventListener('click', () => {
+			capture(nama_barang.value);
 		});
-		caputre();
-	});
+
+		qty.addEventListener('keyup', () => {
+			capture(nama_barang.value);
+		});
+
+		capture(nama_barang.value);
+	}
 </script>

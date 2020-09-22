@@ -106,35 +106,20 @@
 <!-- ================================================================================================ -->
 
 <script>
-	let qty_ubah = document.querySelector('#qty_ubah');
-	let barang_ubah = document.querySelector('#barang_ubah');
-	let total_harga_ubah = document.querySelector('#total_harga_ubah');
-	let stok_ubah = document.querySelector('#stok_ubah')
-	let kode_barang_ubah = document.querySelector('#kode_barang_ubah')
-	let harga_ubah = document.querySelector('#harga_ubah')
-	let suplier_ubah = document.querySelector('#suplier_ubah');
-	let tgl_ubah = document.querySelector('#tgl_ubah');
-	let kode_transaksi_ubah = document.querySelector('#kode_transaksi_ubah');
-	let form_modal_ubah = document.querySelector('#form_modal_ubah');
-	let alert_modal_ubah = document.querySelector('#alert-modal-ubah');
-	let id_barang_masuk_ubah = document.querySelector('#id_barang_masuk_ubah');
-
-	barang_ubah.addEventListener('change', function() {
-		caputre(this.value);
-		countQty();
-		cekStok(this.value);
-	});
-
-	qty_ubah.addEventListener('keyup', function() {
-		countQty();
-	});
-	qty_ubah.addEventListener('click', function() {
-		countQty();
-	});
-
 	function ubahData(data) {
-		setAlert('hide_alert', '', '', '#alert-modal-ubah');
-		setVisibleForm();
+		let qty_ubah = document.querySelector('#qty_ubah');
+		let barang_ubah = document.querySelector('#barang_ubah');
+		let total_harga_ubah = document.querySelector('#total_harga_ubah');
+		let stok_ubah = document.querySelector('#stok_ubah')
+		let kode_barang_ubah = document.querySelector('#kode_barang_ubah')
+		let harga_ubah = document.querySelector('#harga_ubah')
+		let suplier_ubah = document.querySelector('#suplier_ubah');
+		let tgl_ubah = document.querySelector('#tgl_ubah');
+		let kode_transaksi_ubah = document.querySelector('#kode_transaksi_ubah');
+		let form_modal_ubah = document.querySelector('#form_modal_ubah');
+		let alert_modal_ubah = document.querySelector('#alert-modal-ubah');
+		let id_barang_masuk_ubah = document.querySelector('#id_barang_masuk_ubah');
+
 		suplier_ubah.value = data.dataset.id_barang_suplier;
 		barang_ubah.value = data.dataset.id_barang_data;
 		qty_ubah.value = data.dataset.barang_masuk_jumlah;
@@ -146,55 +131,70 @@
 			stok: data_barang[data.dataset.id_barang_data].barang_data_stok,
 			qty: Number(data.dataset.barang_masuk_jumlah)
 		};
-		caputre(data.dataset.id_barang_data);
-	}
 
+		const setVisibleForm = (visible = true) => {
+			if (visible) form_modal_ubah.removeAttribute('onsubmit');
+			else form_modal_ubah.setAttribute('onsubmit', 'return false');
+		}
 
-	function caputre(id) {
-		stok_ubah.value = data_barang[id].barang_data_stok;
-		kode_barang_ubah.value = data_barang[id].barang_data_kode;
-		harga_ubah.value = data_barang[id].barang_data_harga_jual;
-		countQty();
-	}
+		const countQty = () => {
+			if (temp.ubah.id == barang_ubah.value) {
+				if (Number(qty_ubah.value) > Number(temp.ubah.qty)) {
+					stok_ubah.value = Number(temp.ubah.stok) + Number(qty_ubah.value) - Number(temp.ubah.qty);
+				} else if (Number(qty_ubah.value) < Number(temp.ubah.qty)) {
+					stok_ubah.value = Number(temp.ubah.stok) - (Number(temp.ubah.qty) - Number(qty_ubah.value));
+					if (Number(stok_ubah.value) < 0) {
+						setAlert('Peringatan.. ', "Qty tidak bisa kurangi lagi karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
+						setVisibleForm(false);
+					} else {
+						setAlert('hide_alert', '', '', '#alert-modal-ubah');
+						setVisibleForm();
+					}
+				}
+			} else {
+				stok_ubah.value = Number(qty_ubah.value) + Number(data_barang[barang_ubah.value].barang_data_stok);
+			}
+			total_harga_ubah.value = (Number(qty_ubah.value) * Number(harga_ubah.value));
+		}
 
-	function countQty() {
-		if (temp.ubah.id == barang_ubah.value) {
-			if (Number(qty_ubah.value) > Number(temp.ubah.qty)) {
-				stok_ubah.value = Number(temp.ubah.stok) + Number(qty_ubah.value) - Number(temp.ubah.qty);
-			} else if (Number(qty_ubah.value) < Number(temp.ubah.qty)) {
-				stok_ubah.value = Number(temp.ubah.stok) - (Number(temp.ubah.qty) - Number(qty_ubah.value));
-				if (Number(stok_ubah.value) < 0) {
-					setAlert('Peringatan.. ', "Qty tidak bisa kurangi lagi karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
+		const cekStok = (id) => {
+			if (id == temp.ubah.id) {
+				setAlert('hide_alert', '', '', '#alert-modal-ubah');
+				setVisibleForm();
+				countQty();
+			} else {
+				if ((temp.ubah.stok - temp.ubah.qty) < 0) {
+					setAlert('Peringatan.. ', "Barang tidak bisa diubah karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
 					setVisibleForm(false);
 				} else {
 					setAlert('hide_alert', '', '', '#alert-modal-ubah');
 					setVisibleForm();
 				}
 			}
-		} else {
-			stok_ubah.value = Number(qty_ubah.value) + Number(data_barang[barang_ubah.value].barang_data_stok);
 		}
-		total_harga_ubah.value = (Number(qty_ubah.value) * Number(harga_ubah.value));
-	}
 
-	function setVisibleForm(visible = true) {
-		if (visible) form_modal_ubah.removeAttribute('onsubmit');
-		else form_modal_ubah.setAttribute('onsubmit', 'return false');
-	}
-
-	function cekStok(id) {
-		if (id == temp.ubah.id) {
-			setAlert('hide_alert', '', '', '#alert-modal-ubah');
-			setVisibleForm();
+		const caputre = (id) => {
+			stok_ubah.value = data_barang[id].barang_data_stok;
+			kode_barang_ubah.value = data_barang[id].barang_data_kode;
+			harga_ubah.value = data_barang[id].barang_data_harga_jual;
 			countQty();
-		} else {
-			if ((temp.ubah.stok - temp.ubah.qty) < 0) {
-				setAlert('Peringatan.. ', "Barang tidak bisa diubah karena stok akan menjadi minus..!", 'danger', '#alert-modal-ubah');
-				setVisibleForm(false);
-			} else {
-				setAlert('hide_alert', '', '', '#alert-modal-ubah');
-				setVisibleForm();
-			}
 		}
+
+		barang_ubah.addEventListener('change', function() {
+			caputre(this.value);
+			countQty();
+			cekStok(this.value);
+		});
+
+		qty_ubah.addEventListener('keyup', function() {
+			countQty();
+		});
+		qty_ubah.addEventListener('click', function() {
+			countQty();
+		});
+
+		setAlert('hide_alert', '', '', '#alert-modal-ubah');
+		setVisibleForm();
+		caputre(data.dataset.id_barang_data);
 	}
 </script>
