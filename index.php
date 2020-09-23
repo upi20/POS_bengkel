@@ -11,7 +11,6 @@ if (!ceklogin($_SESSION['user'])) header('Location: login.php');
 
 // Mengambil data untuk menu navigasi
 $level        = $_SESSION['user']['level'];
-$display_page = "home.php";
 $menus        = query("SELECT * FROM tb_user_menu_access 
         INNER JOIN tb_user_menu 
         ON    tb_user_menu_access.menu_id       = tb_user_menu.user_menu_id
@@ -40,10 +39,10 @@ if ($menus) {
 
                 // mencari menu dan sub menu navigasi active
                 if ($menus[$i]['menu_url'] . $menus[$i]['sub_menu'][$j]['sub_menu_url'] == ($page . $submenu)) {
-                    $display_page                 = $menus[$i]['sub_menu'][$j]['file'];
+                    $display_page                        = $menus[$i]['sub_menu'][$j]['file'];
                     $menus[$i]['sub_menu'][$j]['active'] = true;
                     $menus[$i]['active']                 = true;
-                    $temp['page']['title'] = $menus[$i]['sub_menu'][$j]['title'];
+                    $temp['page']['title']               = $menus[$i]['sub_menu'][$j]['title'];
                 } else {
                     $menus[$i]['sub_menu'][$j]['active'] = false;
                 }
@@ -137,8 +136,8 @@ if ($menus) {
                                 // tag buaka ul
                                 if ($menu['active']) {
                                     echo '
-                                <a  href  = "#" class                                        = "bg-primary"><i class = "' . $menu["icon"] . '"></i> ' . $menu["menu_title"] . '<span class = "fa arrow"></span></a>
-                                <ul class = "nav nav-second-level collapse in" aria-expanded = "true" style          = "">
+                                <a  href  = "#" class="bg-primary"><i class = "' . $menu["icon"] . '"></i> ' . $menu["menu_title"] . '<span class = "fa arrow"></span></a>
+                                <ul class = "nav nav-second-level collapse in" aria-expanded = "true" style= "">
                                 ';
                                 } else {
                                     echo '
