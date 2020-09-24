@@ -8,6 +8,7 @@ if (isset($_POST['simpan'])) {
     $kategori    = $_POST['kategori'];
     $fotoasal    = $_POST['fotoasal'];
     $id_barang   = $_POST['id_barang'];
+    $tgl_daftar  = $_POST['tgl_daftar'];
     $gambar      = $_FILES['gambar']['name'];
     $lokasi      = $_FILES['gambar']['tmp_name'];
 
@@ -28,6 +29,7 @@ if (isset($_POST['simpan'])) {
             `barang_data_harga_beli` = '$harga_beli',
             `barang_data_harga_jual` = '$harga_jual',
             `barang_data_gambar`     = '$namaFileBaru',
+            `barang_data_tanggal`    = '$tgl_daftar',
             `id_barang_kategori`     = '$kategori'
         WHERE `tb_barang_data`.`id_barang_data` = '$id_barang'
         ";
@@ -45,6 +47,7 @@ if (isset($_POST['simpan'])) {
             `barang_data_nama`       = '$nama_barang',
             `barang_data_harga_beli` = '$harga_beli',
             `barang_data_harga_jual` = '$harga_jual',
+            `barang_data_tanggal`    = '$tgl_daftar',
             `id_barang_kategori`     = '$kategori'
         WHERE `tb_barang_data`.`id_barang_data` = '$id_barang'
         ";
@@ -158,6 +161,12 @@ if (isset($_GET['id'])) {
                                             }
                                         } ?>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tanggal Daftar</label>
+                                    <input class="form-control" type="date" name="tgl_daftar" id="tgl_daftar" value="<?php echo $tampil['data']['barang_data_tanggal']; ?>" />
                                 </div>
                             </div>
                             <div class="col-md-3">

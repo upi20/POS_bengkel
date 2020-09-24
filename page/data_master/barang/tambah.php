@@ -6,6 +6,7 @@ if (isset($_POST['simpan'])) {
     $harga_beli  = $_POST['harga_beli'];
     $harga_jual  = $_POST['harga_jual'];
     $kategori    = $_POST['kategori'];
+    $tgl_daftar  = $_POST['tgl_daftar'];
 
     // menyiapkan informasi gambar
     $foto          = $_FILES['gambar']['name'];
@@ -16,9 +17,9 @@ if (isset($_POST['simpan'])) {
     $upload        = move_uploaded_file($lokasi, "images/master_data_barang/" . $namaFileBaru);
 
     $querybuilder = "INSERT INTO `tb_barang_data` 
-    (`id_barang_data`, `id_barang_kategori`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_beli`, `barang_data_harga_jual`, `barang_data_gambar`)
+    (`id_barang_data`, `id_barang_kategori`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_beli`, `barang_data_harga_jual`, `barang_data_gambar`, `barang_data_tanggal`)
     VALUES 
-    (NULL, '$kategori', '$nama_barang', '$kode_barang', '$harga_beli', '$harga_jual', '$namaFileBaru') ";
+    (NULL, '$kategori', '$nama_barang', '$kode_barang', '$harga_beli', '$harga_jual', '$namaFileBaru', '$tgl_daftar') ";
 
     $sql = $koneksi->query($querybuilder);
     if ($sql) {
@@ -111,7 +112,13 @@ $kategori = query("SELECT * FROM tb_barang_kategori");
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tanggal Daftar</label>
+                                    <input class="form-control" readonly="" type="date" name="tgl_daftar" id="tgl_daftar" value="<?= date("yy-m-d"); ?>" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="gambar">Gambar</label>
                                     <input type="file" class="file-control-file" name="gambar" id="gambar" required="" />

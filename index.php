@@ -69,9 +69,9 @@ if ($menus) {
     <!-- FONTAWESOME STYLES-->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLES-->
-    <link href="assets/css/custom.css" rel="stylesheet" />
 
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
 
     <style>
         .navbar-bg {
@@ -92,6 +92,41 @@ if ($menus) {
         .navbar-merek:hover {
             text-decoration: none;
             color: #fff;
+        }
+
+
+        .checkbox[type="checkbox"] {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            -webkit-appearance: none;
+            background: #c6c6c6;
+            outline: none;
+            border-radius: 20px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+            transition: .5s;
+        }
+
+        .checkbox:checked[type="checkbox"] {
+            background: #03a9f4;
+        }
+
+        .checkbox[type="checkbox"]:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            top: 0;
+            left: 0;
+            background: #ffffff;
+            transform: scale(1.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            transition: .5s;
+        }
+
+        .checkbox:checked[type="checkbox"]:before {
+            left: 20px;
         }
     </style>
     <!-- JQUERY SCRIPTS -->
