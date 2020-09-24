@@ -62,7 +62,7 @@ if (isset($_GET['title'])) {
     </style>
     <title><?php echo $judul_laporan; ?></title>
     <script>
-        // window.print();
+        window.print();
     </script>
 </head>
 

@@ -1,5 +1,4 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,16 +13,17 @@ CREATE TABLE `tb_barang_data` (
   `barang_data_kode` varchar(100) COLLATE utf8_bin NOT NULL,
   `barang_data_harga_beli` int(255) NOT NULL,
   `barang_data_harga_jual` int(255) NOT NULL,
+  `barang_data_tanggal` date NOT NULL,
   `barang_data_gambar` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `tb_barang_data` (`id_barang_data`, `id_barang_kategori`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_beli`, `barang_data_harga_jual`, `barang_data_gambar`) VALUES
-(40, 8, 'Ban addidas Terbaru', '2020-09-19-5f66001194479', 300000, 350000, '2020-09-19-5f66001194479_5f6718c627efa.jpg'),
-(41, 13, 'Spion Addinda', '2020-09-19-5f660025905c9', 100000, 110000, 'qweqwe_5f65ecebaad38.jpg'),
-(42, 9, 'Velg Rokstar', '2020-09-19-5f6600401f739', 1000000, 1200000, 'qweqwe_5f65ed197799c.jpg'),
-(46, 13, 'Kaca Spion', '2020-09-19-5f66005fb0a3a', 30000, 35000, '111efd_5f65e7944b0ed.jpg'),
-(50, 10, 'Monitor LCD', '2020-09-19-5f66007e8767d', 2000000, 2200000, '123_5f65e77157af2.jpg'),
-(53, 8, 'Spion super', '2020-09-20-5f66bb70afac9', 50000, 51000, '2020-09-20-5f66bb70afac9_5f674b87bad1b.jpg');
+INSERT INTO `tb_barang_data` (`id_barang_data`, `id_barang_kategori`, `barang_data_nama`, `barang_data_kode`, `barang_data_harga_beli`, `barang_data_harga_jual`, `barang_data_tanggal`, `barang_data_gambar`) VALUES
+(40, 8, 'Ban addidas Terbaru', '2020-09-19-5f66001194479', 300000, 350000, '2020-09-23', '2020-09-19-5f66001194479_5f6718c627efa.jpg'),
+(41, 13, 'Spion Addinda', '2020-09-19-5f660025905c9', 100000, 110000, '2020-09-22', 'qweqwe_5f65ecebaad38.jpg'),
+(42, 9, 'Velg Rokstar', '2020-09-19-5f6600401f739', 1000000, 1200000, '2020-09-01', 'qweqwe_5f65ed197799c.jpg'),
+(46, 13, 'Kaca Spion', '2020-09-19-5f66005fb0a3a', 30000, 35000, '2020-09-26', '111efd_5f65e7944b0ed.jpg'),
+(50, 10, 'Monitor LCD', '2020-09-19-5f66007e8767d', 2000000, 2200000, '2020-09-22', '123_5f65e77157af2.jpg'),
+(53, 8, 'Spion super', '2020-09-20-5f66bb70afac9', 50000, 51000, '2020-09-23', '2020-09-20-5f66bb70afac9_5f674b87bad1b.jpg');
 
 CREATE TABLE `tb_barang_kategori` (
   `id_barang_kategori` int(11) NOT NULL,

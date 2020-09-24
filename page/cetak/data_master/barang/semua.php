@@ -48,7 +48,7 @@ if (isset($_POST['cetak'])) {
         $dari = $_POST['tanggal_dari'];
         $sampai = $_POST['tanggal_sampai'];
         if ($title_laporan == "") $title_laporan = "Laporan Barang<br>Tanggal: Dari " . $dari . " Sampai " . $sampai;
-        else $title_laporan .= "<br>Tanggal: Dari " . $dari . " Sampai " . $sampai;
+        else $title_laporan .= "<br>Periode: Dari " . $dari . " / " . $sampai;
 
         if ($qwhere == "") $qwhere .= "WHERE ";
         else $qwhere .= ") AND ";
