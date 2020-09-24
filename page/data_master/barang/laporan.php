@@ -8,7 +8,7 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
                 Cetak Semua Data Barang
             </div>
             <div class="panel-body">
-                <form action="./page/cetak/cetak.php" method="post">
+                <form action="./page/cetak/cetak.php?laporan=barang" target="blank" method="post">
                     <div class="row">
                         <h4 style="padding:3px 0; margin:0; text-align:center;">Kostumisasi</h4>
                         <hr>

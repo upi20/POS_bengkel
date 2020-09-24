@@ -37,6 +37,7 @@ INSERT INTO `tb_barang_kategori` (`id_barang_kategori`, `barang_kategori_nama`) 
 (21, 'Lain-Lain'),
 (23, 'Lainnya'),
 (24, 'Other'),
+(29, 'Pintu Mobil'),
 (13, 'Spion'),
 (9, 'Velg');
 
@@ -220,9 +221,9 @@ INSERT INTO `tb_user_sub_menu` (`id`, `menu_id`, `title`, `sub_menu_url`, `file`
 (20, 4, 'Data Kategori Barang', 'kategori', 'page/data_master/kategori/display.php'),
 (21, 4, 'Data Barang', 'barang', 'page/data_master/barang/barang.php'),
 (22, 4, 'Data Konsumen', 'konsumen', 'page/data_master/konsumen/konsumen.php'),
-(24, 3, 'Laporan Barang', 'barang', 'page/data_master/barang/form_laporan_barang.php'),
+(24, 3, 'Laporan Barang', 'barang', 'page/data_master/barang/laporan.php'),
 (25, 3, 'Laporan Konsumen', 'konsumen', 'page/data_master/konsumen/form_laporan_konsumen.php'),
-(26, 3, 'Laporan Kategori', 'kategori', 'page/data_master/kategori/form_laporan_kategori.php'),
+(26, 3, 'Laporan Kategori', 'kategori', 'page/data_master/kategori/laporan.php'),
 (27, 3, 'Laporan Penjualan', 'penjualan', 'page/data_transaksi/transaksi/form_laporan_transaksi.php'),
 (34, 5, 'Data Level', 'level', 'page/data_pengguna/level/switcher.php'),
 (37, 2, 'Data Pengadaan', 'barang_masuk', 'page/data_transaksi/barang_masuk/display.php'),
@@ -357,7 +358,7 @@ ALTER TABLE `tb_barang_data`
   MODIFY `id_barang_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 ALTER TABLE `tb_barang_kategori`
-  MODIFY `id_barang_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_barang_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 ALTER TABLE `tb_barang_keluar`
   MODIFY `id_barang_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;

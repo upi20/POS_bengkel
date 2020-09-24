@@ -85,12 +85,12 @@ $datas = query($qbuilder);
                 <th style="text-align: center;">No</th>
                 <?php
                 if (isset($_POST['tabel_nama'])) echo '<th style="text-align: center;">Nama barang</th>';
+                if (isset($_POST['tabel_kategori'])) echo '<th style="text-align: center;">Kategori</th>';
+                if (isset($_POST['tabel_tanggal'])) echo '<th style="text-align: center;">Tgl Daftar</th>';
+                if (isset($_POST['tabel_stok'])) echo '<th style="text-align: center;">Stok</th>';
                 if (isset($_POST['tabel_harga_beli'])) echo '<th style="text-align: center;">Harga beli</th>';
                 if (isset($_POST['tabel_harga_jual'])) echo '<th style="text-align: center;">Harga jual</th>';
-                if (isset($_POST['tabel_stok'])) echo '<th style="text-align: center;">Stok</th>';
                 if (isset($_POST['tabel_gambar'])) echo '<th style="text-align: center;">Gambar</th>';
-                if (isset($_POST['tabel_tanggal'])) echo '<th style="text-align: center;">Tgl Daftar</th>';
-                if (isset($_POST['tabel_kategori'])) echo '<th style="text-align: center;">Kategori</th>';
                 ?>
             </tr>
         </thead>
@@ -101,12 +101,12 @@ $datas = query($qbuilder);
                         <td style="text-align: center;"><?php echo $nomor++; ?></td>
                         <?php
                         if (isset($_POST['tabel_nama'])) echo '<td>' . $data["barang_data_nama"] . '</td>';
+                        if (isset($_POST['tabel_kategori'])) echo '<td>' . $data["barang_kategori_nama"] . '</td>';
+                        if (isset($_POST['tabel_tanggal'])) echo '<td>' . $data["barang_data_tanggal"] . '</td>';
+                        if (isset($_POST['tabel_stok'])) echo '<td style="text-align:right;">' . getStokBarang($data["id_barang_data"]) . '</td>';
                         if (isset($_POST['tabel_harga_beli'])) echo '<td style="text-align:right;">Rp. ' . number_format($data["barang_data_harga_beli"], 0, ',', '.') . '</td>';
                         if (isset($_POST['tabel_harga_jual'])) echo '<td style="text-align:right;">Rp. ' . number_format($data["barang_data_harga_jual"], 0, ',', '.') . '</td>';
-                        if (isset($_POST['tabel_stok'])) echo '<td style="text-align:right;">' . getStokBarang($data["id_barang_data"]) . '</td>';
                         if (isset($_POST['tabel_gambar'])) echo '<td style="text-align:center;"><img style="width: 80px; height: 80px; object-fit:contain;" src="../../images/master_data_barang/' . $data["barang_data_gambar"] . '" style="width: 100px;" alt="..." class="img-thumbnail"></td>';
-                        if (isset($_POST['tabel_tanggal'])) echo '<td>' . $data["barang_data_tanggal"] . '</td>';
-                        if (isset($_POST['tabel_kategori'])) echo '<td>' . $data["barang_kategori_nama"] . '</td>';
                         ?>
                     </tr>
                 <?php endforeach; ?>

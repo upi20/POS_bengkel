@@ -19,6 +19,7 @@ if (isset($_GET['title'])) {
             margin: auto;
             background-color: white;
             font: 11pt "Tahoma", "Helvetica";
+            text-align: center;
         }
 
         * {
@@ -71,7 +72,23 @@ if (isset($_GET['title'])) {
     <p align="center"><?php echo $print['header']['alamat']; ?></p>
     <hr>
     <br>
-    <?php include 'data_master/barang/semua.php'; ?>
+    <?php
+    if (isset($_GET['laporan'])) {
+        switch ($_GET['laporan']) {
+            case 'barang':
+                include 'data_master/barang/print.php';
+                break;
+
+            case 'kategori':
+                include 'data_master/kategori/print.php';
+                break;
+
+            default:
+                echo '<h2 align="center">Data Tidak Ditemukan</h2>';
+                break;
+        }
+    } else  echo '<h2 align="center">Data Tidak Ditemukan</h2>';
+    ?>
     <div class="ttd">
         <h4><?php echo $print['footer']['jabatan']; ?></h4>
         <br>

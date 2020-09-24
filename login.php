@@ -114,7 +114,7 @@ if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
     </div>
 
     <footer class="footer text-tengah">
-        <h5 class="text-putih">copyright &copy; 2020 PT. Agung Automall Jambi</h5>
+        <h5 class="text-putih">Copyright @ <?= $tools['copyright'] . " " . $tools['page_title']; ?></h5>
     </footer>
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
