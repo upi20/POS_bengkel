@@ -11,51 +11,7 @@ $database_pass = "";
 $database_dbna = "db_pos_bengkel";
 
 $koneksi = mysqli_connect($database_host, $database_user, $database_pass, $database_dbna);
-// ===========================================================
-
-
-
-// tools ======================================================
-// Judul halaman
-$tools['page_title'] = "PT. Agung Automall Jambi";
-
-// default home page
-$display_page = "page/home.php";
-
-// print
-// ============================================================
-$print['header'] = [
-    'judul' => 'PT. AGUNG AUTOMALL JAMBI',
-    'alamat' => 'Alamat: Jl. Sumantri Brojonegoro No. 135, Selamat, Kec. Telanaipura, Kota Jambi, Jambi 36129'
-];
-
-$print['footer'] = [
-    'jabatan' => 'KEPALA BENGKEL',
-    'nama' => 'SUTIKNA'
-];
-
-
-// ============================================================
-
-
-// mode Ubah dan Delete Manajemen user
-$tools['developer'] = true;
-
-// jangan dirubah <------
-$temp['page']['title'] = false;
-// --------------------->
-//  ===========================================================
-
-// mengecek apakah ada data get atau tidak
-if (isset($_GET['page'])) $page = $_GET['page'];
-else $page = "";
-
-if (isset($_GET['submenu'])) $submenu = $_GET['submenu'];
-else $submenu = "";
-
-// mendefinisikan base url
-$_baseurl = '?page=' . $page . '&submenu=' . $submenu;
-
+// fungsi query ke database
 function query($query)
 {
     global $koneksi;
@@ -71,6 +27,81 @@ function query($query)
     } else return false;
 }
 
+
+// ===========================================================
+// query setting
+$_settingApplication = query("SELECT * FROM tb_pengaturan");
+// ===========================================================
+
+
+// tools ======================================================
+// Judul halaman
+$tools['page_title'] = "PT. Agung Automall Jambi";
+
+// default home page
+$display_page = "page/home.php";
+
+// default copyright
+$tools['copyright'] = 2020;
+
+// mode Ubah dan Delete Manajemen user
+$tools['developer'] = true;
+
+// print
+$print = [];
+
+// setting detail
+$_settingDetail = [];
+
+// tols from database
+// ============================================================
+foreach ($_settingApplication as $set) {
+    $pengaturan = $set['pengaturan_title'];
+    if ($pengaturan == 'laporan') {
+        $_settingDetail['laporan'] = $set;
+        $result = explode('$', $set['pengaturan_nilai']);
+        $print['header'] = [
+            'judul' => $result[0],
+            'alamat' => $result[1]
+        ];
+
+        $print['footer'] = [
+            'jabatan' => $result[2],
+            'nama' => $result[3]
+        ];
+    } elseif ($pengaturan == 'nama_perusahaan') {
+        $_settingDetail['nama_perusahaan'] = $set;
+        $tools['page_title'] = $set['pengaturan_nilai'];
+    } elseif ($pengaturan == 'tahuncopyright') {
+        $_settingDetail['tahuncopyright'] = $set;
+        $tools['copyright'] = $set['pengaturan_nilai'];
+    } elseif ($pengaturan == 'default_home') {
+        $_settingDetail['default_home'] = $set;
+        $display_page = $set['pengaturan_nilai'];
+    } elseif ($pengaturan == 'logo') {
+        $_settingDetail['logo'] = $set;
+        $tools['logo'] = $set['pengaturan_nilai'];
+    } elseif ($pengaturan == 'pengembangan') {
+        $_settingDetail['pengembangan'] = $set;
+        $tools['pengembangan'] = $set['pengaturan_nilai'];
+    }
+}
+// ============================================================
+
+// jangan dirubah <------
+$temp['page']['title'] = false;
+// --------------------->
+//  ===========================================================
+
+// mengecek apakah ada data get atau tidak
+if (isset($_GET['page'])) $page = $_GET['page'];
+else $page = "";
+
+if (isset($_GET['submenu'])) $submenu = $_GET['submenu'];
+else $submenu = "";
+
+// mendefinisikan base url
+$_baseurl = '?page=' . $page . '&submenu=' . $submenu;
 
 function cekLogin($data = false)
 {

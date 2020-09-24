@@ -78,9 +78,9 @@ if (isset($_GET['id'])) {
                                                     <td style="text-align:center;"><?= ++$nomor; ?></td>
                                                     <td><?= $menu['menu_title']; ?></td>
                                                     <?php if ($menu['akses']) : ?>
-                                                        <td style="text-align:center;"><input type="checkbox" checked="" onchange="gantiHakAksesMenu('<?= $menu['user_menu_id']; ?>', '<?= $id_level; ?>', 1)"></td>
+                                                        <td style="text-align:center;"><input type="checkbox" class="checkbox" checked="" onchange="gantiHakAksesMenu('<?= $menu['user_menu_id']; ?>', '<?= $id_level; ?>', 1)"></td>
                                                     <?php else : ?>
-                                                        <td style="text-align:center;"><input type="checkbox" onchange="gantiHakAksesMenu('<?= $menu['user_menu_id']; ?>', '<?= $id_level; ?>', 0)"></td>
+                                                        <td style="text-align:center;"><input type="checkbox" class="checkbox" onchange="gantiHakAksesMenu('<?= $menu['user_menu_id']; ?>', '<?= $id_level; ?>', 0)"></td>
                                                     <?php endif; ?>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -133,9 +133,9 @@ if (isset($_GET['id'])) {
                                                         <?php echo $sub_menu['title']; ?>
                                                     </td>
                                                     <?php if ($sub_menu['akses']) : ?>
-                                                        <td style="text-align:center;"><input type="checkbox" checked="" onchange="gantiHakAksesSubMenu('<?= $sub_menu['id']; ?>', '<?= $id_level; ?>', 1)"></td>
+                                                        <td style="text-align:center;"><input type="checkbox" class="checkbox" checked="" onchange="gantiHakAksesSubMenu('<?= $sub_menu['id']; ?>', '<?= $id_level; ?>', 1)"></td>
                                                     <?php else : ?>
-                                                        <td style="text-align:center;"><input type="checkbox" onchange="gantiHakAksesSubMenu('<?= $sub_menu['id']; ?>', '<?= $id_level; ?>', 0)"></td>
+                                                        <td style="text-align:center;"><input type="checkbox" class="checkbox" onchange="gantiHakAksesSubMenu('<?= $sub_menu['id']; ?>', '<?= $id_level; ?>', 0)"></td>
                                                     <?php endif; ?>
                                                 </tr>
                                             <?php endforeach; ?>

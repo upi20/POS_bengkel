@@ -51,7 +51,7 @@ if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <style>
         body {
-            background-image: url(images/bg.jpg);
+            background-image: url(images/background/bg.jpg);
             background-size: cover;
         }
 

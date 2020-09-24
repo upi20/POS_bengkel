@@ -235,7 +235,7 @@ if ($menus) {
     </div>
     <div class="navbar navbar-inverse navbar-fixed-bottom footer-bottom">
         <div class="container text-center">
-            <p class="text-center" style="color: #D1C4E9;"><small>Copyright @ 2020 <?= $tools['page_title']; ?></p>
+            <p class="text-center" style="color: #D1C4E9;"><small>Copyright @ <?= $tools['copyright'] . " " . $tools['page_title']; ?></p>
         </div>
         <!-- /. WRAPPER  -->
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->

@@ -57,7 +57,8 @@ INSERT INTO `tb_barang_keluar` (`id_barang_keluar`, `id_barang_data`, `id_barang
 (4, 42, 7, '2020-09-20-5f66ef6898432', 9, 1200000, '2020-09-20'),
 (6, 50, 7, '2020-09-22-5f69856fd3548', 15, 2200000, '2020-09-22'),
 (8, 50, 8, '2020-09-22-5f698edcb9099', 17, 2200000, '2020-09-22'),
-(9, 53, 8, '2020-09-22-5f699a226abd8', 1, 51000, '2020-09-22');
+(9, 53, 8, '2020-09-22-5f699a226abd8', 1, 51000, '2020-09-22'),
+(10, 50, 7, '2020-09-24-5f6c736cec763', 14, 2200000, '2020-09-24');
 
 CREATE TABLE `tb_barang_konsumen` (
   `id_barang_konsumen` int(20) NOT NULL,
@@ -100,7 +101,9 @@ INSERT INTO `tb_barang_masuk` (`id_barang_masuk`, `id_barang_data`, `id_barang_s
 (16, 42, 2, '2020-09-21-5f68a610ac39e', 1, 1200000, '2020-09-21'),
 (17, 53, 2, '2020-09-21-5f68b44f7a19a', 2, 51000, '2020-09-21'),
 (18, 42, 2, '2020-09-21-5f68b45f07910', 5, 1200000, '2020-09-21'),
-(19, 50, 1, '2020-09-22-5f6986f9523d5', 26, 2200000, '2020-09-22');
+(19, 50, 1, '2020-09-22-5f6986f9523d5', 26, 2200000, '2020-09-22'),
+(20, 50, 3, '2020-09-24-5f6c73aacd052', 7, 2200000, '2020-09-24'),
+(21, 50, 1, '2020-09-24-5f6c73d02800a', 4, 2200000, '2020-09-24');
 
 CREATE TABLE `tb_barang_suplier` (
   `id_barang_suplier` int(11) NOT NULL,
@@ -115,6 +118,21 @@ INSERT INTO `tb_barang_suplier` (`id_barang_suplier`, `barang_suplier_nama`, `ba
 (1, 'Pt. Sakti Mantra Guna Indah', '2020-09-20-5f67565585854', '089123505', '2020-09-19', 'Banceuy Jawa Utara'),
 (2, 'Muhidin bin syukur', '2020-09-20-5f6757b184019', '0943438463333', '2020-09-20', 'Kabupaten Ciamis'),
 (3, 'Pt. Indah Makmur Sentausa', '2020-09-20-5f675b41b734a', '085798132505', '2020-09-20', 'Nusa Tenggara Timur');
+
+CREATE TABLE `tb_pengaturan` (
+  `id_pengaturan` int(11) NOT NULL,
+  `pengaturan_title` varchar(50) NOT NULL,
+  `pengaturan_nilai` text NOT NULL,
+  `pengaturan_deskripsi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `tb_pengaturan` (`id_pengaturan`, `pengaturan_title`, `pengaturan_nilai`, `pengaturan_deskripsi`) VALUES
+(1, 'nama_perusahaan', 'PT. Agung Automall Jambi', 'Nilai ini akan ditampilkan pada judul halaman dan coopyright'),
+(2, 'tahuncopyright', '2020', 'Tahun ini ditampilkan dibawah tepatnya di footer'),
+(3, 'logo', 'bg.jpg', 'Logo halaman dashboard dan login'),
+(4, 'laporan', 'PT. AGUNG AUTOMALL JAMBI$Alamat: Jl. Sumantri Brojonegoro No. 135, Selamat, Kec. Telanaipura, Kota Jambi, Jambi 36129$KEPALA BENGKEL$SUTIKNA', 'Pengaturan untuk laporan untuk Header Alamat Dan nama Tanda Tangan tidak boleh memasukan karakter $\r\n'),
+(5, 'default_home', 'page/home.php', 'Halaman dashboard default'),
+(6, 'pengembangan', '1', 'Mode pengembangan bisa menambahkan Menghapus dan mengubah Menu dan sub menu');
 
 CREATE TABLE `tb_user` (
   `id` int(11) NOT NULL,
@@ -156,10 +174,11 @@ CREATE TABLE `tb_user_menu` (
 
 INSERT INTO `tb_user_menu` (`user_menu_id`, `menu_title`, `icon`, `menu_url`) VALUES
 (2, 'Data Transaksi', 'fa fa-edit fa-2x', 'transaksi'),
-(3, 'Laporan', 'fa fa-edit fa-2x', 'laporan'),
+(3, 'Laporan', 'fa fa-copy fa-2x', 'laporan'),
 (4, 'Data Master', 'fa fa-laptop fa-2x', 'data_master'),
 (5, 'Data Pengguna', 'fa fa-user fa-2x', 'pengguna'),
-(6, 'Menu Mnajemen', 'fa fa-folder fa-2x', 'menumanagement');
+(6, 'Menu Mnajemen', 'fa fa-folder fa-2x', 'menumanagement'),
+(33, 'Pengaturan', 'fa fa-gear fa-2x', 'pengatura');
 
 CREATE TABLE `tb_user_menu_access` (
   `id` int(11) NOT NULL,
@@ -180,7 +199,9 @@ INSERT INTO `tb_user_menu_access` (`id`, `menu_id`, `id_user_level`) VALUES
 (56, 2, 1),
 (57, 3, 1),
 (59, 6, 1),
-(60, 4, 1);
+(60, 4, 1),
+(63, 33, 2),
+(64, 33, 1);
 
 CREATE TABLE `tb_user_sub_menu` (
   `id` int(11) NOT NULL,
@@ -202,11 +223,15 @@ INSERT INTO `tb_user_sub_menu` (`id`, `menu_id`, `title`, `sub_menu_url`, `file`
 (24, 3, 'Laporan Barang', 'barang', 'page/data_master/barang/form_laporan_barang.php'),
 (25, 3, 'Laporan Konsumen', 'konsumen', 'page/data_master/konsumen/form_laporan_konsumen.php'),
 (26, 3, 'Laporan Kategori', 'kategori', 'page/data_master/kategori/form_laporan_kategori.php'),
-(27, 3, 'Laporan Transaksi', 'transaksi', 'page/data_transaksi/transaksi/form_laporan_transaksi.php'),
-(30, 2, 'Data Penjualan', 'barang_keluar', 'page/data_transaksi/barang_keluar/display.php'),
+(27, 3, 'Laporan Penjualan', 'penjualan', 'page/data_transaksi/transaksi/form_laporan_transaksi.php'),
 (34, 5, 'Data Level', 'level', 'page/data_pengguna/level/switcher.php'),
 (37, 2, 'Data Pengadaan', 'barang_masuk', 'page/data_transaksi/barang_masuk/display.php'),
-(39, 4, 'Data Suplier', 'data_suplier', 'page/data_master/suplier/switcher.php');
+(39, 4, 'Data Suplier', 'data_suplier', 'page/data_master/suplier/switcher.php'),
+(43, 33, 'Applikasi', 'app', 'page/pengaturan/aplikasi/display.php'),
+(44, 33, 'Laporan', 'laporan', 'page/pengaturan/laporan/display.php'),
+(45, 3, 'Laporan Pengadaan', 'pengadaan', 'page/data_transaksi/barang_masuk/laporan.php'),
+(47, 2, 'Data Penjualan', 'barang_keluar', 'page/data_transaksi/barang_keluar/display.php'),
+(48, 3, 'Laporan Suplier', 'suplier', 'page/data_master/suplier/laporan.php');
 
 CREATE TABLE `tb_user_sub_menu_access` (
   `id` int(11) NOT NULL,
@@ -228,14 +253,12 @@ INSERT INTO `tb_user_sub_menu_access` (`id`, `sub_menu_id`, `id_user_level`) VAL
 (14, 25, 2),
 (15, 26, 2),
 (16, 27, 2),
-(18, 30, 2),
 (20, 20, 3),
 (22, 22, 3),
 (24, 34, 2),
 (25, 21, 3),
 (26, 2, 3),
 (29, 34, 1),
-(30, 30, 1),
 (31, 2, 1),
 (33, 27, 1),
 (34, 24, 1),
@@ -251,7 +274,21 @@ INSERT INTO `tb_user_sub_menu_access` (`id`, `sub_menu_id`, `id_user_level`) VAL
 (48, 38, 2),
 (49, 38, 1),
 (50, 38, 1),
-(51, 39, 1);
+(51, 39, 1),
+(56, 37, 2),
+(58, 43, 1),
+(59, 44, 1),
+(60, 39, 2),
+(61, 39, 2),
+(62, 43, 2),
+(63, 43, 2),
+(64, 44, 2),
+(65, 45, 1),
+(66, 45, 2),
+(67, 47, 2),
+(68, 47, 1),
+(69, 48, 2),
+(70, 48, 1);
 
 
 ALTER TABLE `tb_barang_data`
@@ -281,6 +318,10 @@ ALTER TABLE `tb_barang_suplier`
   ADD PRIMARY KEY (`id_barang_suplier`),
   ADD UNIQUE KEY `barang_suplier_nama` (`barang_suplier_nama`),
   ADD UNIQUE KEY `barang_suplier_nama_2` (`barang_suplier_nama`);
+
+ALTER TABLE `tb_pengaturan`
+  ADD PRIMARY KEY (`id_pengaturan`),
+  ADD UNIQUE KEY `pengaturan_title` (`pengaturan_title`);
 
 ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`id`),
@@ -319,16 +360,19 @@ ALTER TABLE `tb_barang_kategori`
   MODIFY `id_barang_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 ALTER TABLE `tb_barang_keluar`
-  MODIFY `id_barang_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_barang_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 ALTER TABLE `tb_barang_konsumen`
   MODIFY `id_barang_konsumen` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 ALTER TABLE `tb_barang_masuk`
-  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 ALTER TABLE `tb_barang_suplier`
   MODIFY `id_barang_suplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `tb_pengaturan`
+  MODIFY `id_pengaturan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 ALTER TABLE `tb_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
@@ -337,16 +381,16 @@ ALTER TABLE `tb_user_level`
   MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 ALTER TABLE `tb_user_menu`
-  MODIFY `user_menu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `user_menu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 ALTER TABLE `tb_user_menu_access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 ALTER TABLE `tb_user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 ALTER TABLE `tb_user_sub_menu_access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 
 ALTER TABLE `tb_barang_data`

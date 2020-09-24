@@ -23,7 +23,6 @@ if (isset($_POST['simpan'])) {
         if (file_exists("images/master_data_barang/$fotoasal")) {
             unlink("images/master_data_barang/$fotoasal");
         }
-        $upload       = move_uploaded_file($lokasi, "images/barang/" . $gambar);
         $querybuilder = " UPDATE `tb_barang_data` SET
             `barang_data_nama`       = '$nama_barang',
             `barang_data_harga_beli` = '$harga_beli',

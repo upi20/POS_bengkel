@@ -61,9 +61,9 @@ if (isset($_GET['id'])) {
                                             <?php echo $u_level['title']; ?>
                                         </td>
                                         <?php if ($u_level['akses']) : ?>
-                                            <td style="text-align:center;"><input type="checkbox" checked="" onchange="gantiHakAkses('<?= $u_level['id_level']; ?>', '<?= $id_sub_menu; ?>', 1)"></td>
+                                            <td style="text-align:center;"><input type="checkbox" class="checkbox" checked="" onchange="gantiHakAkses('<?= $u_level['id_level']; ?>', '<?= $id_sub_menu; ?>', 1)"></td>
                                         <?php else : ?>
-                                            <td style="text-align:center;"><input type="checkbox" onchange="gantiHakAkses('<?= $u_level['id_level']; ?>', '<?= $id_sub_menu; ?>', 0)"></td>
+                                            <td style="text-align:center;"><input type="checkbox" class="checkbox" onchange="gantiHakAkses('<?= $u_level['id_level']; ?>', '<?= $id_sub_menu; ?>', 0)"></td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
