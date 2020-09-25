@@ -39,7 +39,7 @@ if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PT. AGUNG AUTOMALL JAMBI</title>
+    <title><?php echo $tools['page_title']; ?></title>
     <!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
