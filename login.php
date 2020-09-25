@@ -4,24 +4,23 @@ include "config.php";
 if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
     header("location: index.php");
 } else if (isset($_POST['login'])) {
-    $nama   = $_POST['username'];
-    $pass   = $_POST['password'];
-    $ambil  = $koneksi->query("SELECT * FROM tb_user INNER JOIN tb_user_level ON tb_user.id_level = tb_user_level.id_level WHERE username='$nama' and password='$pass'");
-    $data   = $ambil->fetch_assoc();
-    $ketemu = $ambil->num_rows;
-    if ($ketemu >= 1) {
+    $nama = $_POST['username'];
+    $pass = $_POST['password'];
+    $data = query("SELECT * FROM `tb_user` INNER JOIN `tb_user_level` ON `tb_user`.`id_level` = `tb_user_level`.`id_level` WHERE `username`='$nama' AND `password`='$pass'");
+
+    if ($data) {
         $_SESSION['user'] = [
-            'user'        => $data['username'],
-            'nama'        => $data['nama'],
-            'pass'        => $data['password'],
-            'level'       => $data['id_level'],
-            'level_title' => $data['title'],
-            'id'          => $data['id']
+            'user'        => $data[0]['username'],
+            'nama'        => $data[0]['nama'],
+            'pass'        => $data[0]['password'],
+            'level'       => $data[0]['id_level'],
+            'level_title' => $data[0]['title'],
+            'id'          => $data[0]['id']
         ];
 
         $_SESSION['alert']['title'] = "";
         $_SESSION['alert']['color'] = "";
-        $_SESSION['alert']['show'] = false;
+        $_SESSION['alert']['show']  = false;
 
         header("location:index.php");
     } else {
@@ -114,7 +113,9 @@ if (isset($_SESSION['admin']) || isset($_SESSION['user'])) {
     </div>
 
     <footer class="footer text-tengah">
-        <h5 class="text-putih">Copyright @ <?= $tools['copyright'] . " " . $tools['page_title']; ?></h5>
+        <h5 class="text-putih">Copyright @
+            <?= $tools['copyright'] . " " . $tools['page_title']; ?>
+        </h5>
     </footer>
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->

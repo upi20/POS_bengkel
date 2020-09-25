@@ -1,13 +1,11 @@
 <?php
-// error_reporting(0);
 session_start();
 include "config.php";
 include "functions.php";
 
-
 // ============================================================
 // cek apakah user sudah login altau belum
-if (!ceklogin($_SESSION['user'])) header('Location: login.php');
+if (!ceklogin($_SESSION['user'])) header('Location: ./login.php');
 
 // Mengambil data untuk menu navigasi
 $level        = $_SESSION['user']['level'];

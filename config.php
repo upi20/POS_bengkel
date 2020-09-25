@@ -89,7 +89,7 @@ foreach ($_settingApplication as $set) {
     }
 }
 // ============================================================
-
+if (!$tools['pengembangan']) error_reporting(0);
 // jangan dirubah <------
 $temp['page']['title'] = false;
 // --------------------->
