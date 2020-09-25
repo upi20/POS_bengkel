@@ -23,7 +23,6 @@ if (isset($_POST['cetak'])) {
 
     if (!isset($_POST['kategori_all'])) {
         $querykategori = query('SELECT * FROM tb_barang_kategori');
-        $qkategori = "";
         if ($querykategori) {
             foreach ($querykategori as $kategori) {
                 if (isset($_POST['kategori_' . $kategori['id_barang_kategori']])) {
@@ -47,7 +46,7 @@ if (isset($_POST['cetak'])) {
     if (!isset($_POST['tanggal_all'])) {
         $dari = $_POST['tanggal_dari'];
         $sampai = $_POST['tanggal_sampai'];
-        if ($title_laporan == "") $title_laporan = "Laporan Barang<br>Tanggal: Dari " . $dari . " Sampai " . $sampai;
+        if ($title_laporan == "") $title_laporan = "Laporan Barang<br>Periode: " . $dari . " / " . $sampai;
         else $title_laporan .= "<br>Periode: Dari " . $dari . " / " . $sampai;
 
         if ($qwhere == "") $qwhere .= "WHERE ";

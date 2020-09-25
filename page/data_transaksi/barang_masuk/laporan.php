@@ -1,5 +1,7 @@
 <?php
-$kategori = query('SELECT * FROM tb_barang_kategori');
+$barang = query('SELECT `barang_data_nama`,`id_barang_data` FROM tb_barang_data');
+$suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_barang_suplier');
+
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -8,41 +10,42 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
                 Cetak Laporan Pengadaan Barang
             </div>
             <div class="panel-body">
-                <form action="./page/cetak/cetak.php?laporan=barang" target="blank" method="post">
+                <form action="./page/cetak/cetak.php?laporan=barang_masuk" method="post">
+                    <!-- <form action="./page/cetak/cetak.php?laporan=barang_masuk" target="blank" method="post"> -->
                     <div class="row">
                         <h4 style="padding:3px 0; margin:0; text-align:center;">Kostumisasi</h4>
                         <hr>
                         <div class="col-md-4">
                             <div class="container-fluid">
                                 <h4 style="padding:3px 0; margin:0; text-align:center;">Tabel</h4>
-                                <table width="100%" onclick="tableCapture()" id="tabel_tabel">
+                                <table width="100%" onclick="tableCapture()" id="tabel_tabel" hidden="">
                                     <tr>
                                         <td style="white-space:nowrap"><label for="tabel_nama" class="form-check-label">Nama Barang</label></td>
                                         <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_nama" checked="" name="tabel_nama"></td>
                                     </tr>
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_harga_beli" class="form-check-label">Harga Beli</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_harga_beli" checked="" name="tabel_harga_beli"></td>
+                                        <td style="white-space:nowrap"><label for="tabel_suplier" class="form-check-label">Nama Suplier</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_suplier" checked="" name="tabel_suplier"></td>
                                     </tr>
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_harga_jual" class="form-check-label">Harga Jual</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_harga_jual" checked="" name="tabel_harga_jual"></td>
+                                        <td style="white-space:nowrap"><label for="tabel_kode" class="form-check-label">Kode Transaksi</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_kode" checked="" name="tabel_kode"></td>
                                     </tr>
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_stok" class="form-check-label">Stok</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_stok" checked="" name="tabel_stok"></td>
+                                        <td style="white-space:nowrap"><label for="tabel_jumlah" class="form-check-label">Jumlah</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_jumlah" checked="" name="tabel_jumlah"></td>
                                     </tr>
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_kategori" class="form-check-label">Kategori</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_kategori" checked="" name="tabel_kategori"></td>
+                                        <td style="white-space:nowrap"><label for="tabel_harga" class="form-check-label">Harga</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_harga" checked="" name="tabel_harga"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="white-space:nowrap"><label for="tabel_total" class="form-check-label">Total</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_total" checked="" name="tabel_total"></td>
                                     </tr>
                                     <tr>
                                         <td style="white-space:nowrap"><label for="tabel_tanggal" class="form-check-label">Tanggal</label></td>
                                         <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_tanggal" checked="" name="tabel_tanggal"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_gambar" class="form-check-label">Gambar</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_gambar" name="tabel_gambar"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -53,7 +56,7 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
                                 <table width="100%" onclick="tableCapture()">
                                     <tr>
                                         <td style="white-space:nowrap"><label for="tabel_all" class="form-check-label">Pilih Semua</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="tabel_all" name="tabel_all"></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="tabel_all" name="tabel_all" checked=""></td>
                                     </tr>
                                 </table>
                                 <hr>
@@ -84,13 +87,13 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
                         </div>
                         <div class="col-md-4">
                             <div class="container-fluid">
-                                <h4 style="padding:3px 0; margin:0; text-align:center;">Kategori</h4>
-                                <table width="100%" onclick="kategoriCapture()" id="kategori_tabel">
-                                    <?php if ($kategori) {
-                                        foreach ($kategori as $k) { ?>
+                                <h4 style="padding:3px 0; margin:0; text-align:center;">Suplier</h4>
+                                <table width="100%" onclick="suplierCapture()" id="suplier_tabel">
+                                    <?php if ($suplier) {
+                                        foreach ($suplier as $k) { ?>
                                             <tr>
-                                                <td style="white-space:nowrap"><label for="kategori_<?php echo $k['id_barang_kategori']; ?>" class="form-check-label"><?php echo $k['barang_kategori_nama']; ?></label></td>
-                                                <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_kategori" id="kategori_<?php echo $k['id_barang_kategori']; ?>" name="kategori_<?php echo $k['id_barang_kategori']; ?>" checked=""></td>
+                                                <td style="white-space:nowrap"><label for="suplier_<?php echo $k['id_barang_data']; ?>" class="form-check-label"><?php echo $k['barang_suplier_nama']; ?></label></td>
+                                                <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_kategori" id="suplier_<?php echo $k['id_barang_data']; ?>" name="suplier_<?php echo $k['id_barang_suplier']; ?>" checked=""></td>
                                             </tr>
                                     <?php }
                                     } ?>
@@ -100,13 +103,44 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="100%" onclick="kategoriCapture()">
+                                <table width="100%" onclick="suplierCapture()">
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="kategori_all" class="form-check-label">Semua Kategori</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="kategori_all" name="kategori_all" checked=""></td>
+                                        <td style="white-space:nowrap"><label for="suplier_all" class="form-check-label">Semua Suplier</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="suplier_all" name="suplier_all" checked=""></td>
                                     </tr>
                                 </table>
                                 <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="col-md-4">
+                                <div class="container-fluid">
+                                    <h4 style="padding:3px 0; margin:0; text-align:center;">Barang</h4>
+                                    <table width="100%" onclick="barangCapture()" id="data_tabel">
+                                        <?php if ($barang) {
+                                            foreach ($barang as $k) { ?>
+                                                <tr>
+                                                    <td style="white-space:nowrap"><label for="data_<?php echo $k['id_barang_data']; ?>" class="form-check-label"><?php echo $k['barang_data_nama']; ?></label></td>
+                                                    <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_kategori" id="data_<?php echo $k['id_barang_data']; ?>" name="data_<?php echo $k['id_barang_data']; ?>" checked=""></td>
+                                                </tr>
+                                        <?php }
+                                        } ?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <hr>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table width="100%" onclick="barangCapture()">
+                                        <tr>
+                                            <td style="white-space:nowrap"><label for="data_all" class="form-check-label">Semua Barang</label></td>
+                                            <td style="text-align:right;"><input type="checkbox" class="checkbox" id="data_all" name="data_all" checked=""></td>
+                                        </tr>
+                                    </table>
+                                    <hr>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -163,42 +197,82 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
         });
     }
 
-    function kategoriCapture() {
-        const kategori_checkbox = document.querySelectorAll('.checkbox_kategori');
-        let kategori_all_btn = document.querySelector('#kategori_all');
+    function barangCapture() {
+        const data_checkbox = document.querySelectorAll('.checkbox_kategori');
+        let data_all_btn = document.querySelector('#data_all');
 
         const tabelVisib = (bool = true) => {
-            const kategori_tabel = document.querySelector('#kategori_tabel');
-            if (bool) kategori_tabel.removeAttribute('hidden');
-            else kategori_tabel.setAttribute('hidden', '');
+            const data_tabel = document.querySelector('#data_tabel');
+            if (bool) data_tabel.removeAttribute('hidden');
+            else data_tabel.setAttribute('hidden', '');
         }
 
-        const kategori_checkedall = () => {
-            kategori_checkbox.forEach(element => {
+        const data_checkedall = () => {
+            data_checkbox.forEach(element => {
                 element.checked = true;
             });
             tabelVisib(false);
         }
 
-        const kategori_periksa = () => {
+        const data_periksa = () => {
             let cek = true;
-            kategori_checkbox.forEach(element => {
+            data_checkbox.forEach(element => {
                 if (!element.checked) cek = false;
             });
             if (cek) {
                 tabelVisib(false);
-                kategori_all_btn.checked = cek;
+                data_all_btn.checked = cek;
             }
         }
 
-        kategori_checkbox.forEach(element => {
+        data_checkbox.forEach(element => {
             element.addEventListener('change', function() {
-                kategori_periksa();
+                data_periksa();
             });
         });
 
-        kategori_all_btn.addEventListener('change', function() {
-            if (this.checked) kategori_checkedall();
+        data_all_btn.addEventListener('change', function() {
+            if (this.checked) data_checkedall();
+            else tabelVisib();
+        });
+    }
+
+    function suplierCapture() {
+        const suplier_checkbox = document.querySelectorAll('.checkbox_kategori');
+        let suplier_all_btn = document.querySelector('#suplier_all');
+
+        const tabelVisib = (bool = true) => {
+            const suplier_tabel = document.querySelector('#suplier_tabel');
+            if (bool) suplier_tabel.removeAttribute('hidden');
+            else suplier_tabel.setAttribute('hidden', '');
+        }
+
+        const suplier_checkedall = () => {
+            suplier_checkbox.forEach(element => {
+                element.checked = true;
+            });
+            tabelVisib(false);
+        }
+
+        const suplier_periksa = () => {
+            let cek = true;
+            suplier_checkbox.forEach(element => {
+                if (!element.checked) cek = false;
+            });
+            if (cek) {
+                tabelVisib(false);
+                suplier_all_btn.checked = cek;
+            }
+        }
+
+        suplier_checkbox.forEach(element => {
+            element.addEventListener('change', function() {
+                suplier_periksa();
+            });
+        });
+
+        suplier_all_btn.addEventListener('change', function() {
+            if (this.checked) suplier_checkedall();
             else tabelVisib();
         });
     }
@@ -219,6 +293,8 @@ $kategori = query('SELECT * FROM tb_barang_kategori');
         }
     }
     cektanggal();
-    if (!document.querySelector('#kategori_all').checked) document.querySelector('#kategori_tabel').removeAttribute('hidden');
-    else document.querySelector('#kategori_tabel').setAttribute('hidden', '');
+    if (!document.querySelector('#data_all').checked) document.querySelector('#data_tabel').removeAttribute('hidden');
+    else document.querySelector('#data_tabel').setAttribute('hidden', '');
+    if (!document.querySelector('#suplier_all').checked) document.querySelector('#suplier_tabel').removeAttribute('hidden');
+    else document.querySelector('#suplier_tabel').setAttribute('hidden', '');
 </script>
