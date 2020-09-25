@@ -10,8 +10,7 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
                 Cetak Laporan Pengadaan Barang
             </div>
             <div class="panel-body">
-                <form action="./page/cetak/cetak.php?laporan=barang_masuk" method="post">
-                    <!-- <form action="./page/cetak/cetak.php?laporan=barang_masuk" target="blank" method="post"> -->
+                <form action="./page/cetak/cetak.php?laporan=barang_masuk" target="blank" method="post">
                     <div class="row">
                         <h4 style="padding:3px 0; margin:0; text-align:center;">Kostumisasi</h4>
                         <hr>

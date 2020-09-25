@@ -79,13 +79,14 @@ if (isset($_GET['title'])) {
                 include 'data_master/barang/print.php';
                 break;
 
-            case 'barang_masuk':
-                include 'data_master/barang_masuk/print.php';
-                break;
-
             case 'kategori':
                 include 'data_master/kategori/print.php';
                 break;
+
+            case 'barang_masuk':
+                include 'data_transaksi/barang_masuk/print.php';
+                break;
+
 
             default:
                 echo '<h2 align="center">Data Tidak Ditemukan</h2>';
