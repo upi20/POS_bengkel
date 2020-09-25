@@ -11,6 +11,8 @@ $database_pass = "";
 $database_dbna = "db_pos_bengkel";
 
 $koneksi = mysqli_connect($database_host, $database_user, $database_pass, $database_dbna);
+
+
 // fungsi query ke database
 function query($query)
 {
