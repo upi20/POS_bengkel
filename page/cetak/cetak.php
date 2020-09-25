@@ -63,7 +63,7 @@ if (isset($_GET['title'])) {
     </style>
     <title><?php echo $judul_laporan; ?></title>
     <script>
-        window.print();
+        // window.print();
     </script>
 </head>
 
@@ -81,6 +81,14 @@ if (isset($_GET['title'])) {
 
             case 'kategori':
                 include 'data_master/kategori/print.php';
+                break;
+
+            case 'konsumen':
+                include 'data_master/konsumen/print.php';
+                break;
+
+            case 'suplier':
+                include 'data_master/suplier/print.php';
                 break;
 
             case 'barang_masuk':

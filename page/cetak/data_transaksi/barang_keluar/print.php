@@ -6,6 +6,7 @@ $qjoin           = "";
 $qwhere          = "";
 $title_laporan   = "";
 $count           = 0;
+$dnotfoundcount  = 1;
 $querywhere      = [
     0 => ['val' => '', 'stt' => false, 'judul' => ''],
     1 => ['val' => '', 'stt' => false, 'judul' => ''],
@@ -17,6 +18,7 @@ if (isset($_POST['cetak'])) {
         $qselect = '*';
         $qjoin .= $joindata;
         $qjoin .= $joinkonsumen;
+        $dnotfoundcount += 7;
     } else {
         $qselect .= "`tb_barang_keluar`.`id_barang_keluar`";
         if (isset($_POST['tabel_kode'])) $qselect .= ",`barang_keluar_kode`";
@@ -147,13 +149,34 @@ $datas    = query($qbuilder);
             <tr>
                 <th style="text-align: center;">No</th>
                 <?php
-                if (isset($_POST['tabel_nama'])) echo '<th style="text-align: center;">Nama barang</th>';
-                if (isset($_POST['tabel_kode'])) echo '<th style="text-align: center;">Kode Transaksi</th>';
-                if (isset($_POST['tabel_konsumen'])) echo '<th style="text-align: center;">Nama konsumen</th>';
-                if (isset($_POST['tabel_tanggal'])) echo '<th style="text-align: center;">Tanggal</th>';
-                if (isset($_POST['tabel_jumlah'])) echo '<th style="text-align: center;">Jumlah</th>';
-                if (isset($_POST['tabel_harga'])) echo '<th style="text-align: center;">Harga</th>';
-                if (isset($_POST['tabel_total'])) echo '<th style="text-align: center;">Total Harga</th>';
+                if (isset($_POST['tabel_nama'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Nama barang</th>';
+                }
+                if (isset($_POST['tabel_kode'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Kode Transaksi</th>';
+                }
+                if (isset($_POST['tabel_konsumen'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Nama konsumen</th>';
+                }
+                if (isset($_POST['tabel_tanggal'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Tanggal</th>';
+                }
+                if (isset($_POST['tabel_jumlah'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Jumlah</th>';
+                }
+                if (isset($_POST['tabel_harga'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Harga</th>';
+                }
+                if (isset($_POST['tabel_total'])) {
+                    $dnotfoundcount++;
+                    echo '<th style="text-align: center;">Total Harga</th>';
+                }
                 ?>
             </tr>
         </thead>
@@ -173,6 +196,12 @@ $datas    = query($qbuilder);
                         ?>
                     </tr>
                 <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td style="text-align:center;" colspan="<?php echo ++$dnotfoundcount; ?>">
+                        <h4>DATA TIDAK DITEMUKAN</h4>
+                    </td>
+                </tr>
             <?php endif; ?>
         </tbody>
     </table>

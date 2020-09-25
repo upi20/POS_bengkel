@@ -4,6 +4,7 @@ $qselect         = "";
 $qjoin           = "";
 $qwhere          = "";
 $title_laporan   = "";
+$dnotfoundcount  = 1;
 $count           = 0;
 $querywhere      = [
     0 => ['val' => '', 'stt' => false, 'judul' => ''],
@@ -14,16 +15,33 @@ if (isset($_POST['cetak'])) {
     if (isset($_POST['tabel_all'])) {
         $qselect = '*';
         $qjoin .= $joindata;
+        $dnotfoundcount += 6;
     } else {
         $qselect .= "`id_barang_data`";
-        if (isset($_POST['tabel_nama'])) $qselect .= ",`barang_data_nama`";
-        if (isset($_POST['tabel_harga_beli'])) $qselect .= ",`barang_data_harga_beli`";
-        if (isset($_POST['tabel_harga_jual'])) $qselect .= ",`barang_data_harga_jual`";
-        if (isset($_POST['tabel_gambar'])) $qselect .= ",`barang_data_gambar`";
-        if (isset($_POST['tabel_tanggal'])) $qselect .= ",`barang_data_tanggal`";
+        if (isset($_POST['tabel_nama'])) {
+            $qselect .= ",`barang_data_nama`";
+            $dnotfoundcount++;
+        }
+        if (isset($_POST['tabel_harga_beli'])) {
+            $qselect .= ",`barang_data_harga_beli`";
+            $dnotfoundcount++;
+        }
+        if (isset($_POST['tabel_harga_jual'])) {
+            $qselect .= ",`barang_data_harga_jual`";
+            $dnotfoundcount++;
+        }
+        if (isset($_POST['tabel_gambar'])) {
+            $qselect .= ",`barang_data_gambar`";
+            $dnotfoundcount++;
+        }
+        if (isset($_POST['tabel_tanggal'])) {
+            $qselect .= ",`barang_data_tanggal`";
+            $dnotfoundcount++;
+        }
         if (isset($_POST['tabel_kategori'])) {
             $qselect .= ",`tb_barang_data`.`id_barang_kategori`, `tb_barang_kategori`.`id_barang_kategori`, `tb_barang_kategori`.`barang_kategori_nama`";
             $qjoin .= $joindata;
+            $dnotfoundcount++;
         }
     }
 
@@ -51,7 +69,7 @@ if (isset($_POST['cetak'])) {
         $querywhere[2]['judul'] = "Periode: Dari " . $dari . " / " . $sampai;
 
         // menambahkan barang tambah di query select
-        $qselect .= ",`barang_data_tanggal`";
+        if (!isset($_POST['tabel_tanggal'])) $qselect .= ",`barang_data_tanggal`";
 
         $querywhere[2]['val'] = "`tb_barang_data`.`barang_data_tanggal` BETWEEN '$dari' AND '$sampai'";
     }
@@ -143,6 +161,12 @@ $datas = query($qbuilder);
                         ?>
                     </tr>
                 <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td style="text-align:center;" colspan="<?php echo ++$dnotfoundcount; ?>">
+                        <h4>DATA TIDAK DITEMUKAN</h4>
+                    </td>
+                </tr>
             <?php endif; ?>
         </tbody>
     </table>

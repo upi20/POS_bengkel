@@ -11,11 +11,19 @@ $data = query("SELECT * FROM tb_barang_kategori ORDER BY id_barang_kategori DESC
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($data as $d) : ?>
+        <?php if ($data) : ?>
+            <?php foreach ($data as $d) : ?>
+                <tr>
+                    <td><?php echo ++$number; ?></td>
+                    <td><?php echo $d['barang_kategori_nama']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else : ?>
             <tr>
-                <td><?php echo ++$number; ?></td>
-                <td><?php echo $d['barang_kategori_nama']; ?></td>
+                <td style="text-align:center;" colspan="2">
+                    <h4>DATA TIDAK DITEMUKAN</h4>
+                </td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </tbody>
 </table>
