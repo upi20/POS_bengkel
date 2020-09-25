@@ -87,6 +87,10 @@ if (isset($_GET['title'])) {
                 include 'data_transaksi/barang_masuk/print.php';
                 break;
 
+            case 'barang_keluar':
+                include 'data_transaksi/barang_keluar/print.php';
+                break;
+
 
             default:
                 echo '<h2 align="center">Data Tidak Ditemukan</h2>';

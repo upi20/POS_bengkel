@@ -1,16 +1,16 @@
 <?php
 $barang = query('SELECT `barang_data_nama`,`id_barang_data` FROM tb_barang_data');
-$suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_barang_suplier');
+$konsumen = query('SELECT `barang_konsumen_nama`,`id_barang_konsumen` FROM tb_barang_konsumen');
 
 ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Cetak Laporan Pengadaan Barang
+                Cetak Laporan Penjualan Barang
             </div>
             <div class="panel-body">
-                <form action="./page/cetak/cetak.php?laporan=barang_masuk" target="blank" method="post">
+                <form action="./page/cetak/cetak.php?laporan=barang_keluar" target="blank" method="post">
                     <div class="row">
                         <h4 style="padding:3px 0; margin:0; text-align:center;">Kostumisasi</h4>
                         <hr>
@@ -23,8 +23,8 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
                                         <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_nama" checked="" name="tabel_nama"></td>
                                     </tr>
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="tabel_suplier" class="form-check-label">Nama Suplier</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_suplier" checked="" name="tabel_suplier"></td>
+                                        <td style="white-space:nowrap"><label for="tabel_konsumen" class="form-check-label">Nama konsumen</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_tabel" id="tabel_konsumen" checked="" name="tabel_konsumen"></td>
                                     </tr>
                                     <tr>
                                         <td style="white-space:nowrap"><label for="tabel_kode" class="form-check-label">Kode Transaksi</label></td>
@@ -86,13 +86,13 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
                         </div>
                         <div class="col-md-4">
                             <div class="container-fluid">
-                                <h4 style="padding:3px 0; margin:0; text-align:center;">Suplier</h4>
-                                <table width="100%" onclick="suplierCapture()" id="suplier_tabel">
-                                    <?php if ($suplier) {
-                                        foreach ($suplier as $k) { ?>
+                                <h4 style="padding:3px 0; margin:0; text-align:center;">Konsumen</h4>
+                                <table width="100%" onclick="konsumenCapture()" id="konsumen_tabel">
+                                    <?php if ($konsumen) {
+                                        foreach ($konsumen as $k) { ?>
                                             <tr>
-                                                <td style="white-space:nowrap"><label for="suplier_<?php echo $k['id_barang_data']; ?>" class="form-check-label"><?php echo $k['barang_suplier_nama']; ?></label></td>
-                                                <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_kategori" id="suplier_<?php echo $k['id_barang_data']; ?>" name="suplier_<?php echo $k['id_barang_suplier']; ?>" checked=""></td>
+                                                <td style="white-space:nowrap"><label for="konsumen_<?php echo $k['id_barang_data']; ?>" class="form-check-label"><?php echo $k['barang_konsumen_nama']; ?></label></td>
+                                                <td style="text-align:right;"><input type="checkbox" class="checkbox checkbox_kategori" id="konsumen_<?php echo $k['id_barang_data']; ?>" name="konsumen_<?php echo $k['id_barang_konsumen']; ?>" checked=""></td>
                                             </tr>
                                     <?php }
                                     } ?>
@@ -102,10 +102,10 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="100%" onclick="suplierCapture()">
+                                <table width="100%" onclick="konsumenCapture()">
                                     <tr>
-                                        <td style="white-space:nowrap"><label for="suplier_all" class="form-check-label">Semua Suplier</label></td>
-                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="suplier_all" name="suplier_all" checked=""></td>
+                                        <td style="white-space:nowrap"><label for="konsumen_all" class="form-check-label">Semua konsumen</label></td>
+                                        <td style="text-align:right;"><input type="checkbox" class="checkbox" id="konsumen_all" name="konsumen_all" checked=""></td>
                                     </tr>
                                 </table>
                                 <hr>
@@ -236,42 +236,42 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
         });
     }
 
-    function suplierCapture() {
-        const suplier_checkbox = document.querySelectorAll('.checkbox_kategori');
-        let suplier_all_btn = document.querySelector('#suplier_all');
+    function konsumenCapture() {
+        const konsumen_checkbox = document.querySelectorAll('.checkbox_kategori');
+        let konsumen_all_btn = document.querySelector('#konsumen_all');
 
         const tabelVisib = (bool = true) => {
-            const suplier_tabel = document.querySelector('#suplier_tabel');
-            if (bool) suplier_tabel.removeAttribute('hidden');
-            else suplier_tabel.setAttribute('hidden', '');
+            const konsumen_tabel = document.querySelector('#konsumen_tabel');
+            if (bool) konsumen_tabel.removeAttribute('hidden');
+            else konsumen_tabel.setAttribute('hidden', '');
         }
 
-        const suplier_checkedall = () => {
-            suplier_checkbox.forEach(element => {
+        const konsumen_checkedall = () => {
+            konsumen_checkbox.forEach(element => {
                 element.checked = true;
             });
             tabelVisib(false);
         }
 
-        const suplier_periksa = () => {
+        const konsumen_periksa = () => {
             let cek = true;
-            suplier_checkbox.forEach(element => {
+            konsumen_checkbox.forEach(element => {
                 if (!element.checked) cek = false;
             });
             if (cek) {
                 tabelVisib(false);
-                suplier_all_btn.checked = cek;
+                konsumen_all_btn.checked = cek;
             }
         }
 
-        suplier_checkbox.forEach(element => {
+        konsumen_checkbox.forEach(element => {
             element.addEventListener('change', function() {
-                suplier_periksa();
+                konsumen_periksa();
             });
         });
 
-        suplier_all_btn.addEventListener('change', function() {
-            if (this.checked) suplier_checkedall();
+        konsumen_all_btn.addEventListener('change', function() {
+            if (this.checked) konsumen_checkedall();
             else tabelVisib();
         });
     }
@@ -294,6 +294,6 @@ $suplier = query('SELECT `barang_suplier_nama`,`id_barang_suplier` FROM tb_baran
     cektanggal();
     if (!document.querySelector('#data_all').checked) document.querySelector('#data_tabel').removeAttribute('hidden');
     else document.querySelector('#data_tabel').setAttribute('hidden', '');
-    if (!document.querySelector('#suplier_all').checked) document.querySelector('#suplier_tabel').removeAttribute('hidden');
-    else document.querySelector('#suplier_tabel').setAttribute('hidden', '');
+    if (!document.querySelector('#konsumen_all').checked) document.querySelector('#konsumen_tabel').removeAttribute('hidden');
+    else document.querySelector('#konsumen_tabel').setAttribute('hidden', '');
 </script>

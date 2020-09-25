@@ -1,13 +1,19 @@
 <?php
-$qselect = "";
-$qjoin = "";
-$qwhere = "";
-$title_laporan = "";
+$joindata        = " INNER JOIN `tb_barang_kategori` ON `tb_barang_data`.`id_barang_kategori` = `tb_barang_kategori`.`id_barang_kategori` ";
+$qselect         = "";
+$qjoin           = "";
+$qwhere          = "";
+$title_laporan   = "";
+$count           = 0;
+$querywhere      = [
+    0 => ['val' => '', 'stt' => false, 'judul' => ''],
+    1 => ['val' => '', 'stt' => false, 'judul' => '']
+];
 
 if (isset($_POST['cetak'])) {
     if (isset($_POST['tabel_all'])) {
         $qselect = '*';
-        $qjoin .= " INNER JOIN `tb_barang_kategori` ON `tb_barang_data`.`id_barang_kategori` = `tb_barang_kategori`.`id_barang_kategori` ";
+        $qjoin .= $joindata;
     } else {
         $qselect .= "`id_barang_data`";
         if (isset($_POST['tabel_nama'])) $qselect .= ",`barang_data_nama`";
@@ -17,7 +23,7 @@ if (isset($_POST['cetak'])) {
         if (isset($_POST['tabel_tanggal'])) $qselect .= ",`barang_data_tanggal`";
         if (isset($_POST['tabel_kategori'])) {
             $qselect .= ",`tb_barang_data`.`id_barang_kategori`, `tb_barang_kategori`.`id_barang_kategori`, `tb_barang_kategori`.`barang_kategori_nama`";
-            $qjoin .= " INNER JOIN `tb_barang_kategori` ON `tb_barang_data`.`id_barang_kategori` = `tb_barang_kategori`.`id_barang_kategori` ";
+            $qjoin .= $joindata;
         }
     }
 
@@ -26,18 +32,13 @@ if (isset($_POST['cetak'])) {
         if ($querykategori) {
             foreach ($querykategori as $kategori) {
                 if (isset($_POST['kategori_' . $kategori['id_barang_kategori']])) {
-                    if (!isset($_POST['tanggal_all'])) {
-                        if ($qwhere == "") $qwhere .= "WHERE (";
-                        else $qwhere .= " OR ";
-                    } else {
-                        if ($qwhere == "") $qwhere .= "WHERE ";
-                        else $qwhere .= " OR ";
-                    }
-                    if ($title_laporan == "") $title_laporan = "Laporan Barang<br>Kategori: " . $kategori['barang_kategori_nama'];
-                    else $title_laporan .= ", " . $kategori['barang_kategori_nama'];
+                    if ($querywhere[0]['val'] != "") $querywhere[0]['val'] .= " OR ";
+
+                    if ($querywhere[0]['judul'] == "") $querywhere[0]['judul'] = "Kategori: " . $kategori['barang_kategori_nama'];
+                    else $querywhere[0]['judul'] .= ", " . $kategori['barang_kategori_nama'];
 
                     $id_kategori = $kategori['id_barang_kategori'];
-                    $qwhere .= " `tb_barang_data`.`id_barang_kategori` = '$id_kategori' ";
+                    $querywhere[0]['val'] .= " `tb_barang_data`.`id_barang_kategori` = '$id_kategori' ";
                 }
             }
         }
@@ -46,15 +47,48 @@ if (isset($_POST['cetak'])) {
     if (!isset($_POST['tanggal_all'])) {
         $dari = $_POST['tanggal_dari'];
         $sampai = $_POST['tanggal_sampai'];
-        if ($title_laporan == "") $title_laporan = "Laporan Barang<br>Periode: " . $dari . " / " . $sampai;
-        else $title_laporan .= "<br>Periode: Dari " . $dari . " / " . $sampai;
 
-        if ($qwhere == "") $qwhere .= "WHERE ";
-        else $qwhere .= ") AND ";
+        $querywhere[2]['judul'] = "Periode: Dari " . $dari . " / " . $sampai;
+
+        // menambahkan barang tambah di query select
         $qselect .= ",`barang_data_tanggal`";
-        $qwhere .= " `tb_barang_data`.`barang_data_tanggal` BETWEEN '$dari' AND '$sampai'";
+
+        $querywhere[2]['val'] = "`tb_barang_data`.`barang_data_tanggal` BETWEEN '$dari' AND '$sampai'";
     }
 }
+
+// query builder where generator
+// =======================================================================
+// 1. Pemerikasaan
+for ($i = 0; $i < count($querywhere); $i++) {
+    if ($querywhere[$i]['val'] != '') {
+        $count++;
+        $querywhere[$i]['stt'] = true;
+    }
+}
+
+// 2. Eksekusi
+if ($count == 1) {
+    foreach ($querywhere as $q) {
+        if ($q['stt']) {
+            $qwhere = " WHERE " . $q['val'];
+            $title_laporan = "Laporan Barang<br>" . $q['judul'];
+        }
+    }
+} else if ($count > 1) {
+    foreach ($querywhere as $q) {
+        if ($q['stt']) {
+            if ($qwhere == "") {
+                $qwhere = " WHERE (" . $q['val'] . ")";
+                $title_laporan = "Laporan Barang<br>" . $q['judul'];
+            } else {
+                $qwhere .= " AND (" . $q['val'] . ")";
+                $title_laporan .= "<br>" . $q['judul'];
+            }
+        }
+    }
+}
+// =======================================================================
 
 $qbuilder = "SELECT " . $qselect . " FROM `tb_barang_data` " . $qjoin . $qwhere;
 $nomor = 1;
